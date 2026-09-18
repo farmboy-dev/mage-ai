@@ -1,6 +1,6 @@
 # 남은 클라우드 커넥터·패키지 제거 계획 — 승인 전
 
-상태 갱신: 이 계획 작성 후 사용자가 C1을 승인했고 구현을 완료했다. [C1 결과](CLOUD_CONNECTOR_C1_REMOVAL.ko.md)를 참고한다. 아래는 승인 당시의 계획이며 C2·C3는 미적용이다.
+상태 갱신: 이 계획 작성 후 사용자가 C1을 승인했고 구현을 완료했다. [C1 결과](CLOUD_CONNECTOR_C1_REMOVAL.ko.md)를 참고한다. C2a Algolia·Airtable도 별도 승인 후 적용했다([결과](ALGOLIA_AIRTABLE_REMOVAL.ko.md)). 아래는 단계별 계획이며 나머지 C2·C3는 미적용이다.
 
 2026-09-18, 로컬 HEAD `1912c297f`와 현재 미커밋 수정 상태 기준. 사용자가 승인한 작업은 조사와 변경안 작성이다. 이번에는 소스·설정·의존성·컨테이너를 변경하지 않았다. 로컬 파일과 개발 컨테이너의 설치된 패키지 메타데이터를 읽었으며 외부 서비스 접속·키 입력·패키지 설치·이미지 빌드는 하지 않았다.
 
@@ -77,7 +77,7 @@
 
 ### 우선순위 갱신: C2a Algolia·Airtable
 
-사용자 확인 요청에 따라 **Algolia와 Airtable을 외부 SaaS 제거 대상으로 명시**한다. C1에 남아 있던 이유는 내부망 서비스이기 때문이 아니라, C1을 여섯 공급자로 한정했기 때문이다. C2의 첫 작업으로 두 서비스의 I/O·기본 템플릿·Airtable integration·설정 예시 제거안을 준비한다. 현재 체크포인트를 커밋한 후 파일별 변경안과 검증 범위를 제출하고, 구현은 별도 승인 후 시작한다.
+사용자 확인 요청에 따라 **Algolia와 Airtable을 외부 SaaS 제거 대상으로 명시**한다. C1에 남아 있던 이유는 내부망 서비스이기 때문이 아니라, C1을 여섯 공급자로 한정했기 때문이다. C2의 첫 작업으로 두 서비스의 I/O·기본 템플릿·Airtable integration·설정 예시 제거안을 준비한다. 체크포인트 `b49f9c837` 커밋 후 파일별 변경안의 승인을 받아 C2a를 적용했다. 상세 변경과 검증은 [C2a 결과](ALGOLIA_AIRTABLE_REMOVAL.ko.md)를 참고한다.
 
 - Algolia: 호스팅 검색 SaaS이며 자체 서버 설치를 지원하지 않는다는 [공식 안내](https://support.algolia.com/hc/en-us/articles/4406975236625-Can-I-run-Algolia-on-premises-on-my-own-servers)를 확인했다.
 - Airtable: AWS에 호스팅되는 클라우드 서비스라는 [공식 안내](https://www.airtable.com/company/data-residency-faqs)를 확인했다.

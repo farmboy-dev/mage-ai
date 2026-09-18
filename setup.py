@@ -46,9 +46,6 @@ setuptools.setup(
             'langchain_community==0.2.5',
             'openai==1.82.0',
         ],
-        'airtable': [
-            'pyairtable>=2.3.3'
-        ],
         'azure': [
             'azure-eventhub==5.11.2',
             'azure-identity==1.12.0',
@@ -196,7 +193,6 @@ setuptools.setup(
             'protobuf>=6.0,<7',
             'psycopg2-binary==2.9.3',
             'psycopg2==2.9.3',
-            'pyairtable==2.3.3',
             'pydruid==0.6.5',
             'pymongo==4.3.3',
             "pyodbc==4.0.35; python_version < '3.12'",

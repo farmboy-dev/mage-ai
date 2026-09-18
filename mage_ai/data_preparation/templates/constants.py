@@ -21,13 +21,6 @@ GROUP_SHIFT = 'Shift'
 TEMPLATES = [
     dict(
         block_type=BlockType.DATA_LOADER,
-        description='Load a Table from Airtable App.',
-        language=BlockLanguage.PYTHON,
-        name='Airtable',
-        path='data_loaders/airtable.py',
-    ),
-    dict(
-        block_type=BlockType.DATA_LOADER,
         description='Load a Delta Table from Amazon S3.',
         groups=[GROUP_DELTA_LAKE],
         language=BlockLanguage.PYTHON,
@@ -131,13 +124,6 @@ TEMPLATES_ONLY_FOR_V2 = [
     ),
     #   Data warehouses
     #   Databases
-    dict(
-        block_type=BlockType.DATA_LOADER,
-        groups=[GROUP_DATABASES],
-        language=BlockLanguage.PYTHON,
-        name='Algolia',
-        path='data_loaders/algolia.py',
-    ),
     dict(
         block_type=BlockType.DATA_LOADER,
         groups=[GROUP_DATABASES],
@@ -435,13 +421,6 @@ TEMPLATES_ONLY_FOR_V2 = [
     ),
     #   Data warehouses
     #   Databases
-    dict(
-        block_type=BlockType.DATA_EXPORTER,
-        groups=[GROUP_DATABASES],
-        language=BlockLanguage.PYTHON,
-        name='Algolia',
-        path='data_exporters/algolia.py',
-    ),
     dict(
         block_type=BlockType.DATA_EXPORTER,
         groups=[GROUP_DATABASES],

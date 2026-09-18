@@ -10,12 +10,6 @@ default:
   AWS_SECRET_ACCESS_KEY: "{{ env_var('AWS_SECRET_ACCESS_KEY') }}"
   AWS_SESSION_TOKEN: null
   AWS_REGION: region
-  # Algolia
-  ALGOLIA_APP_ID: app_id
-  ALGOLIA_API_KEY: api_key
-  ALGOLIA_INDEX_NAME: index_name
-  # Airtable
-  AIRTABLE_ACCESS_TOKEN: token
   # Chroma
   CHROMA_COLLECTION: collection_name
   CHROMA_PATH: path

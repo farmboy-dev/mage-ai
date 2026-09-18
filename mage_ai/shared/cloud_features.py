@@ -4,7 +4,7 @@ REMOVED_PROJECT_CONFIGS = frozenset({
 })
 
 REMOVED_CONNECTORS = frozenset({
-    'azure_blob_storage', 'bigquery', 'google_cloud_storage', 'google_sheets',
+    'algolia', 'airtable', 'azure_blob_storage', 'bigquery', 'google_cloud_storage', 'google_sheets',
     'redshift', 'snowflake', 'delta_lake_azure',
 })
 

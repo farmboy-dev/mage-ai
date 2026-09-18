@@ -40,6 +40,8 @@ class RemovedCloudConnectorTest(unittest.TestCase):
         cache.load_all_data.return_value = {
             'mage_template': {
                 'legacy': {'name': 'BigQuery', 'path': 'data_loaders/bigquery.py'},
+                'algolia': {'name': 'Algolia', 'path': 'data_exporters/algolia.py'},
+                'airtable': {'name': 'Airtable', 'path': 'data_loaders/airtable.py'},
                 's3': {'name': 'Amazon S3', 'path': 'data_loaders/s3.py'},
             },
             'block_file': {'custom': {'uuid': 'custom', 'content': 'bigquery migration notes'}},
@@ -121,3 +123,24 @@ class RemovedCloudConnectorTest(unittest.TestCase):
     def test_non_connector_edits_are_not_rejected_by_policy(self):
         reject_removed_connector_config({'name': 'Legacy pipeline block'})
         reject_removed_connector_config({'content': 'from mage_ai.io.bigquery import BigQuery'})
+
+    def test_saas_payloads_are_rejected_before_creation_and_execution(self):
+        for provider in ['algolia', 'airtable']:
+            for config in [
+                {'data_source': provider},
+                {'template_path': f'data_loaders/{provider}.py'},
+                {'template_variables': {'name': provider.title()}},
+                {'configuration': {'data_integration': {'source': provider}}},
+            ]:
+                with self.subTest(provider=provider, config=config):
+                    with self.assertRaises(ApiError) as raised:
+                        validate_connector_payload({'config': config})
+                    self.assertEqual(raised.exception.code, 400)
+                    with self.assertRaisesRegex(ValueError, 'removed from this internal deployment'):
+                        Block.create('legacy', 'data_loader', '/unused', config=config)
+            with self.assertRaisesRegex(ValueError, 'removed from this internal deployment'):
+                Block.execute_sync(SimpleNamespace(configuration={'data_source': provider}))
+            pipeline = SimpleNamespace(source_uuid=provider, destination_uuid=provider)
+            for prop in ['source', 'destination', 'source_file_path', 'destination_file_path']:
+                with self.assertRaisesRegex(ValueError, 'removed from this internal deployment'):
+                    getattr(IntegrationPipeline, prop).fget(pipeline)

@@ -18,5 +18,8 @@
 | [클라우드 커넥터 제거 계획](CLOUD_CONNECTOR_REMOVAL_PLAN.ko.md) | C1~C3 단계, 파일별 변경·보존 대상, 의존성 및 승인 범위 |
 | [C1 전용 파일 후보](CLOUD_CONNECTOR_C1_FILES.ko.md) | 여섯 공급자 관련 실제 파일 81개 목록 |
 | [C1 제거 결과](CLOUD_CONNECTOR_C1_REMOVAL.ko.md) | 승인된 커넥터 제거, 기존 설정 오류 처리, 보존 범위와 검증 |
+| [C2a Algolia·Airtable 제거안](ALGOLIA_AIRTABLE_REMOVAL_PLAN.ko.md) | 승인된 파일별 변경·의존성·검증 범위 |
+| [C2a Algolia·Airtable 제거 결과](ALGOLIA_AIRTABLE_REMOVAL.ko.md) | 구현·UI/API 검증 결과와 패키지 정리의 한계 |
+| [C2b 런타임 제거안](CLOUD_RUNTIME_C2B_PLAN.ko.md) | GCS 결과·로그 및 Azure/AWS Secrets 제거 범위와 검토 요청 |
 
 최초 분석 이후의 구현 상태와 검증 결과는 각 작업 문서를 참고한다. 후속 리팩터링 문서도 이 폴더에 추가한다.

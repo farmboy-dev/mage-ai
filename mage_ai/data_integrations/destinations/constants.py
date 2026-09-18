@@ -1,5 +1,4 @@
 DESTINATIONS = [
-    dict(name='Airtable'),
     dict(name='Amazon S3'),
     dict(name='Clickhouse'),
     dict(name='Delta Lake S3'),
