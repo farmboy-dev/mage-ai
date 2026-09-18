@@ -62,6 +62,9 @@ class BaseHandler(tornado.web.RequestHandler):
         super().write(chunk)
 
     def write_error(self, status_code, **kwargs):
+        if status_code == 404:
+            self.write({'error': {'code': 404, 'message': 'Unknown resource'}})
+            return
         if status_code == 500:
             self.set_status(200)
             exception = kwargs['exc_info'][1]
@@ -174,6 +177,14 @@ class BaseApiHandler(BaseHandler, OAuthMiddleware):
                 self.finish()
                 return
         super().prepare()
+        if not getattr(self.request, 'error', None) and self.path_kwargs.get('resource'):
+            from mage_ai.api.operations.base import BaseOperation
+            parent = self.path_kwargs['resource']
+            child = self.path_kwargs.get('child')
+            operation = BaseOperation(resource=child or parent,
+                                      resource_parent=parent if child else None)
+            operation.validate_resource()
+
 
 
 class BaseDetailHandler(BaseHandler):

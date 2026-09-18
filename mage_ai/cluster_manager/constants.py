@@ -1,17 +1,5 @@
 from mage_ai.shared.enum import StrEnum
 
-# ECS environment variables
-ECS_CLUSTER_NAME = 'ECS_CLUSTER_NAME'
-ECS_TASK_DEFINITION = 'ECS_TASK_DEFINITION'
-ECS_CONTAINER_NAME = 'ECS_CONTAINER_NAME'
-
-# GCP environment variables
-GCP_PROJECT_ID = 'GCP_PROJECT_ID'
-GCP_PATH_TO_KEYFILE = 'path_to_keyfile'
-GCP_REGION = 'GCP_REGION'
-# this should be the name of the current cloud run service that is running Mage
-GCP_SERVICE_NAME = 'GCP_SERVICE_NAME'
-
 # K8s environment variables
 KUBE_NAMESPACE = 'KUBE_NAMESPACE'
 KUBE_SERVICE_TYPE = 'KUBE_SERVICE_TYPE'
@@ -30,7 +18,4 @@ NODE_PORT_SERVICE_TYPE = 'NodePort'
 
 
 class ClusterType(StrEnum):
-    EMR = 'emr'
-    ECS = 'ecs'
-    CLOUD_RUN = 'cloud_run'
     K8S = 'k8s'

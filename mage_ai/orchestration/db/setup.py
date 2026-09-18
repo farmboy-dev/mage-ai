@@ -2,8 +2,6 @@ import os
 from typing import Optional
 
 from mage_ai.orchestration.constants import (
-    AWS_DB_SECRETS_NAME,
-    AZURE_SECRET_DB_CONN_URL,
     PG_DB_HOST,
     PG_DB_NAME,
     PG_DB_PASS,
@@ -21,14 +19,7 @@ def get_postgres_connection_url() -> Optional[str]:
     db_name = None
     db_host = None
     db_port = None
-    if os.getenv(AWS_DB_SECRETS_NAME):
-        raise ValueError('AWS_DB_SECRETS_NAME is removed. Set MAGE_DATABASE_CONNECTION_URL or POSTGRES credentials directly.')
-    elif os.getenv(AZURE_SECRET_DB_CONN_URL):
-        raise ValueError(
-            'AZURE_SECRET_DB_CONN_URL has been removed. Set MAGE_DATABASE_CONNECTION_URL '
-            'or DB_USER, DB_PASS, DB_NAME, DB_HOST, and DB_PORT directly.'
-        )
-    elif os.getenv(PG_DB_USER):
+    if os.getenv(PG_DB_USER):
         db_user = os.getenv(PG_DB_USER)
         db_pass = os.getenv(PG_DB_PASS)
         db_name = os.getenv(PG_DB_NAME)

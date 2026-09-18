@@ -91,9 +91,6 @@ CLEAN_VARIABLES_PROJECT_PATH_DEFAULT = typer.Argument(
 )
 CLEAN_VARIABLES_PIPELINE_UUID_DEFAULT = typer.Option(None, help='uuid of the pipeline to clean.')
 
-CREATE_SPARK_CLUSTER_PROJECT_PATH_DEFAULT = typer.Argument(
-    ..., help='path of the Mage project that contains the EMR config.'
-)
 
 
 @app.command()
@@ -293,16 +290,6 @@ def clean_old_logs(
     LoggerManagerFactory.get_logger_manager(
         pipeline_uuid=pipeline_uuid,
     ).delete_old_logs()
-
-
-@app.command()
-def create_spark_cluster(
-    project_path: str = CREATE_SPARK_CLUSTER_PROJECT_PATH_DEFAULT,
-):
-    """
-    Create EMR cluster for Mage project.
-    """
-    raise ValueError('EMR cluster creation is removed. Configure your existing Spark cluster in spark_config.')
 
 
 if __name__ == '__main__':

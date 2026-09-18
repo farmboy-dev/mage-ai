@@ -1,4 +1,4 @@
-from mage_ai.shared.cloud_features import reject_removed_connector_config
+from mage_ai.shared.supported_features import validate_connector_config
 import asyncio
 import functools
 import importlib.util
@@ -1062,8 +1062,8 @@ class Block(
         widget: bool = False,
         downstream_block_uuids: List[str] = None,
     ) -> 'Block':
-        reject_removed_connector_config(config)
-        reject_removed_connector_config(configuration)
+        validate_connector_config(config)
+        validate_connector_config(configuration)
         from mage_ai.data_preparation.models.block.block_factory import BlockFactory
 
         """
@@ -1466,7 +1466,7 @@ class Block(
         override_outputs: bool = True,
         **kwargs,
     ) -> Dict:
-        reject_removed_connector_config(self.configuration)
+        validate_connector_config(self.configuration)
         def __execute(
             self=self,
             analyze_outputs=analyze_outputs,
@@ -1708,7 +1708,7 @@ class Block(
         update_status: bool = True,
         parallel: bool = True,
     ) -> None:
-        reject_removed_connector_config(self.configuration)
+        validate_connector_config(self.configuration)
         if parallel:
             loop = asyncio.get_event_loop()
             await loop.run_in_executor(
@@ -1989,7 +1989,7 @@ class Block(
         execution_partition_previous: str = None,
         **kwargs,
     ) -> List:
-        reject_removed_connector_config(self.configuration)
+        validate_connector_config(self.configuration)
         if logging_tags is None:
             logging_tags = dict()
 
@@ -3097,7 +3097,7 @@ class Block(
         return data
 
     def update(self, data, **kwargs) -> 'Block':
-        reject_removed_connector_config(data)
+        validate_connector_config(data)
         if 'name' in data and data['name'] != self.name:
             detach = kwargs.get('detach', False)
             self.__update_name(data['name'], detach=detach)

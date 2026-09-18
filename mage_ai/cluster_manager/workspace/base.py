@@ -66,7 +66,7 @@ class Workspace(abc.ABC):
             from mage_ai.cluster_manager.workspace.kubernetes import KubernetesWorkspace
 
             return KubernetesWorkspace
-        raise ValueError('Only Kubernetes workspaces are supported; cloud workspace execution is removed.')
+        raise ValueError('Unsupported workspace type. Use k8s.')
 
     @classmethod
     def get_workspace(cls, cluster_type: ClusterType, name: str) -> 'Workspace':

@@ -2,12 +2,7 @@ import { BlockTypeEnum } from './BlockType';
 
 export enum DataSourceTypeEnum {
   ACTIVEMQ = 'activemq',
-  AMAZON_SQS = 'amazon_sqs',
   API = 'api',
-  AZURE_BLOB_STORAGE = 'azure_blob_storage',
-  AZURE_DATA_LAKE = 'azure_data_lake',
-  AZURE_EVENT_HUB = 'azure_event_hub',
-  BIGQUERY = 'bigquery',
   CLICKHOUSE = 'clickhouse',
   DRUID = 'druid',
   DUCKDB = 'duckdb',
@@ -15,12 +10,8 @@ export enum DataSourceTypeEnum {
   ELASTICSEARCH = 'elasticsearch',
   FILE = 'file',
   GENERIC = 'generic',
-  GOOGLE_CLOUD_PUBSUB = 'google_cloud_pubsub',
-  GOOGLE_CLOUD_STORAGE = 'google_cloud_storage',
-  GOOGLE_SHEETS = 'google_sheets',
   INFLUXDB = 'influxdb',
   KAFKA = 'kafka',
-  KINESIS = 'kinesis',
   MONGODB = 'mongodb',
   MSSQL = 'mssql',
   MYSQL = 'mysql',
@@ -30,9 +21,7 @@ export enum DataSourceTypeEnum {
   PINOT = 'pinot',
   POSTGRES = 'postgres',
   RABBITMQ = 'rabbitmq',
-  REDSHIFT = 'redshift',
   S3 = 's3',
-  SNOWFLAKE = 'snowflake',
   TRINO = 'trino',
 }
 

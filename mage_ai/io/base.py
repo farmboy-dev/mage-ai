@@ -16,17 +16,12 @@ QUERY_ROW_LIMIT = 10_000_000
 
 
 class DataSource(StrEnum):
-    AIRTABLE = 'airtable'
-    ALGOLIA = 'algolia'
     API = 'api'
-    BIGQUERY = 'bigquery'
     CHROMA = 'chroma'
     CLICKHOUSE = 'clickhouse'
     DRUID = 'druid'
     DUCKDB = 'duckdb'
     FILE = 'file'
-    GOOGLE_CLOUD_STORAGE = 'google_cloud_storage'
-    GOOGLE_SHEETS = 'google_sheets'
     KAFKA = 'kafka'
     MYSQL = 'mysql'
     MSSQL = 'sqlserver'
@@ -34,9 +29,7 @@ class DataSource(StrEnum):
     PINOT = 'pinot'
     POSTGRES = 'postgres'
     QDRANT = 'qdrant'
-    REDSHIFT = 'redshift'
     S3 = 's3'
-    SNOWFLAKE = 'snowflake'
     SPARK = 'spark'
     TRINO = 'trino'
     WEAVIATE = 'weaviate'

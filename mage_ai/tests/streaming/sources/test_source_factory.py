@@ -53,14 +53,6 @@ class SourceFactoryTests(TestCase):
             self.assertIsInstance(source, ActiveMQSource)
             mock_init.assert_called_once_with(config)
 
-    def test_get_source_other(self):
-        s = "Consuming data from random is not supported " \
-            "in streaming pipelines yet."
-        with self.assertRaises(Exception) as context:
-            SourceFactory.get_source(dict(
-                connector_type='random',
-            ))
-        self.assertTrue(
-            s
-            in str(context.exception),
-        )
+    def test_unknown_connector(self):
+        with self.assertRaisesRegex(ValueError, 'Unsupported connector'):
+            SourceFactory.get_source({'connector_type': 'unknown_connector'})

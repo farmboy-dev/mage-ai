@@ -8,14 +8,14 @@ from mage_ai.data_preparation.models.constants import (
     PipelineType,
 )
 from mage_ai.data_preparation.models.pipeline import Pipeline
-from mage_ai.shared.cloud_features import reject_removed_executor
+from mage_ai.shared.supported_features import validate_executor
 
 
 class ExecutorFactory:
     @classmethod
     def get_default_executor_type(self):
         executor_type = os.getenv('DEFAULT_EXECUTOR_TYPE', ExecutorType.LOCAL_PYTHON)
-        reject_removed_executor(executor_type)
+        validate_executor(executor_type)
         if ExecutorType.is_valid_type(executor_type):
             return executor_type
         return ExecutorType.LOCAL_PYTHON
@@ -30,7 +30,7 @@ class ExecutorFactory:
             executor_type = pipeline.get_executor_type()
             if executor_type == ExecutorType.LOCAL_PYTHON or executor_type is None:
                 executor_type = self.get_default_executor_type()
-        reject_removed_executor(executor_type)
+        validate_executor(executor_type)
         return executor_type
 
     @classmethod
@@ -114,7 +114,7 @@ class ExecutorFactory:
                 if executor_type == ExecutorType.LOCAL_PYTHON or not executor_type:
                     executor_type = self.get_default_executor_type()
 
-        reject_removed_executor(executor_type)
+        validate_executor(executor_type)
         if executor_type == ExecutorType.K8S:
             from mage_ai.data_preparation.executors.k8s_block_executor import (
                 K8sBlockExecutor,

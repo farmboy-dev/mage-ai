@@ -1,4 +1,4 @@
-from mage_ai.shared.cloud_features import reject_removed_connector
+from mage_ai.shared.supported_features import validate_connector
 import importlib
 import os
 import time
@@ -44,7 +44,7 @@ class GenericIOSink(BaseSink):
     config_class = GenericIOConfig
 
     def init_client(self):
-        reject_removed_connector(self.connector_type)
+        validate_connector(self.connector_type, 'streaming_sink')
         config_path = os.path.join(get_repo_path(), 'io_config.yaml')
         config_file_loader = ConfigFileLoader(config_path, self.config.profile)
 

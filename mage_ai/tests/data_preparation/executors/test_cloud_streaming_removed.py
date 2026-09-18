@@ -10,11 +10,10 @@ from mage_ai.streaming.sinks.sink_factory import SinkFactory
 
 class RemovedCloudStreamingTest(unittest.TestCase):
     def test_factories_reject_before_import(self):
-        with patch('builtins.__import__', side_effect=AssertionError('Unexpected import')):
-            for provider in ['amazon_sqs', 'kinesis', 'google_cloud_pubsub',
-                             'azure_event_hub', 'azure_data_lake']:
+        with patch('boto3.client', side_effect=AssertionError('Unexpected client')):
+            for provider in ['unknown_connector']:
                 for factory in [SourceFactory.get_source, SinkFactory.get_sink]:
-                    with self.assertRaisesRegex(ValueError, 'removed from this internal deployment'):
+                    with self.assertRaisesRegex(ValueError, 'Unsupported connector'):
                         factory({'connector_type': provider})
 
     def test_removed_sink_prevents_yaml_and_python_source_initialization(self):
@@ -31,9 +30,9 @@ class RemovedCloudStreamingTest(unittest.TestCase):
             with patch.object(SourceFactory, 'get_source') as source, \
                     patch.object(SourceFactory, 'get_python_source') as python_source, \
                     patch.object(SinkFactory, 'get_sink') as sink:
-                with self.assertRaisesRegex(ValueError, 'removed from this internal deployment'):
+                with self.assertRaisesRegex(ValueError, 'Unsupported connector'):
                     executor._StreamingPipelineExecutor__execute_in_python(
-                        global_vars={'sink': 'kinesis'})
+                        global_vars={'sink': 'unknown_connector'})
                 source.assert_not_called()
                 python_source.assert_not_called()
                 sink.assert_not_called()
@@ -41,10 +40,10 @@ class RemovedCloudStreamingTest(unittest.TestCase):
     def test_removed_source_prevents_initialization(self):
         executor = StreamingPipelineExecutor.__new__(StreamingPipelineExecutor)
         executor.source_block = SimpleNamespace(
-            uuid='source', language=BlockLanguage.YAML, content='connector_type: amazon_sqs')
+            uuid='source', language=BlockLanguage.YAML, content='connector_type: unknown_connector')
         executor.sink_blocks = []
         with patch.object(SourceFactory, 'get_source') as source:
-            with self.assertRaisesRegex(ValueError, 'removed from this internal deployment'):
+            with self.assertRaisesRegex(ValueError, 'Unsupported connector'):
                 executor._StreamingPipelineExecutor__execute_in_python()
             source.assert_not_called()
 

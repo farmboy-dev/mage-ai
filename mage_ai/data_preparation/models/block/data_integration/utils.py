@@ -1,4 +1,4 @@
-from mage_ai.shared.cloud_features import reject_removed_connector
+from mage_ai.shared.supported_features import validate_connector
 import importlib
 import json
 import os
@@ -110,12 +110,12 @@ def variable_directory(data_integration_uuid: str, stream: str = None) -> str:
 
 
 def destination_module(data_integration_uuid: str) -> Any:
-    reject_removed_connector(data_integration_uuid)
+    validate_connector(data_integration_uuid, 'destination')
     return importlib.import_module(f'mage_integrations.destinations.{data_integration_uuid}')
 
 
 def source_module(data_integration_uuid: str) -> Any:
-    reject_removed_connector(data_integration_uuid)
+    validate_connector(data_integration_uuid, 'source')
     return importlib.import_module(f'mage_integrations.sources.{data_integration_uuid}')
 
 

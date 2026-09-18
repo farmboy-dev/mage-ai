@@ -38,12 +38,8 @@ export const BLOCK_TEMPLATES = 'block_templates';
 export const BROWSER_ITEMS = 'browser_items';
 export const CACHE_ITEMS: 'cache_items' = 'cache_items';
 export const CLIENT_PAGES: 'client_pages' = 'client_pages';
-export const CLUSTERS: 'clusters' = 'clusters';
 export const COLUMNS: 'columns' = 'columns';
 export const COMMAND_CENTER_ITEMS: 'command_center_items' = 'command_center_items';
-export const COMPUTE_CLUSTERS: 'compute_clusters' = 'compute_clusters';
-export const COMPUTE_CONNECTIONS: 'compute_connections' = 'compute_connections';
-export const COMPUTE_SERVICES: 'compute_services' = 'compute_services';
 export const CONFIGURATION_OPTIONS: 'configuration_options' = 'configuration_options';
 export const CUSTOM_DESIGNS: 'custom_designs' = 'custom_designs';
 export const CUSTOM_TEMPLATES: 'custom_templates' = 'custom_templates';
@@ -136,12 +132,8 @@ const RESOURCES_PAIRS_ARRAY: any[][] = [
   [BLOCK_TEMPLATES],
   [CACHE_ITEMS],
   [CLIENT_PAGES],
-  [CLUSTERS],
   [COLUMNS, FEATURE_SETS],
   [COMMAND_CENTER_ITEMS],
-  [COMPUTE_CLUSTERS, COMPUTE_SERVICES],
-  [COMPUTE_CONNECTIONS, COMPUTE_SERVICES],
-  [COMPUTE_SERVICES],
   [CONFIGURATION_OPTIONS, PIPELINES],
   [CUSTOM_DESIGNS],
   [CUSTOM_TEMPLATES],
@@ -164,7 +156,6 @@ const RESOURCES_PAIRS_ARRAY: any[][] = [
   [GIT_FILES],
   [GLOBAL_DATA_PRODUCTS],
   [GLOBAL_HOOKS],
-  [INSTANCES, CLUSTERS],
   [INTEGRATION_DESTINATIONS],
   [INTEGRATION_SAMPLES, INTEGRATION_SOURCES],
   [INTEGRATION_SOURCES, PIPELINES],

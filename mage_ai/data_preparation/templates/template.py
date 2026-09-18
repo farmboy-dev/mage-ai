@@ -1,4 +1,4 @@
-from mage_ai.shared.cloud_features import reject_removed_connector_config
+from mage_ai.shared.supported_features import validate_connector_config
 import json
 from typing import Mapping, Union
 
@@ -56,7 +56,7 @@ def fetch_template_source(
     language: BlockLanguage = BlockLanguage.PYTHON,
     pipeline_type: PipelineType = PipelineType.PYTHON,
 ) -> str:
-    reject_removed_connector_config(config)
+    validate_connector_config(config)
     template_source = ''
 
     if language not in [BlockLanguage.PYTHON, BlockLanguage.R, BlockLanguage.YAML]:
@@ -156,14 +156,14 @@ def __fetch_data_loader_templates(
         template_folder = 'data_loaders'
 
     default_template = template_folder + '/' + (default_template_name or 'default.jinja')
-    if data_source is None:
+    if data_source is None or data_source in ('generic', 'default'):
         template_path = default_template
     else:
         data_source_template = template_folder + '/' + f'{data_source.lower()}.{file_extension}'
         if template_exists(data_source_template):
             template_path = data_source_template
         else:
-            template_path = default_template
+            raise ValueError('Unsupported connector for this block language and pipeline type.')
     return (
         template_env.get_template(template_path).render(
             code=config.get('existing_code', ''),
@@ -279,14 +279,14 @@ def __fetch_data_exporter_templates(
         template_folder = 'data_exporters'
 
     default_template = template_folder + '/' + (default_template_name or 'default.jinja')
-    if data_source is None:
+    if data_source is None or data_source in ('generic', 'default'):
         template_path = default_template
     else:
         data_source_template = template_folder + '/' + f'{data_source.lower()}.{file_extension}'
         if template_exists(data_source_template):
             template_path = data_source_template
         else:
-            template_path = default_template
+            raise ValueError('Unsupported connector for this block language and pipeline type.')
 
     return (
         template_env.get_template(template_path).render(

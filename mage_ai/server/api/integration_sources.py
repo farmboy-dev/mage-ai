@@ -1,4 +1,4 @@
-from mage_ai.shared.cloud_features import reject_removed_connector
+from mage_ai.shared.supported_features import validate_connector
 import importlib
 import json
 import subprocess
@@ -13,7 +13,7 @@ logger = Logger().new_server_logger(__name__)
 
 
 def build_integration_module_info(key: str, option: Dict) -> Dict:
-    reject_removed_connector(get_uuid(option))
+    validate_connector(get_uuid(option), 'source' if key == 'sources' else 'destination')
     d = option.copy()
 
     module_name = d.get('module_name', d['name'].replace(' ', ''))

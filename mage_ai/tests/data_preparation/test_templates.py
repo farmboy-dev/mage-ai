@@ -162,9 +162,9 @@ def test_output(output, *args) -> None:
     assert output is not None, 'The output is undefined'
 """
 
-        config1 = {'data_source': DataSource.REDSHIFT}
+        config1 = {'data_source': 'unknown_connector'}
         config2 = {'data_source': DataSource.S3}
-        with self.assertRaisesRegex(ValueError, "removed from this internal deployment"):
+        with self.assertRaisesRegex(ValueError, "Unsupported connector"):
             fetch_template_source(BlockType.DATA_LOADER, config1)
         new_s3_template = fetch_template_source(BlockType.DATA_LOADER, config2)
         self.assertEqual(s3_template, new_s3_template)
@@ -487,11 +487,11 @@ def export_data(data, *args, **kwargs):
 
     def test_template_generation_data_exporter_specific(self):
 
-        config1 = {'data_source': DataSource.BIGQUERY}
-        config2 = {'data_source': DataSource.SNOWFLAKE}
-        with self.assertRaisesRegex(ValueError, "removed from this internal deployment"):
+        config1 = {'data_source': 'unknown_connector'}
+        config2 = {'data_source': 'unknown_connector'}
+        with self.assertRaisesRegex(ValueError, "Unsupported connector"):
             fetch_template_source(BlockType.DATA_EXPORTER, config1)
-        with self.assertRaisesRegex(ValueError, "removed from this internal deployment"):
+        with self.assertRaisesRegex(ValueError, "Unsupported connector"):
             fetch_template_source(BlockType.DATA_EXPORTER, config2)
 
     def test_template_generation_data_exporter_streaming(self):
@@ -562,8 +562,8 @@ def test_output(output, *args) -> None:
 
 
         config1 = {'data_source': DataSource.POSTGRES}
-        config2 = {'data_source': DataSource.BIGQUERY}
+        config2 = {'data_source': 'unknown_connector'}
         expected_postgres_template = fetch_template_source(BlockType.TRANSFORMER, config1)
-        with self.assertRaisesRegex(ValueError, "removed from this internal deployment"):
+        with self.assertRaisesRegex(ValueError, "Unsupported connector"):
             fetch_template_source(BlockType.TRANSFORMER, config2)
         self.assertEqual(postgres_template, expected_postgres_template)

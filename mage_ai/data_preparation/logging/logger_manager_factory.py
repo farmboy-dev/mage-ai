@@ -17,9 +17,9 @@ class LoggerManagerFactory:
             if logger_type == LoggerType.S3:
                 from mage_ai.data_preparation.logging.s3_logger_manager import S3LoggerManager
                 return S3LoggerManager(repo_config=repo_config, **kwargs)
-            elif logger_type == 'gcs':
+            elif logger_type not in (None, LoggerType.DEFAULT):
                 raise ValueError(
-                    'GCS logging has been removed. Migrate logs and configure file or s3 logging.'
+                    'Unsupported logger type. Use file or s3.'
                 )
 
         return LoggerManager(repo_config=repo_config, **kwargs)

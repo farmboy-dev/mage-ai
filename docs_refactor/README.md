@@ -31,5 +31,8 @@
 | [C2e 전용 파일 목록](SAAS_INTEGRATIONS_C2E_FILES.ko.md) | 삭제 승인 후보 593개 파일 전체 목록 |
 | [C2e SaaS integration 제거 결과](SAAS_INTEGRATIONS_C2E_REMOVAL.ko.md) | 593개 파일 제거·96개 테스트·기존 Couchbase/Delta Lake 호환성 문제 |
 | [Tableau·Teradata 추가 제거](TABLEAU_TERADATA_REMOVAL.ko.md) | 사용자 요청에 따른 전용 파일 16개·UI/API 제거 및 검증 |
+| [최종 잔여 코드 정리안](FINAL_CLEANUP_PLAN.ko.md) | R1 지원 목록/API 정리, R2 이미지·SDK, R3 보존 기능 호환성 |
+| [R1 잔여 코드 정리 결과](FINAL_CLEANUP_R1_RESULT.ko.md) | 지원 목록 검증·전용 API 삭제·Spark 보존 및 실행 검증 |
+| [삭제 기능 호환 코드 목록](REMOVED_FEATURES_INVENTORY.ko.md) | connector 42개·executor 4개·설정 4개 및 참조 파일 |
 
 최초 분석 이후의 구현 상태와 검증 결과는 각 작업 문서를 참고한다. 후속 리팩터링 문서도 이 폴더에 추가한다.

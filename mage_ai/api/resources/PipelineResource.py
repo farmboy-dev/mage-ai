@@ -56,7 +56,7 @@ from mage_ai.server.kernels import PIPELINE_TO_KERNEL_NAME
 from mage_ai.settings.platform import project_platform_activated
 from mage_ai.settings.platform.utils import get_pipeline_from_platform_async
 from mage_ai.settings.repo import get_repo_path
-from mage_ai.shared.cloud_features import reject_removed_executor
+from mage_ai.shared.supported_features import validate_executor
 from mage_ai.shared.array import find, find_index
 from mage_ai.shared.hash import group_by, ignore_keys, merge_dict
 from mage_ai.shared.strings import is_number
@@ -411,7 +411,7 @@ class PipelineResource(BaseResource):
     @classmethod
     @safe_db_query
     async def create(self, payload, user, **kwargs):
-        reject_removed_executor((payload or {}).get('executor_type'))
+        validate_executor((payload or {}).get('executor_type'))
         context_data = kwargs.get('context_data')
 
         clone_pipeline_uuid = payload.get('clone_pipeline_uuid')
@@ -650,7 +650,7 @@ class PipelineResource(BaseResource):
 
     @safe_db_query
     async def update(self, payload, **kwargs):
-        reject_removed_executor((payload or {}).get('executor_type'))
+        validate_executor((payload or {}).get('executor_type'))
         context_data = kwargs.get('context_data')
         if 'add_upstream_for_block_uuid' in payload:
             block_uuid = payload['add_upstream_for_block_uuid']

@@ -1,3 +1,5 @@
+from pathlib import Path
+from tornado.web import HTTPError
 import importlib
 import importlib.util
 import inspect
@@ -73,6 +75,9 @@ class BaseOperation:
         self.__presentation_format_attr = None
         self.__updated_options_attr = None
         self.__flags = dict()
+
+    def validate_resource(self):
+        self.__classified_class()
 
     async def execute(self):
         db_connection.start_cache()
@@ -734,7 +739,15 @@ class BaseOperation:
             if child_resource_class:
                 return child_resource_class.model_name()
 
-        return classify(self.__resource_name_singular())
+        name = classify(self.__resource_name_singular())
+        self.__require_resource(name)
+        return name
+
+    @staticmethod
+    def __require_resource(name):
+        root = Path(__file__).parents[1] / 'resources'
+        if not name.isidentifier() or not (root / f'{name}Resource.py').is_file():
+            raise HTTPError(404, reason='Unknown resource')
 
     def __resource_name_singular(self):
         return singularize(self.resource)
@@ -791,6 +804,7 @@ class BaseOperation:
     def __resource_parent_class(self):
         entity_name = self.__resource_parent_entity_name()
         if entity_name:
+            self.__require_resource(entity_name)
             return getattr(
                 importlib.import_module('mage_ai.api.resources.{}Resource'.format(entity_name)),
                 '{}Resource'.format(entity_name),

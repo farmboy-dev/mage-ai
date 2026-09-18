@@ -20,7 +20,7 @@ from mage_ai.data_preparation.shared.stream import StreamToLogger
 from mage_ai.data_preparation.shared.utils import get_template_vars
 from mage_ai.orchestration.db import safe_db_query
 from mage_ai.orchestration.db.models.schedules import PipelineRun
-from mage_ai.shared.cloud_features import reject_removed_connector_config
+from mage_ai.shared.supported_features import validate_connector_config
 from mage_ai.shared.hash import merge_dict
 from mage_ai.shared.retry import retry
 from mage_ai.usage_statistics.logger import UsageStatisticLogger
@@ -155,7 +155,8 @@ class StreamingPipelineExecutor(PipelineExecutor):
         for block in [self.source_block, *self.sink_blocks]:
             if block.language != BlockLanguage.PYTHON:
                 config = self.__interpolate_vars(block.content, global_vars=global_vars)
-                reject_removed_connector_config(config)
+                validate_connector_config(config, streaming_kind=(
+                    'streaming_source' if block is self.source_block else 'streaming_sink'))
                 configs_by_uuid[block.uuid] = config
 
         # Initialize source block

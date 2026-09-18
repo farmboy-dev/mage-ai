@@ -2009,10 +2009,6 @@ function CodeBlock(
     [blockUUID, dataProviderConfig, savePipelineContent],
   );
 
-  const requiresDatabaseName =
-    DataSourceTypeEnum.BIGQUERY === dataProviderConfig[CONFIG_KEY_DATA_PROVIDER] ||
-    DataSourceTypeEnum.SNOWFLAKE === dataProviderConfig[CONFIG_KEY_DATA_PROVIDER];
-
   const blocksLength = useMemo(() => blocks?.length || 0, [blocks]);
 
   const markdownEl = useMemo(
@@ -3037,38 +3033,7 @@ df = get_variable('${pipelineUUID}', '${blockUUID}', 'output_0')`;
 
                         {!dataProviderConfig[CONFIG_KEY_USE_RAW_SQL] && (
                           <>
-                            {requiresDatabaseName && (
-                              <>
-                                <Spacing mr={1} />
 
-                                <FlexContainer alignItems="center">
-                                  <TextInput
-                                    compact
-                                    label="Database"
-                                    monospace
-                                    onBlur={() =>
-                                      setTimeout(() => {
-                                        setAnyInputFocused(false);
-                                      }, 300)
-                                    }
-                                    onChange={e => {
-                                      // @ts-ignore
-                                      updateDataProviderConfig({
-                                        [CONFIG_KEY_DATA_PROVIDER_DATABASE]: e.target.value,
-                                      });
-                                      e.preventDefault();
-                                    }}
-                                    onClick={pauseEvent}
-                                    onFocus={() => {
-                                      setAnyInputFocused(true);
-                                    }}
-                                    small
-                                    value={dataProviderConfig[CONFIG_KEY_DATA_PROVIDER_DATABASE]}
-                                    width={10 * UNIT}
-                                  />
-                                </FlexContainer>
-                              </>
-                            )}
 
                             <Spacing mr={1} />
 
@@ -3208,7 +3173,7 @@ df = get_variable('${pipelineUUID}', '${blockUUID}', 'output_0')`;
                             description={
                               <Text default inline>
                                 How do you want to handle existing data with the same
-                                {requiresDatabaseName ? ' database,' : ''} schema, and table name?
+                                schema, and table name?
                                 <br />
                                 <Text bold inline monospace>
                                   Append

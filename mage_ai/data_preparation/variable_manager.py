@@ -1,3 +1,4 @@
+from mage_ai.shared.supported_features import validate_storage_path
 import os
 import re
 from datetime import datetime
@@ -22,7 +23,7 @@ from mage_ai.io.base import ExportWritePolicy
 from mage_ai.settings.platform import project_platform_activated
 from mage_ai.settings.repo import get_repo_path, get_variables_dir
 from mage_ai.settings.server import MEMORY_MANAGER_V2
-from mage_ai.shared.constants import GCS_PREFIX, S3_PREFIX
+from mage_ai.shared.constants import S3_PREFIX
 from mage_ai.shared.dates import str_to_timedelta
 from mage_ai.shared.environments import is_debug
 from mage_ai.shared.strings import to_ordinal_integers
@@ -38,11 +39,7 @@ class VariableManager:
             self.variables_dir = get_variables_dir(repo_path=self.repo_path)
         else:
             self.variables_dir = variables_dir
-        if self.variables_dir is not None and self.variables_dir.startswith(GCS_PREFIX):
-            raise ValueError(
-                'GCS variable storage has been removed. Migrate results to local or '
-                'S3-compatible storage and update variables_dir.'
-            )
+        validate_storage_path(self.variables_dir)
         self.storage = LocalStorage()
         # TODO: implement caching logic
 

@@ -23,11 +23,6 @@ class ConfigKey(StrEnum):
     AWS_SESSION_TOKEN = 'AWS_SESSION_TOKEN'
     AWS_S3_ADDRESSING_STYLE = 'AWS_S3_ADDRESSING_STYLE'
 
-    AZURE_CLIENT_ID = 'AZURE_CLIENT_ID'
-    AZURE_CLIENT_SECRET = 'AZURE_CLIENT_SECRET'
-    AZURE_STORAGE_ACCOUNT_NAME = 'AZURE_STORAGE_ACCOUNT_NAME'
-    AZURE_TENANT_ID = 'AZURE_TENANT_ID'
-
     B2_APPLICATION_KEY_ID = 'B2_APPLICATION_KEY_ID'
     B2_APPLICATION_KEY = 'B2_APPLICATION_KEY'
     B2_ENDPOINT_URL = 'B2_ENDPOINT_URL'
@@ -52,10 +47,6 @@ class ConfigKey(StrEnum):
     DUCKDB_DATABASE = 'DUCKDB_DATABASE'
     DUCKDB_SCHEMA = 'DUCKDB_SCHEMA'
     MOTHERDUCK_TOKEN = 'MOTHERDUCK_TOKEN'
-
-    GOOGLE_LOCATION = 'GOOGLE_LOCATION'
-    GOOGLE_SERVICE_ACC_KEY = 'GOOGLE_SERVICE_ACC_KEY'
-    GOOGLE_SERVICE_ACC_KEY_FILEPATH = 'GOOGLE_SERVICE_ACC_KEY_FILEPATH'
 
     MONGODB_COLLECTION = 'MONGODB_COLLECTION'
     MONGODB_CONNECTION_STRING = "MONGODB_CONNECTION_STRING"
@@ -112,27 +103,6 @@ class ConfigKey(StrEnum):
     POSTGRES_SSH_PORT = 'POSTGRES_SSH_PORT'
     POSTGRES_SSH_USERNAME = 'POSTGRES_SSH_USERNAME'
     POSTGRES_USER = 'POSTGRES_USER'
-
-    REDSHIFT_CLUSTER_ID = 'REDSHIFT_CLUSTER_ID'
-    REDSHIFT_DBNAME = 'REDSHIFT_DBNAME'
-    REDSHIFT_DBUSER = 'REDSHIFT_DBUSER'
-    REDSHIFT_HOST = 'REDSHIFT_HOST'
-    REDSHIFT_IAM_PROFILE = 'REDSHIFT_IAM_PROFILE'
-    REDSHIFT_PORT = 'REDSHIFT_PORT'
-    REDSHIFT_SCHEMA = 'REDSHIFT_SCHEMA'
-    REDSHIFT_TEMP_CRED_PASSWORD = 'REDSHIFT_TEMP_CRED_PASSWORD'
-    REDSHIFT_TEMP_CRED_USER = 'REDSHIFT_TEMP_CRED_USER'
-
-    SNOWFLAKE_ACCOUNT = 'SNOWFLAKE_ACCOUNT'
-    SNOWFLAKE_DEFAULT_DB = 'SNOWFLAKE_DEFAULT_DB'
-    SNOWFLAKE_DEFAULT_SCHEMA = 'SNOWFLAKE_DEFAULT_SCHEMA'
-    SNOWFLAKE_DEFAULT_WH = 'SNOWFLAKE_DEFAULT_WH'
-    SNOWFLAKE_PASSWORD = 'SNOWFLAKE_PASSWORD'
-    SNOWFLAKE_PRIVATE_KEY_PASSPHRASE = 'SNOWFLAKE_PRIVATE_KEY_PASSPHRASE'
-    SNOWFLAKE_PRIVATE_KEY_PATH = 'SNOWFLAKE_PRIVATE_KEY_PATH'
-    SNOWFLAKE_ROLE = 'SNOWFLAKE_ROLE'
-    SNOWFLAKE_TIMEOUT = 'SNOWFLAKE_TIMEOUT'
-    SNOWFLAKE_USER = 'SNOWFLAKE_USER'
 
     SPARK_CLUSTER = 'SPARK_CLUSTER'
     SPARK_DRIVER = 'SPARK_DRIVER'
@@ -198,14 +168,6 @@ class BaseConfigLoader(ABC):
         return self.get(key)
 
 
-class AWSSecretLoader:
-    def __init__(self, **kwargs) -> None:
-        raise ValueError(
-            'AWSSecretLoader has been removed. Use ConfigFileLoader, EnvironmentVariableLoader, '
-            'or internal Mage secrets.'
-        )
-
-
 class EnvironmentVariableLoader(BaseConfigLoader):
     def contains(self, env_var: Union[ConfigKey, str]) -> bool:
         """
@@ -239,15 +201,12 @@ class VerboseConfigKey(StrEnum):
 
     AWS = 'AWS'
     BACKBLAZE_B2 = 'Backblaze B2'
-    BIGQUERY = 'BigQuery'
     CHROMA = 'Chroma'
     CLICKHOUSE = 'ClickHouse'
     DRUID = 'Druid'
     DUCKDB = 'Duck DB'
     PINOT = 'Pinot'
     POSTGRES = 'PostgreSQL'
-    REDSHIFT = 'Redshift'
-    SNOWFLAKE = 'Snowflake'
     SPARK = 'Spark'
     QDRANT = 'Qdrant'
     WEAVIATE = 'Weaviate'
@@ -262,37 +221,6 @@ class ConfigFileLoader(BaseConfigLoader):
         ConfigKey.B2_APPLICATION_KEY_ID: (VerboseConfigKey.BACKBLAZE_B2, 'application_key_id'),
         ConfigKey.B2_APPLICATION_KEY: (VerboseConfigKey.BACKBLAZE_B2, 'application_key'),
         ConfigKey.B2_ENDPOINT_URL: (VerboseConfigKey.BACKBLAZE_B2, 'endpoint_url'),
-        ConfigKey.GOOGLE_LOCATION: (VerboseConfigKey.BIGQUERY, 'location'),
-        ConfigKey.GOOGLE_SERVICE_ACC_KEY: (VerboseConfigKey.BIGQUERY, 'credentials_mapping'),
-        ConfigKey.GOOGLE_SERVICE_ACC_KEY_FILEPATH: (
-            VerboseConfigKey.BIGQUERY,
-            'path_to_credentials',
-        ),
-        ConfigKey.REDSHIFT_CLUSTER_ID: (
-            VerboseConfigKey.AWS,
-            VerboseConfigKey.REDSHIFT,
-            'cluster_identifier',
-        ),
-        ConfigKey.REDSHIFT_DBNAME: (VerboseConfigKey.AWS, VerboseConfigKey.REDSHIFT, 'database'),
-        ConfigKey.REDSHIFT_DBUSER: (VerboseConfigKey.AWS, VerboseConfigKey.REDSHIFT, 'db_user'),
-        ConfigKey.REDSHIFT_HOST: (VerboseConfigKey.AWS, VerboseConfigKey.REDSHIFT, 'host'),
-        ConfigKey.REDSHIFT_IAM_PROFILE: (
-            VerboseConfigKey.AWS,
-            VerboseConfigKey.REDSHIFT,
-            'profile',
-        ),
-        ConfigKey.REDSHIFT_PORT: (VerboseConfigKey.AWS, VerboseConfigKey.REDSHIFT, 'port'),
-        ConfigKey.REDSHIFT_SCHEMA: (VerboseConfigKey.AWS, VerboseConfigKey.REDSHIFT, 'schema'),
-        ConfigKey.REDSHIFT_TEMP_CRED_PASSWORD: (
-            VerboseConfigKey.AWS,
-            VerboseConfigKey.REDSHIFT,
-            'password',
-        ),
-        ConfigKey.REDSHIFT_TEMP_CRED_USER: (
-            VerboseConfigKey.AWS,
-            VerboseConfigKey.REDSHIFT,
-            'user',
-        ),
         ConfigKey.CHROMA_COLLECTION: (
             VerboseConfigKey.CHROMA, 'collection'),
         ConfigKey.CHROMA_PATH: (
@@ -332,17 +260,6 @@ class ConfigFileLoader(BaseConfigLoader):
         ConfigKey.POSTGRES_USER: (VerboseConfigKey.POSTGRES, 'user'),
         ConfigKey.QDRANT_COLLECTION: (VerboseConfigKey.QDRANT, 'collection'),
         ConfigKey.QDRANT_PATH: (VerboseConfigKey.QDRANT, 'path'),
-        ConfigKey.SNOWFLAKE_ACCOUNT: (VerboseConfigKey.SNOWFLAKE, 'account'),
-        ConfigKey.SNOWFLAKE_DEFAULT_DB: (VerboseConfigKey.SNOWFLAKE, 'database'),
-        ConfigKey.SNOWFLAKE_DEFAULT_SCHEMA: (VerboseConfigKey.SNOWFLAKE, 'schema'),
-        ConfigKey.SNOWFLAKE_DEFAULT_WH: (VerboseConfigKey.SNOWFLAKE, 'warehouse'),
-        ConfigKey.SNOWFLAKE_PASSWORD: (VerboseConfigKey.SNOWFLAKE, 'password'),
-        ConfigKey.SNOWFLAKE_PRIVATE_KEY_PASSPHRASE: (
-            VerboseConfigKey.SNOWFLAKE, 'private_key_passphrase'),
-        ConfigKey.SNOWFLAKE_PRIVATE_KEY_PATH: (VerboseConfigKey.SNOWFLAKE, 'private_key_path'),
-        ConfigKey.SNOWFLAKE_ROLE: (VerboseConfigKey.SNOWFLAKE, 'role'),
-        ConfigKey.SNOWFLAKE_TIMEOUT: (VerboseConfigKey.SNOWFLAKE, 'timeout'),
-        ConfigKey.SNOWFLAKE_USER: (VerboseConfigKey.SNOWFLAKE, 'user'),
         ConfigKey.SPARK_CLUSTER: (VerboseConfigKey.SPARK, 'cluster'),
         ConfigKey.SPARK_DRIVER: (VerboseConfigKey.SPARK, 'driver'),
         ConfigKey.SPARK_ENDPOINT: (VerboseConfigKey.SPARK, 'endpoint'),

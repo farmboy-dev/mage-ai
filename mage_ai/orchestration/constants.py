@@ -2,8 +2,6 @@ from mage_ai.shared.enum import StrEnum
 
 DATABASE_CONNECTION_URL_ENV_VAR = 'MAGE_DATABASE_CONNECTION_URL'
 
-AWS_DB_SECRETS_NAME = 'AWS_DB_SECRETS_NAME'
-AZURE_SECRET_DB_CONN_URL = 'AZURE_SECRET_DB_CONN_URL'
 
 # ============= Postgres credentials =============
 

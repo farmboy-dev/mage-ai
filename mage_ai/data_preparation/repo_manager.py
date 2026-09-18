@@ -24,7 +24,7 @@ from mage_ai.settings.repo import get_repo_path as get_repo_path_new
 from mage_ai.settings.repo import get_variables_dir
 from mage_ai.settings.repo import set_repo_path as set_repo_path_new
 from mage_ai.settings.utils import base_repo_path
-from mage_ai.shared.cloud_features import REMOVED_PROJECT_CONFIGS
+from mage_ai.shared.supported_features import UnsupportedFeatureError, validate_storage_path
 from mage_ai.shared.enum import StrEnum
 from mage_ai.shared.environments import is_debug
 from mage_ai.shared.yaml import load_yaml, trim_strings
@@ -106,6 +106,7 @@ class RepoConfig:
             # `get_variables_dir`.
             if config_dict and config_dict.get('variables_dir'):
                 self.variables_dir = config_dict.get('variables_dir')
+                validate_storage_path(self.variables_dir)
                 if not self.variables_dir.startswith('s3'):
                     self.variables_dir = os.path.abspath(
                         os.path.join(self.repo_path, self.variables_dir)
@@ -116,8 +117,10 @@ class RepoConfig:
                     repo_config=repo_config,
                     root_project=self.root_project,
                 )
+            validate_storage_path(self.variables_dir)
             try:
-                os.makedirs(self.variables_dir, exist_ok=True)
+                if not self.variables_dir.startswith('s3://'):
+                    os.makedirs(self.variables_dir, exist_ok=True)
             except Exception:
                 pass
 
@@ -166,6 +169,8 @@ class RepoConfig:
                 'variables_retention_period'
             )
         except Exception as err:
+            if isinstance(err, UnsupportedFeatureError):
+                raise
             traceback.print_exc()
             if is_debug():
                 raise err
@@ -231,8 +236,12 @@ class RepoConfig:
         else:
             data = {}
 
-        if REMOVED_PROJECT_CONFIGS.intersection(kwargs):
-            raise ValueError('Cloud executor configuration is removed. Use k8s_executor_config or spark_config.')
+        supported_fields = set(self.to_dict()) | {key for key in vars(self) if not key.startswith('_')}
+        if set(kwargs) - supported_fields:
+            raise ValueError('Unsupported project setting.')
+        for key in ('variables_dir', 'remote_variables_dir'):
+            if key in kwargs:
+                validate_storage_path(kwargs[key])
         for key, value in kwargs.items():
             if key == 'help_improve_mage':
                 value = False

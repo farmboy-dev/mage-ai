@@ -1,14 +1,14 @@
 from typing import Dict
 
 from mage_ai.data_preparation.decorators import collect_decorated_objs
-from mage_ai.shared.cloud_features import reject_removed_connector
+from mage_ai.shared.supported_features import validate_connector
 from mage_ai.streaming.constants import SourceType
 
 
 class SourceFactory:
     @classmethod
     def get_source(self, config: Dict, **kwargs):
-        reject_removed_connector(config.get('connector_type'))
+        validate_connector(config.get('connector_type'), 'streaming_source')
         connector_type = config['connector_type']
         if connector_type == SourceType.INFLUXDB:
             from mage_ai.streaming.sources.influxdb import InfluxDbSource

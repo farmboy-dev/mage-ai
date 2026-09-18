@@ -14,12 +14,6 @@ class SinkFactoryTests(TestCase):
             self.assertIsInstance(sink, OpenSearchSink)
             mock_init.assert_called_once_with(config)
 
-    def test_get_source_other(self):
-        with self.assertRaises(Exception) as context:
-            SinkFactory.get_sink(dict(
-                connector_type='random',
-            ))
-        self.assertTrue(
-            'Ingesting data to random is not supported in streaming pipelines yet.'
-            in str(context.exception),
-        )
+    def test_unknown_connector(self):
+        with self.assertRaisesRegex(ValueError, 'Unsupported connector'):
+            SinkFactory.get_sink({'connector_type': 'unknown_connector'})

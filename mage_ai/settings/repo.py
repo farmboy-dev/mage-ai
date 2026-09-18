@@ -1,3 +1,4 @@
+from mage_ai.shared.supported_features import validate_storage_path
 import os
 import sys
 from pathlib import Path
@@ -209,7 +210,8 @@ def get_variables_dir(
             variables_dir = DEFAULT_MAGE_DATA_DIR
         variables_dir = os.path.expanduser(variables_dir)
 
-    if not variables_dir.startswith('s3') and not variables_dir.startswith('gs'):
+    validate_storage_path(variables_dir)
+    if not variables_dir.startswith('s3://'):
         if os.path.isabs(variables_dir) and variables_dir != repo_path:
             # If the variables_dir is an absolute path and not same as repo_path
             variables_dir = os.path.join(variables_dir, repo_name)

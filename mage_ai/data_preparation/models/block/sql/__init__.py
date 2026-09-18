@@ -1,4 +1,4 @@
-from mage_ai.shared.cloud_features import reject_removed_connector_config
+from mage_ai.shared.supported_features import validate_connector_config
 from datetime import datetime
 from os import path
 from time import sleep
@@ -89,7 +89,7 @@ def execute_sql_code(
         PostgreSQL, and Trino, applying relevant configurations and
         returning the query execution results.
     """
-    reject_removed_connector_config(configuration or block.configuration)
+    validate_connector_config(configuration or block.configuration)
     is_dynamic = is_dynamic_block(block) or is_dynamic_block_child(block)
 
     configuration = configuration if configuration else block.configuration

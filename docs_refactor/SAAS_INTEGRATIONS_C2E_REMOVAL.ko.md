@@ -1,6 +1,6 @@
 # C2e 잔여 SaaS integration 제거 결과
 
-2026-09-18. [승인안](SAAS_INTEGRATIONS_C2E_PLAN.ko.md)에 따라 적용했다. C2d 완료분과 검토 문서는 먼저 `ce9a32992`로 로컬 커밋했다. 이번 C2e 구현은 아직 미커밋이며 GitHub push는 하지 않았다.
+2026-09-18. [승인안](SAAS_INTEGRATIONS_C2E_PLAN.ko.md)에 따라 적용했다. C2d 완료분과 검토 문서는 먼저 `ce9a32992`로 로컬 커밋했다. C2e 및 Tableau·Teradata 추가 변경은 이후 `d0d25e265`로 커밋했으며 GitHub push는 하지 않았다.
 
 후속 갱신: 사용자 요청으로 Tableau·Teradata도 추가 제거했다. [추가 결과](TABLEAU_TERADATA_REMOVAL.ko.md)를 참고한다. 아래는 C2e 최초 완료 기록이다.
 

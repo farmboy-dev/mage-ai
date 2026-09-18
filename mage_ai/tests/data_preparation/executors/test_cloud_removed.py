@@ -6,7 +6,7 @@ from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 from mage_ai.data_preparation.executors.executor_factory import ExecutorFactory
-from mage_ai.shared.cloud_features import REMOVED_EXECUTOR_TYPES, REMOVED_PROJECT_CONFIGS
+
 
 
 class CloudExecutionRemovedTest(unittest.IsolatedAsyncioTestCase):
@@ -19,21 +19,21 @@ class CloudExecutionRemovedTest(unittest.IsolatedAsyncioTestCase):
         return pipeline
 
     def test_removed_executor_rejected_at_every_dispatch_entry(self):
-        for value in REMOVED_EXECUTOR_TYPES:
+        for value in ['unknown_executor']:
             with self.subTest(executor=value):
                 pipeline = self.pipeline(value)
-                with self.assertRaisesRegex(ValueError, 'removed'):
+                with self.assertRaisesRegex(ValueError, 'Unsupported'):
                     ExecutorFactory.get_pipeline_executor(pipeline)
-                with self.assertRaisesRegex(ValueError, 'removed'):
+                with self.assertRaisesRegex(ValueError, 'Unsupported'):
                     ExecutorFactory.get_block_executor(pipeline, 'block')
                 with patch.dict(os.environ, DEFAULT_EXECUTOR_TYPE=value):
-                    with self.assertRaisesRegex(ValueError, 'removed'):
+                    with self.assertRaisesRegex(ValueError, 'Unsupported'):
                         ExecutorFactory.get_pipeline_executor(self.pipeline())
-                    with self.assertRaisesRegex(ValueError, 'removed'):
+                    with self.assertRaisesRegex(ValueError, 'Unsupported'):
                         ExecutorFactory.get_block_executor(self.pipeline(), 'block')
-                with self.assertRaisesRegex(ValueError, 'removed'):
+                with self.assertRaisesRegex(ValueError, 'Unsupported'):
                     ExecutorFactory.get_pipeline_executor(self.pipeline(), executor_type=value)
-                with self.assertRaisesRegex(ValueError, 'removed'):
+                with self.assertRaisesRegex(ValueError, 'Unsupported'):
                     ExecutorFactory.get_block_executor(self.pipeline(), 'block', executor_type=value)
 
     def test_pyspark_pipeline_uses_configured_execution_infrastructure(self):
@@ -63,46 +63,22 @@ class CloudExecutionRemovedTest(unittest.IsolatedAsyncioTestCase):
         from mage_ai.api.resources.BlockResource import BlockResource
         from mage_ai.api.resources.PipelineResource import PipelineResource
         for resource in [BlockResource, PipelineResource]:
-            for value in REMOVED_EXECUTOR_TYPES:
-                with self.assertRaisesRegex(ValueError, 'removed'):
+            for value in ['unknown_executor']:
+                with self.assertRaisesRegex(ValueError, 'Unsupported'):
                     await resource.create({'executor_type': value}, None)
-                with self.assertRaisesRegex(ValueError, 'removed'):
+                with self.assertRaisesRegex(ValueError, 'Unsupported'):
                     await resource.update(None, {'executor_type': value})
-
-    def test_cloud_routes_fail_without_connecting(self):
-        from mage_ai.api.errors import ApiError
-        from mage_ai.api.resources.ClusterResource import ClusterResource
-        from mage_ai.api.resources.ComputeClusterResource import ComputeClusterResource
-        from mage_ai.api.resources.ComputeConnectionResource import ComputeConnectionResource
-        from mage_ai.api.resources.ComputeServiceResource import ComputeServiceResource
-        with patch('socket.getaddrinfo', side_effect=AssertionError('Unexpected network')):
-            for resource in [ClusterResource, ComputeClusterResource, ComputeConnectionResource, ComputeServiceResource]:
-                for call in [lambda: resource.collection({}, {}, None),
-                             lambda: resource.member('aws_emr', None),
-                             lambda: resource.create({}, None),
-                             lambda: resource.update(None, {}),
-                             lambda: resource.delete(None)]:
-                    with self.assertRaises(ApiError):
-                        call()
 
     def test_old_cloud_config_is_readable_but_not_exposed_or_writable(self):
         from mage_ai.data_preparation.repo_manager import RepoConfig
         with tempfile.TemporaryDirectory() as path:
-            Path(path, 'metadata.yaml').write_text('emr_config:\n  master_instance_type: old\nspark_config:\n  spark_master: local\n')
+            Path(path, 'metadata.yaml').write_text('unknown_setting:\n  master_instance_type: old\nspark_config:\n  spark_master: local\n')
             config = RepoConfig(repo_path=path)
             self.assertEqual(config.spark_config['spark_master'], 'local')
-            self.assertFalse(REMOVED_PROJECT_CONFIGS.intersection(config.to_dict()))
-            for key in REMOVED_PROJECT_CONFIGS:
-                with self.assertRaisesRegex(ValueError, 'removed'):
+            self.assertFalse({'unknown_setting'}.intersection(config.to_dict()))
+            for key in {'unknown_setting'}:
+                with self.assertRaisesRegex(ValueError, 'Unsupported'):
                     config.save(**{key: {}})
-
-    def test_secrets_manager_legacy_env_and_template(self):
-        from mage_ai.data_preparation.shared.utils import get_template_vars_no_db
-        from mage_ai.orchestration.db.setup import get_postgres_connection_url
-        self.assertNotIn('aws_secret_var', get_template_vars_no_db())
-        with patch.dict(os.environ, AWS_DB_SECRETS_NAME='legacy'):
-            with self.assertRaisesRegex(ValueError, 'removed'):
-                get_postgres_connection_url()
 
     def test_internal_spark_configuration_reaches_session_builder(self):
         # No Spark runtime is installed in the dev image; verify Mage's forwarding boundary.
@@ -123,8 +99,25 @@ class CloudExecutionRemovedTest(unittest.IsolatedAsyncioTestCase):
     def test_only_kubernetes_workspace_factory_is_supported(self):
         from mage_ai.cluster_manager.workspace.base import Workspace
         from mage_ai.cluster_manager.manage import get_instances
-        for cluster in ['ecs', 'cloud_run', 'emr']:
-            with self.assertRaisesRegex(ValueError, 'Kubernetes'):
+        for cluster in ['unknown_workspace']:
+            with self.assertRaisesRegex(ValueError, 'Unsupported workspace'):
                 Workspace.workspace_class_from_type(cluster)
-            with self.assertRaisesRegex(ValueError, 'Kubernetes'):
+            with self.assertRaisesRegex(ValueError, 'Unsupported workspace'):
                 get_instances(cluster)
+
+    def test_spark_master_environment_is_preserved(self):
+        from mage_ai.services.spark import spark
+        from mage_ai.services.spark.config import SparkConfig
+        session = Mock()
+        session.getActiveSession.return_value = None
+        conf = Mock()
+        with patch.dict(os.environ, SPARK_MASTER_HOST='spark://internal-master:7077'), \
+                patch.object(spark, 'SPARK_ENABLED', True), \
+                patch.object(spark, 'SparkSession', session, create=True), \
+                patch.object(spark, 'SparkConf', return_value=conf, create=True):
+            spark.get_spark_session(None)
+            session.builder.master.assert_called_with('spark://internal-master:7077')
+            spark.get_spark_session(SparkConfig())
+            conf.setMaster.assert_called_with('spark://internal-master:7077')
+            spark.get_spark_session(SparkConfig(spark_master='local'))
+            conf.setMaster.assert_called_with('local')

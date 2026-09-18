@@ -24,7 +24,7 @@ def get_instances(cluster_type: str, **kwargs) -> List[Dict]:
 
             instances = workload_manager.list_workloads()
     else:
-        raise ValueError('Only Kubernetes workspaces are supported; cloud workspace execution is removed.')
+        raise ValueError('Unsupported workspace type. Use k8s.')
 
     return instances
 
