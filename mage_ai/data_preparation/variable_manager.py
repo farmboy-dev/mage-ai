@@ -38,6 +38,11 @@ class VariableManager:
             self.variables_dir = get_variables_dir(repo_path=self.repo_path)
         else:
             self.variables_dir = variables_dir
+        if self.variables_dir is not None and self.variables_dir.startswith(GCS_PREFIX):
+            raise ValueError(
+                'GCS variable storage has been removed. Migrate results to local or '
+                'S3-compatible storage and update variables_dir.'
+            )
         self.storage = LocalStorage()
         # TODO: implement caching logic
 
@@ -53,8 +58,6 @@ class VariableManager:
         )
         if variables_dir is not None and variables_dir.startswith(S3_PREFIX):
             return S3VariableManager(**manager_args)
-        elif variables_dir is not None and variables_dir.startswith(GCS_PREFIX):
-            return GCSVariableManager(**manager_args)
         else:
             return VariableManager(**manager_args)
 
@@ -486,14 +489,6 @@ class S3VariableManager(VariableManager):
         from mage_ai.data_preparation.storage.s3_storage import S3Storage
 
         self.storage = S3Storage(dirpath=variables_dir)
-
-
-class GCSVariableManager(VariableManager):
-    def __init__(self, repo_path=None, variables_dir=None):
-        super().__init__(repo_path=repo_path, variables_dir=variables_dir)
-        from mage_ai.data_preparation.storage.gcs_storage import GCSStorage
-
-        self.storage = GCSStorage(dirpath=variables_dir)
 
 
 def clean_variables(pipeline_uuid: str = None):

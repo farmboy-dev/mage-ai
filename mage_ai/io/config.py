@@ -198,116 +198,12 @@ class BaseConfigLoader(ABC):
         return self.get(key)
 
 
-class AWSSecretLoader(BaseConfigLoader):
+class AWSSecretLoader:
     def __init__(self, **kwargs) -> None:
-        import boto3
-
-        self.client = boto3.client('secretsmanager', **kwargs)
-
-    def contains(
-        self,
-        secret_id: Union[ConfigKey, str],
-        version_id: Union[str, None] = None,
-        version_stage_label: Union[str, None] = None,
-    ) -> bool:
-        """
-        Check if there is a secret with ID `secret_id` contained. Can also specify the version of
-        the secret to check. If
-        - both `version_id` and `version_stage_label` are specified, both must agree on the secret
-            version
-        - neither of `version_id` or `version_stage_label` are specified, any version is checked
-        - one of `version_id` and `version_stage_label` are specified, the associated version is
-            checked
-
-        Args:
-            secret_id (str): ID of the secret to load
-            version_id (str, Optional): ID of the version of the secret to load. Defaults to None.
-            version_stage_label (str, Optional): Staging label of the version of the secret to load.
-                                                    Defaults to None.
-
-        Returns: bool: Returns true if secret exists, otherwise returns false.
-        """
-        return self.__get_secret(
-            secret_id,
-            version_id,
-            version_stage_label) is not None
-
-    def get(
-        self,
-        secret_id: Union[ConfigKey, str],
-        version_id: Union[str, None] = None,
-        version_stage_label: Union[str, None] = None,
-    ) -> Union[bytes, str]:
-        """
-        Loads the secret stored under `secret_id`. Can also specify the version of the
-        secret to fetch. If
-        - both `version_id` and `version_stage_label` are specified, both must agree on the secret
-            version
-        - neither of `version_id` or `version_stage_label` are specified, the current version is
-            loaded
-        - one of `version_id` and `version_stage_label` are specified, the associated version is
-            loaded
-
-        Args:
-            secret_id (str): ID of the secret to load
-            version_id (str, Optional): ID of the version of the secret to load. Defaults to None.
-            version_stage_label (str, Optional): Staging label of the version of the secret to load.
-                                                    Defaults to None.
-
-        Returns:
-            Union(bytes, str): The secret stored under `secret_id` in AWS secret manager. If secret
-            is:
-            - a binary value, returns a `bytes` object
-            - a string value, returns a `string` object
-        """
-        response = self.__get_secret(
-            secret_id, version_id, version_stage_label)
-        if 'SecretBinary' in response:
-            return response['SecretBinary']
-        else:
-            return response['SecretString']
-
-    def __get_secret(
-        self,
-        secret_id: Union[ConfigKey, str],
-        version_id: Union[str, None] = None,
-        version_stage_label: Union[str, None] = None,
-    ) -> Union[Dict, None]:
-        """
-        Get secret with ID `secret_id`. Can also specify the version of the secret to get.
-        If
-        - both `version_id` and `version_stage_label` are specified, both must agree on the
-          secret version
-        - neither of `version_id` or `version_stage_label` are specified, a check is made for
-          the current version
-        - one of `version_id` and `version_stage_label` are specified, the associated version
-          is loaded
-
-        Args:
-            secret_id (str): ID of the secret to load
-            version_id (str, Optional): ID of the version of the secret to load. Defaults to None.
-            version_stage_label (str, Optional): Staging label of the version of the secret to load.
-            Defaults to None.
-
-        Returns:
-            Dict: response object returned by AWS Secrets Manager API
-        """
-        from botocore.exceptions import ClientError
-
-        secret_kwargs = dict(SecretId=secret_id)
-
-        if version_id is not None:
-            secret_kwargs['VersionId'] = version_id
-        if version_stage_label is not None:
-            secret_kwargs['VersionStage'] = version_stage_label
-
-        try:
-            return self.client.get_secret_value(**secret_kwargs)
-        except ClientError as error:
-            if error.response['Error']['Code'] == 'ResourceNotFoundException':
-                return None
-            raise RuntimeError(
-                f'Error loading config: {error.response["Error"]["Message"]}')
+        raise ValueError(
+            'AWSSecretLoader has been removed. Use ConfigFileLoader, EnvironmentVariableLoader, '
+            'or internal Mage secrets.'
+        )
 
 
 class EnvironmentVariableLoader(BaseConfigLoader):

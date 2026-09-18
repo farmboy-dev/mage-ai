@@ -1,6 +1,6 @@
 # C2a Algolia·Airtable 제거 결과
 
-2026-09-18. [파일별 변경안](ALGOLIA_AIRTABLE_REMOVAL_PLAN.ko.md)에 대한 사용자 승인 후 적용했다. 이전 체크포인트는 `b49f9c837`이며 이번 변경은 아직 추가 커밋하지 않았다. GitHub push는 하지 않았다.
+2026-09-18. [파일별 변경안](ALGOLIA_AIRTABLE_REMOVAL_PLAN.ko.md)에 대한 사용자 승인 후 적용했다. 이전 체크포인트는 `b49f9c837`이며 C2a 변경은 이후 `6a28ea7db`로 커밋했다. GitHub push는 하지 않았다.
 
 ## 적용 내용
 

@@ -22,10 +22,12 @@ def get_template_vars_no_db(include_python_libraries: Dict = None) -> Dict[str, 
     if include_python_libraries:
         kwargs.update(include_python_libraries)
 
-    try:
-        from mage_ai.services.azure.key_vault.key_vault import get_secret
-        kwargs['azure_secret_var'] = get_secret
-    except Exception:
-        pass
+    kwargs['azure_secret_var'] = azure_secret_var
 
     return kwargs
+
+
+def azure_secret_var(*args, **kwargs):
+    raise ValueError(
+        'Azure Key Vault has been removed. Use env_var or mage_secret_var for internal secrets.'
+    )

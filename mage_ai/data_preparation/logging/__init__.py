@@ -9,7 +9,6 @@ from mage_ai.shared.logger import LoggingLevel
 class LoggerType(StrEnum):
     DEFAULT = 'file'
     S3 = 's3'
-    GCS = 'gcs'
 
 
 @dataclass
