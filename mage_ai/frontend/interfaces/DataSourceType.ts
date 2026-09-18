@@ -38,10 +38,7 @@ export enum DataSourceTypeEnum {
 
 export const DATA_SOURCE_TYPE_HUMAN_READABLE_NAME_MAPPING = {
   [DataSourceTypeEnum.ACTIVEMQ]: 'ActiveMQ',
-  [DataSourceTypeEnum.AMAZON_SQS]: 'Amazon SQS',
   [DataSourceTypeEnum.API]: 'API',
-  [DataSourceTypeEnum.AZURE_DATA_LAKE]: 'Azure Data Lake',
-  [DataSourceTypeEnum.AZURE_EVENT_HUB]: 'Azure Event Hub',
   [DataSourceTypeEnum.CLICKHOUSE]: 'ClickHouse',
   [DataSourceTypeEnum.DRUID]: 'Druid',
   [DataSourceTypeEnum.DUCKDB]: 'DuckDB',
@@ -49,10 +46,8 @@ export const DATA_SOURCE_TYPE_HUMAN_READABLE_NAME_MAPPING = {
   [DataSourceTypeEnum.ELASTICSEARCH]: 'ElasticSearch',
   [DataSourceTypeEnum.FILE]: 'Local file',
   [DataSourceTypeEnum.GENERIC]: 'Generic (no template)',
-  [DataSourceTypeEnum.GOOGLE_CLOUD_PUBSUB]: 'Google Cloud PubSub',
   [DataSourceTypeEnum.INFLUXDB]: 'InfluxDB',
   [DataSourceTypeEnum.KAFKA]: 'Kafka',
-  [DataSourceTypeEnum.KINESIS]: 'Kinesis',
   [DataSourceTypeEnum.MONGODB]: 'MongoDB',
   [DataSourceTypeEnum.MSSQL]: 'Microsoft SQL Server',
   [DataSourceTypeEnum.MYSQL]: 'MySQL',

@@ -18,10 +18,6 @@ class SinkFactory:
             from mage_ai.streaming.sinks.amazon_s3 import AmazonS3Sink
 
             return AmazonS3Sink(config, **kwargs)
-        elif connector_type == SinkType.AZURE_DATA_LAKE:
-            from mage_ai.streaming.sinks.azure_data_lake import AzureDataLakeSink
-
-            return AzureDataLakeSink(config, **kwargs)
         elif connector_type == SinkType.DUMMY:
             from mage_ai.streaming.sinks.dummy import DummySink
 
@@ -30,12 +26,6 @@ class SinkFactory:
             from mage_ai.streaming.sinks.elasticsearch import ElasticSearchSink
 
             return ElasticSearchSink(config, **kwargs)
-        elif connector_type == SinkType.GOOGLE_CLOUD_PUBSUB:
-            from mage_ai.streaming.sinks.google_cloud_pubsub import (
-                GoogleCloudPubSubSink,
-            )
-
-            return GoogleCloudPubSubSink(config, **kwargs)
         elif connector_type == SinkType.INFLUXDB:
             from mage_ai.streaming.sinks.influxdb import InfluxDbSink
 
@@ -44,10 +34,6 @@ class SinkFactory:
             from mage_ai.streaming.sinks.kafka import KafkaSink
 
             return KafkaSink(config, **kwargs)
-        elif connector_type == SinkType.KINESIS:
-            from mage_ai.streaming.sinks.kinesis import KinesisSink
-
-            return KinesisSink(config, **kwargs)
         elif connector_type == SinkType.MONGODB:
             from mage_ai.streaming.sinks.mongodb import MongoDbSink
 

@@ -1,28 +1,16 @@
 from typing import Dict
 
 from mage_ai.data_preparation.decorators import collect_decorated_objs
+from mage_ai.shared.cloud_features import reject_removed_connector
 from mage_ai.streaming.constants import SourceType
 
 
 class SourceFactory:
     @classmethod
     def get_source(self, config: Dict, **kwargs):
+        reject_removed_connector(config.get('connector_type'))
         connector_type = config['connector_type']
-        if connector_type == SourceType.AMAZON_SQS:
-            from mage_ai.streaming.sources.amazon_sqs import AmazonSqsSource
-
-            return AmazonSqsSource(config, **kwargs)
-        elif connector_type == SourceType.AZURE_EVENT_HUB:
-            from mage_ai.streaming.sources.azure_event_hub import AzureEventHubSource
-
-            return AzureEventHubSource(config, **kwargs)
-        elif connector_type == SourceType.GOOGLE_CLOUD_PUBSUB:
-            from mage_ai.streaming.sources.google_cloud_pubsub import (
-                GoogleCloudPubSubSource,
-            )
-
-            return GoogleCloudPubSubSource(config, **kwargs)
-        elif connector_type == SourceType.INFLUXDB:
+        if connector_type == SourceType.INFLUXDB:
             from mage_ai.streaming.sources.influxdb import InfluxDbSource
 
             return InfluxDbSource(config, **kwargs)
@@ -34,10 +22,6 @@ class SourceFactory:
             from mage_ai.streaming.sources.nats_js import NATSSource
 
             return NATSSource(config, **kwargs)
-        elif connector_type == SourceType.KINESIS:
-            from mage_ai.streaming.sources.kinesis import KinesisSource
-
-            return KinesisSource(config, **kwargs)
         elif connector_type == SourceType.RABBITMQ:
             from mage_ai.streaming.sources.rabbitmq import RabbitMQSource
 

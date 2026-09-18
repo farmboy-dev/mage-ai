@@ -22,5 +22,7 @@
 | [C2a Algolia·Airtable 제거 결과](ALGOLIA_AIRTABLE_REMOVAL.ko.md) | 구현·UI/API 검증 결과와 패키지 정리의 한계 |
 | [C2b 런타임 제거안](CLOUD_RUNTIME_C2B_PLAN.ko.md) | GCS 결과·로그 및 Azure/AWS Secrets 제거 범위와 검토 요청 |
 | [C2b 런타임 제거 결과](CLOUD_RUNTIME_C2B_REMOVAL.ko.md) | GCS 저장·로그, 클라우드 Secrets 제거 및 이전·검증 결과 |
+| [C2c 클라우드 스트리밍 제거안](CLOUD_STREAMING_C2C_PLAN.ko.md) | 5개 서비스, 21개 파일 및 UI·실행 전 검증 변경안 |
+| [C2c 스트리밍 제거 결과](CLOUD_STREAMING_C2C_REMOVAL.ko.md) | 21개 전용 파일 제거·연결 전 차단·UI/API 검증 |
 
 최초 분석 이후의 구현 상태와 검증 결과는 각 작업 문서를 참고한다. 후속 리팩터링 문서도 이 폴더에 추가한다.

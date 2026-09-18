@@ -1,6 +1,6 @@
 # C2b GCS 저장·로그 및 클라우드 Secrets 제거 결과
 
-2026-09-18. [승인된 변경안](CLOUD_RUNTIME_C2B_PLAN.ko.md)에 따라 적용했다. C2a 완료분과 C2b 검토 문서를 먼저 로컬 커밋 `6a28ea7db`에 저장했다. 이번 C2b 구현은 아직 추가 커밋하지 않았으며 GitHub push는 하지 않았다.
+2026-09-18. [승인된 변경안](CLOUD_RUNTIME_C2B_PLAN.ko.md)에 따라 적용했다. C2a 완료분과 C2b 검토 문서를 먼저 로컬 커밋 `6a28ea7db`에 저장했다. C2b 구현은 이후 `04836802d`로 커밋했으며 GitHub push는 하지 않았다.
 
 ## 적용 내용
 
