@@ -24,5 +24,10 @@
 | [C2b 런타임 제거 결과](CLOUD_RUNTIME_C2B_REMOVAL.ko.md) | GCS 저장·로그, 클라우드 Secrets 제거 및 이전·검증 결과 |
 | [C2c 클라우드 스트리밍 제거안](CLOUD_STREAMING_C2C_PLAN.ko.md) | 5개 서비스, 21개 파일 및 UI·실행 전 검증 변경안 |
 | [C2c 스트리밍 제거 결과](CLOUD_STREAMING_C2C_REMOVAL.ko.md) | 21개 전용 파일 제거·연결 전 차단·UI/API 검증 |
+| [C2d Google integration 제거안](GOOGLE_INTEGRATIONS_C2D_PLAN.ko.md) | Ads·Analytics·Search Console의 33개 파일 및 UI/API 제거 범위 |
+| [C2d Google integration 제거 결과](GOOGLE_INTEGRATIONS_C2D_REMOVAL.ko.md) | 33개 파일 제거·기존 설정 차단·UI/API 검증 |
+| [잔여 integration 확인](REMAINING_INTEGRATIONS_AUDIT.ko.md) | 실제 Sources/Destinations 화면의 외부 서비스 잔존과 내부 endpoint 구분 |
+| [C2e 잔여 SaaS integration 제거안](SAAS_INTEGRATIONS_C2E_PLAN.ko.md) | 23개 source·Salesforce destination, 공통 테스트·의존성·보존 범위 |
+| [C2e 전용 파일 목록](SAAS_INTEGRATIONS_C2E_FILES.ko.md) | 삭제 승인 후보 593개 파일 전체 목록 |
 
 최초 분석 이후의 구현 상태와 검증 결과는 각 작업 문서를 참고한다. 후속 리팩터링 문서도 이 폴더에 추가한다.

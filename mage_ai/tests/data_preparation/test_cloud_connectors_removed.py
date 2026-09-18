@@ -54,7 +54,8 @@ class RemovedCloudConnectorTest(unittest.TestCase):
     def test_catalogs_exclude_removed_connectors_and_keep_internal_options(self):
         for catalog in [SOURCES, SQL_SOURCES, DESTINATIONS]:
             self.assertFalse(REMOVED_CONNECTORS.intersection(get_uuid(x) for x in catalog))
-        self.assertIn('amazon_s3', {get_uuid(x) for x in SOURCES})
+        self.assertTrue({'amazon_s3', 'api', 'sftp', 'postgresql'}.issubset(
+            {get_uuid(x) for x in SOURCES}))
         self.assertIn('amazon_s3', {get_uuid(x) for x in DESTINATIONS})
         self.assertIn('postgresql', {get_uuid(x) for x in SQL_SOURCES})
         self.assertFalse(REMOVED_CONNECTORS.intersection(DATA_PROVIDERS))
@@ -125,11 +126,12 @@ class RemovedCloudConnectorTest(unittest.TestCase):
         reject_removed_connector_config({'content': 'from mage_ai.io.bigquery import BigQuery'})
 
     def test_saas_payloads_are_rejected_before_creation_and_execution(self):
-        for provider in ['algolia', 'airtable']:
+        for provider in ['algolia', 'airtable', 'google_ads', 'google_analytics',
+                         'google_search_console']:
             for config in [
                 {'data_source': provider},
                 {'template_path': f'data_loaders/{provider}.py'},
-                {'template_variables': {'name': provider.title()}},
+                {'template_variables': {'name': provider.replace('_', ' ').title()}},
                 {'configuration': {'data_integration': {'source': provider}}},
             ]:
                 with self.subTest(provider=provider, config=config):

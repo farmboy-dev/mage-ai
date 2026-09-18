@@ -4,6 +4,7 @@ REMOVED_PROJECT_CONFIGS = frozenset({
 })
 
 REMOVED_CONNECTORS = frozenset({
+    'google_ads', 'google_analytics', 'google_search_console',
     'amazon_sqs', 'kinesis', 'google_cloud_pubsub', 'azure_event_hub', 'azure_data_lake',
     'algolia', 'airtable', 'azure_blob_storage', 'bigquery', 'google_cloud_storage', 'google_sheets',
     'redshift', 'snowflake', 'delta_lake_azure',
