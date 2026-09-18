@@ -32,6 +32,8 @@
 | [C2e SaaS integration 제거 결과](SAAS_INTEGRATIONS_C2E_REMOVAL.ko.md) | 593개 파일 제거·96개 테스트·기존 Couchbase/Delta Lake 호환성 문제 |
 | [Tableau·Teradata 추가 제거](TABLEAU_TERADATA_REMOVAL.ko.md) | 사용자 요청에 따른 전용 파일 16개·UI/API 제거 및 검증 |
 | [최종 잔여 코드 정리안](FINAL_CLEANUP_PLAN.ko.md) | R1 지원 목록/API 정리, R2 이미지·SDK, R3 보존 기능 호환성 |
+| [R2a SDK·이미지 경량화 결과](DEPENDENCIES_R2_RESULT.ko.md) | 후보 이미지 21.3% 감소·118개 테스트·간접 의존성과 기존 오류 |
+| [R2 SDK·이미지 경량화 변경안](DEPENDENCIES_R2_PLAN.ko.md) | 직접 SDK 제거·AWS 설정 잔여 경로·간접 의존성·후보 이미지 검증 계획 |
 | [R1 잔여 코드 정리 결과](FINAL_CLEANUP_R1_RESULT.ko.md) | 지원 목록 검증·전용 API 삭제·Spark 보존 및 실행 검증 |
 | [삭제 기능 호환 코드 목록](REMOVED_FEATURES_INVENTORY.ko.md) | connector 42개·executor 4개·설정 4개 및 참조 파일 |
 

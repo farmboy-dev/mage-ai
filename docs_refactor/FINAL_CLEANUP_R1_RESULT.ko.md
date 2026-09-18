@@ -1,6 +1,6 @@
 # R1 — 잔여 호환 코드 정리 결과
 
-2026-09-18. 사용자 승인 범위인 R1을 적용했다. 기준 커밋은 `d0d25e265`이며 이번 변경은 아직 커밋하거나 GitHub에 올리지 않았다. [변경안](FINAL_CLEANUP_PLAN.ko.md)과 [역사적 제거 목록](REMOVED_FEATURES_INVENTORY.ko.md)은 함께 보존한다.
+2026-09-18. 사용자 승인 범위인 R1을 적용했다. 기준 커밋은 `d0d25e265`이며 R1 변경은 이후 `efe81e6db`로 로컬 커밋했다. GitHub에는 올리지 않았다. [변경안](FINAL_CLEANUP_PLAN.ko.md)과 [역사적 제거 목록](REMOVED_FEATURES_INVENTORY.ko.md)은 함께 보존한다.
 
 ## 적용 내용
 

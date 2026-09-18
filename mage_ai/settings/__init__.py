@@ -1,8 +1,4 @@
-from mage_ai.settings.backends import (
-    AWSSecretsManagerBackend,
-    BackendType,
-    SettingsBackend,
-)
+from mage_ai.settings.backends import SettingsBackend
 from mage_ai.settings.server import *  # noqa: F401, F403
 
 
@@ -21,10 +17,9 @@ class Settings():
         Returns:
             SettingsBackend: A settings backend instance of the specified type
         """
-        if backend_type == BackendType.AWS_SECRETS_MANAGER:
-            self.settings_backend = AWSSecretsManagerBackend(**kwargs)
-        else:
-            self.settings_backend = SettingsBackend(**kwargs)
+        if backend_type is not None or kwargs:
+            raise ValueError('Unsupported settings backend configuration.')
+        self.settings_backend = SettingsBackend()
 
     def get_value(self, key: str, default: str = None) -> str:
         """

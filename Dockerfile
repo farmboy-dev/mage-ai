@@ -50,16 +50,8 @@ RUN \
 # Install uv for faster package installation
 RUN pip3 install --no-cache-dir uv
 
-## Python Packages
-RUN \
-  uv pip install --system --no-cache-dir sparkmagic && \
-  mkdir ~/.sparkmagic && \
-  curl https://raw.githubusercontent.com/jupyter-incubator/sparkmagic/master/sparkmagic/example_config.json > ~/.sparkmagic/config.json && \
-  sed -i 's/localhost:8998/host.docker.internal:9999/g' ~/.sparkmagic/config.json && \
-  jupyter-kernelspec install --user "$(uv pip show sparkmagic | grep Location | cut -d' ' -f2)/sparkmagic/kernels/pysparkkernel"
 # Mage integrations and other related packages
 RUN \
-  uv pip install --system --no-cache-dir "git+https://github.com/wbond/oscrypto.git@d5f3437ed24257895ae1edd9e503cfb352e635a8" && \
   uv pip install --system --no-cache-dir "git+https://github.com/dremio-hub/arrow-flight-client-examples.git#egg=dremio-flight&subdirectory=python/dremio-flight" && \
   uv pip install --system --no-cache-dir "git+https://github.com/mage-ai/singer-python.git#egg=singer-python" && \
   uv pip install --system --no-cache-dir "git+https://github.com/mage-ai/dbt-mysql.git#egg=dbt-mysql" && \

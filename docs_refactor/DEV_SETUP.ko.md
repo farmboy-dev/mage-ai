@@ -83,3 +83,9 @@ podman run --rm --network none -v "$PWD:/workspace:ro" \
 ```
 
 이 단계는 개발 환경 구축이다. 빌드에는 외부 패키지 다운로드가 필요하며 클라우드 기능과 사용자가 설정하는 외부 연동은 아직 남아 있다. 자동 외부 통신의 제거 범위는 OFFLINE_RUNTIME.ko.md를 참고한다. S3/내부 AI의 후속 구현 및 검증 결과는 INTERNAL_SERVICES.ko.md에 기록했다. 실제 사내 서비스와 전체 UI 작업 흐름 검증은 별도다. 기존 의존성 불일치 5건과 기본 이미지 검증 한계는 [LOCAL_BUILD.ko.md](LOCAL_BUILD.ko.md)에 기록했다.
+
+## R2 후보 이미지와 기존 개발 환경
+
+경량화 검증용 태그는 `localhost/mage-fork:r2-candidate`와 `localhost/mage-fork-dev:r2-candidate`이다. [후보 이미지 빌드 방법](LOCAL_BUILD.ko.md)을 따른다.
+
+후보 빌드만으로 현재 3000/6789 컨테이너는 교체되지 않는다. 이미지 전환은 검증 결과를 검토한 뒤 별도로 진행한다. 이전 `localhost/mage-fork:dev-base` 및 `localhost/mage-fork-dev:backend` 태그와 기존 프로젝트 볼륨을 보존하며, 원본 비교용 3100 컨테이너도 유지한다.

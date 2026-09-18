@@ -1,18 +1,5 @@
-import base64
-import logging
 import os
 from typing import Optional
-
-from mage_ai.shared.enum import StrEnum
-
-logger = logging.getLogger(__name__)
-
-
-class BackendType(StrEnum):
-    """
-    Enum for the different types of settings backends.
-    """
-    AWS_SECRETS_MANAGER = 'aws_secrets_manager'
 
 
 class SettingsBackend:
@@ -53,44 +40,3 @@ class SettingsBackend:
                  doesn't exist, returns None.
         """
         return None
-
-
-class AWSSecretsManagerBackend(SettingsBackend):
-    """
-    Settings backend that loads configuration settings from AWS Secrets Manager.
-    """
-    backend_type = BackendType.AWS_SECRETS_MANAGER
-
-    def __init__(self, **kwargs) -> None:
-        import boto3
-
-        self.client = boto3.client('secretsmanager')
-        self.prefix = kwargs.get('prefix', '')
-        self.use_cache = kwargs.get('use_cache', False)
-        self.cache = None
-        if self.use_cache:
-            from aws_secretsmanager_caching import SecretCache, SecretCacheConfig
-            cache_config_arg = kwargs.get('cache_config', {})
-            cache_config = SecretCacheConfig(**cache_config_arg)
-            self.cache = SecretCache(config=cache_config, client=self.client)
-
-    def _get(self, key: str, **kwargs) -> Optional[str]:
-        from botocore.exceptions import ClientError
-        if self.prefix:
-            key = f'{self.prefix}{key}'
-        try:
-            if self.cache is not None:
-                return self.cache.get_secret_string(key)
-            else:
-                secret_response = self.client.get_secret_value(
-                    SecretId=key,
-                )
-                if 'SecretBinary' in secret_response:
-                    binary = secret_response['SecretBinary']
-                    return base64.b64decode(binary)
-                else:
-                    return secret_response['SecretString']
-        except ClientError as error:
-            if error.response['Error']['Code'] != 'ResourceNotFoundException':
-                logger.exception('Failed to get secret %s from AWS Secrets Manager.', key)
-            return None

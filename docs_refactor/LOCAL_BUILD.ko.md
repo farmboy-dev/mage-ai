@@ -97,3 +97,17 @@ dbt-mysql 1.7.0a1 -> dbt-core~=1.8.0 필요, 설치값 1.10.20
 이번 단계에서는 해당 연동을 임의로 삭제하거나 버전 제약을 무시하는 패치를 하지 않았다. 후속 커넥터/의존성 정리에서 보존할 기능에 맞춰 제거·교체·격리해야 한다. 전체 커넥터의 운영 가능 판정에는 별도 검증이 필요하다.
 
 기본 CMD 컨테이너 정리 시 SIGTERM만으로 10초 내 종료되지 않아 Podman이 SIGKILL로 정리한 동작도 관찰했다. 기존 entrypoint와 서버/자식 프로세스 종료 처리는 후속 시작 스크립트 정리 시 확인할 항목이다. 테스트용 컨테이너는 제거했으며 기존 컨테이너/볼륨은 변경하지 않았다.
+
+## R2 후보 이미지 검증
+
+R2 경량화 이미지는 기존 태그를 덮어쓰지 않고 빌드한다. 현재 실행 컨테이너에서 패키지를 수동 제거하지 않는다.
+
+```bash
+podman build --format docker --build-arg POLARS_PACKAGE=polars-lts-cpu \
+  -t localhost/mage-fork:r2-candidate -f Dockerfile .
+podman build --format docker --target backend \
+  --build-arg MAGE_RUNTIME_IMAGE=localhost/mage-fork:r2-candidate \
+  -t localhost/mage-fork-dev:r2-candidate -f dev.Dockerfile .
+```
+
+`dev.Dockerfile`은 runtime의 의존성을 상속하므로 두 단계를 모두 빌드한다. 설치 목록·wheel metadata·`pip check`·실행 검증 결과는 [R2 적용 결과](DEPENDENCIES_R2_RESULT.ko.md)에 기록한다. 빌드 성공만으로 기존 의존성 충돌이나 Spark 실서비스 연결이 해결됐다고 판단하지 않는다.
