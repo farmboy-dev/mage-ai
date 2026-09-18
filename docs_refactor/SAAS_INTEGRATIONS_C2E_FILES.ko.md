@@ -1,6 +1,6 @@
 # C2e 전용 파일 삭제 후보 593개
 
-2026-09-18 기준 Git 추적 파일 목록이다. [변경안](SAAS_INTEGRATIONS_C2E_PLAN.ko.md) 승인 전에는 삭제하지 않는다.
+2026-09-18 기준 Git 추적 파일 목록이다. [변경안](SAAS_INTEGRATIONS_C2E_PLAN.ko.md) 승인 후 C2e에서 삭제했다.
 
 ## amplitude — 9개
 

@@ -1,6 +1,6 @@
 # C2d Google integration 제거 결과
 
-2026-09-18. [승인안](GOOGLE_INTEGRATIONS_C2D_PLAN.ko.md)에 따라 적용했다. 이전 체크포인트는 `682a1e580`이며 C2d 구현은 아직 커밋하지 않았다. GitHub push는 하지 않았다.
+2026-09-18. [승인안](GOOGLE_INTEGRATIONS_C2D_PLAN.ko.md)에 따라 적용했다. 이전 체크포인트는 `682a1e580`이며 C2d 구현은 이후 `ce9a32992`로 커밋했다. GitHub push는 하지 않았다.
 
 ## 적용 내용
 

@@ -1,6 +1,6 @@
 # 남은 클라우드 커넥터·패키지 제거 계획 — 승인 전
 
-상태 갱신: 이 계획 작성 후 사용자가 C1을 승인했고 구현을 완료했다. [C1 결과](CLOUD_CONNECTOR_C1_REMOVAL.ko.md)를 참고한다. C2a Algolia·Airtable도 별도 승인 후 적용했다([결과](ALGOLIA_AIRTABLE_REMOVAL.ko.md)). 아래는 단계별 계획이며 C2b GCS 저장·로그 및 클라우드 Secrets도 적용했다([결과](CLOUD_RUNTIME_C2B_REMOVAL.ko.md)). C2c 클라우드 스트리밍도 적용했다([결과](CLOUD_STREAMING_C2C_REMOVAL.ko.md)). C2d Google Ads·Analytics·Search Console도 적용했다([결과](GOOGLE_INTEGRATIONS_C2D_REMOVAL.ko.md)). 나머지 SaaS·C3는 미적용이다.
+상태 갱신: 이 계획 작성 후 사용자가 C1을 승인했고 구현을 완료했다. [C1 결과](CLOUD_CONNECTOR_C1_REMOVAL.ko.md)를 참고한다. C2a Algolia·Airtable도 별도 승인 후 적용했다([결과](ALGOLIA_AIRTABLE_REMOVAL.ko.md)). 아래는 단계별 계획이며 C2b GCS 저장·로그 및 클라우드 Secrets도 적용했다([결과](CLOUD_RUNTIME_C2B_REMOVAL.ko.md)). C2c 클라우드 스트리밍도 적용했다([결과](CLOUD_STREAMING_C2C_REMOVAL.ko.md)). C2d Google Ads·Analytics·Search Console도 적용했다([결과](GOOGLE_INTEGRATIONS_C2D_REMOVAL.ko.md)). C2e 잔여 SaaS integrations도 적용했다([결과](SAAS_INTEGRATIONS_C2E_REMOVAL.ko.md)). 남은 런타임 경로·호환성·C3는 미적용이다.
 
 2026-09-18, 로컬 HEAD `1912c297f`와 현재 미커밋 수정 상태 기준. 사용자가 승인한 작업은 조사와 변경안 작성이다. 이번에는 소스·설정·의존성·컨테이너를 변경하지 않았다. 로컬 파일과 개발 컨테이너의 설치된 패키지 메타데이터를 읽었으며 외부 서비스 접속·키 입력·패키지 설치·이미지 빌드는 하지 않았다.
 

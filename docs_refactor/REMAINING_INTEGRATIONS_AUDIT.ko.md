@@ -1,5 +1,7 @@
 # Sources / Destinations 잔여 항목 확인
 
+후속 상태: 이 문서의 23개 source 및 Salesforce destination은 이후 C2e에서 제거했다. [적용 결과와 남은 이미지 호환성 문제](SAAS_INTEGRATIONS_C2E_REMOVAL.ko.md)를 참고한다. 아래는 제거 전 조사 기록이다.
+
 2026-09-18. 실행 중인 3000 포트의 example_pipeline 편집 화면에서 Data loader → Sources, Data exporter → Destinations 메뉴를 직접 열어 확인했다. 프로젝트 설정·블록·애플리케이션 코드는 변경하지 않았다.
 
 ## 확인 결과

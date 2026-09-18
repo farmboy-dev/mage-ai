@@ -1,6 +1,6 @@
-# C2e 잔여 SaaS integration 제거안 — 승인 대기
+# C2e 잔여 SaaS integration 제거안 — 승인 후 적용
 
-2026-09-18. 사용자 요청에 따라 23개 source 및 Salesforce destination의 전용 파일·공유 참조·UI·의존성을 조사했다. 이번 턴에서는 문서만 작성했다. C2d 변경은 아직 미커밋이며 마지막 체크포인트는 `682a1e580`이다.
+2026-09-18. 사용자 요청에 따라 23개 source 및 Salesforce destination의 전용 파일·공유 참조·UI·의존성을 조사했다. 사용자 승인 후 적용했다. C2d 체크포인트는 `ce9a32992`이며 [결과와 기존 이미지 오류](SAAS_INTEGRATIONS_C2E_REMOVAL.ko.md)를 참고한다. 아래는 승인 당시 범위다.
 
 ## 적용 범위
 

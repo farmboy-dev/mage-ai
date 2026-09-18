@@ -8,9 +8,7 @@ from singer.schema import Schema
 
 from mage_integrations.sources.base import Source
 from mage_integrations.sources.catalog import Catalog, CatalogEntry
-from mage_integrations.sources.intercom import Intercom
 from mage_integrations.sources.postgresql import PostgreSQL
-from mage_integrations.sources.stripe import Stripe
 
 ABSOLUTE_PATH = os.path.abspath(os.path.dirname(__file__))
 
@@ -50,6 +48,11 @@ def build_sample_streams_catalog():
     )
 
 
+class SchemaFixtureSource(Source):
+    def __init__(self):
+        super().__init__(schemas_folder='samples/schema_discovery')
+
+
 class BaseSourceTests(unittest.TestCase):
     # Shows full diff if any unit tests fail
     maxDiff = None
@@ -75,13 +78,13 @@ class BaseSourceTests(unittest.TestCase):
         )
 
     def test_discover(self):
-        """
-        Testing with Intercom source, since it has a "schemas"
-        folder and no "discover" subclass method.
-        """
-        source = Intercom()
+        source = SchemaFixtureSource()
         streams = source.discover().streams
-        self.assertEqual(len(streams), 11)
+        self.assertEqual(sorted(stream.tap_stream_id for stream in streams), ['events', 'users'])
+        users = next(stream for stream in streams if stream.tap_stream_id == 'users')
+        self.assertEqual(users.schema.to_dict()['properties']['name']['type'], ['null', 'string'])
+        self.assertEqual([stream.tap_stream_id for stream in source.discover(['users']).streams],
+                         ['users'])
 
     def test_discover_streams(self):
         source = Source()
@@ -376,29 +379,7 @@ class BaseSourceTests(unittest.TestCase):
         )
 
     def test_load_schemas_from_folder(self):
-        # Testing with Stripe source, since not all of the
-        # integration sources have "schemas" folders.
-        source = Stripe()
-        schemas = source.load_schemas_from_folder()
-        self.assertEqual(
-            list(schemas).sort(),
-            [
-                'balance_transactions',
-                'charges',
-                'coupons',
-                'customers',
-                'disputes',
-                'events',
-                'invoice_items',
-                'invoice_line_items',
-                'invoices',
-                'payment_intents',
-                'payout_transactions',
-                'payouts',
-                'plans',
-                'products',
-                'subscription_items',
-                'subscriptions',
-                'transfers',
-            ].sort(),
-        )
+        schemas = SchemaFixtureSource().load_schemas_from_folder()
+        self.assertEqual(sorted(schemas), ['events', 'users'])
+        self.assertEqual(schemas['users'].to_dict()['properties']['id']['type'], 'integer')
+        self.assertEqual(schemas['events'].to_dict()['properties']['event']['type'], 'string')

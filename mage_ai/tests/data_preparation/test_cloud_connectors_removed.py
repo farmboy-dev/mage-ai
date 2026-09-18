@@ -126,8 +126,7 @@ class RemovedCloudConnectorTest(unittest.TestCase):
         reject_removed_connector_config({'content': 'from mage_ai.io.bigquery import BigQuery'})
 
     def test_saas_payloads_are_rejected_before_creation_and_execution(self):
-        for provider in ['algolia', 'airtable', 'google_ads', 'google_analytics',
-                         'google_search_console']:
+        for provider in sorted(REMOVED_CONNECTORS):
             for config in [
                 {'data_source': provider},
                 {'template_path': f'data_loaders/{provider}.py'},

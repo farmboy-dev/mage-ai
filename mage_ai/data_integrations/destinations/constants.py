@@ -15,7 +15,5 @@ DESTINATIONS = [
     dict(name='Opensearch'),
     dict(name='OracleDB'),
     dict(name='PostgreSQL'),
-    dict(name='Salesforce'),
-    dict(name='Teradata'),
     dict(name='Trino'),
 ]

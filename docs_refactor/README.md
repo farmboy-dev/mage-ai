@@ -29,5 +29,7 @@
 | [잔여 integration 확인](REMAINING_INTEGRATIONS_AUDIT.ko.md) | 실제 Sources/Destinations 화면의 외부 서비스 잔존과 내부 endpoint 구분 |
 | [C2e 잔여 SaaS integration 제거안](SAAS_INTEGRATIONS_C2E_PLAN.ko.md) | 23개 source·Salesforce destination, 공통 테스트·의존성·보존 범위 |
 | [C2e 전용 파일 목록](SAAS_INTEGRATIONS_C2E_FILES.ko.md) | 삭제 승인 후보 593개 파일 전체 목록 |
+| [C2e SaaS integration 제거 결과](SAAS_INTEGRATIONS_C2E_REMOVAL.ko.md) | 593개 파일 제거·96개 테스트·기존 Couchbase/Delta Lake 호환성 문제 |
+| [Tableau·Teradata 추가 제거](TABLEAU_TERADATA_REMOVAL.ko.md) | 사용자 요청에 따른 전용 파일 16개·UI/API 제거 및 검증 |
 
 최초 분석 이후의 구현 상태와 검증 결과는 각 작업 문서를 참고한다. 후속 리팩터링 문서도 이 폴더에 추가한다.
