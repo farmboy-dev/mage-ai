@@ -1,14 +1,11 @@
 import os
 import subprocess
-import uuid
 
-import aiohttp
 import yaml
 
 from mage_ai.api.resources.GenericResource import GenericResource
 from mage_ai.cache.block_action_object import BlockActionObjectCache
 from mage_ai.cache.file import FileCache
-from mage_ai.cache.ttl import async_ttl_cache
 from mage_ai.data_preparation.models.project import Project
 from mage_ai.data_preparation.models.project.constants import FeatureUUID
 from mage_ai.data_preparation.repo_manager import (
@@ -16,6 +13,7 @@ from mage_ai.data_preparation.repo_manager import (
     get_repo_config,
     init_repo,
 )
+from mage_ai.orchestration.ai.config import OpenAIConfig
 from mage_ai.orchestration.db import safe_db_query
 from mage_ai.server.constants import VERSION
 from mage_ai.settings.platform import (
@@ -26,23 +24,11 @@ from mage_ai.settings.platform import (
 from mage_ai.settings.utils import base_repo_path
 from mage_ai.shared.environments import is_debug
 from mage_ai.shared.hash import combine_into, merge_dict
-from mage_ai.usage_statistics.logger import UsageStatisticLogger
 
 
-@async_ttl_cache(maxsize=1, ttl=600)
 async def get_latest_version() -> str:
-    try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(
-                'https://pypi.org/pypi/mage-ai/json',
-                timeout=3,
-            ) as response:
-                response_json = await response.json()
-                latest_version = response_json.get('info', {}).get('version', None)
-    except Exception:
-        latest_version = VERSION
-
-    return latest_version
+    """Legacy API field: report the installed version without an external lookup."""
+    return VERSION
 
 
 async def build_project(
@@ -60,12 +46,12 @@ async def build_project(
     )
 
     model = merge_dict(project.repo_config.to_dict(), dict(
-        emr_config=project.emr_config,
         features=project.features,
         features_defined=project.features_defined,
         features_override=project.features_override,
         latest_version=await get_latest_version(),
         name=project.name,
+        ai_configured=OpenAIConfig.resolve(project.repo_config).configured,
         platform_settings=project.platform_settings(),
         project_uuid=project.project_uuid,
         projects=project.projects(),
@@ -185,7 +171,6 @@ class ProjectResource(GenericResource):
             return self
 
         data = {}
-        should_log_project = self.model.get('help_improve_mage') or False
 
         if 'features' in payload:
             for k, v in payload.get('features', {}).items():
@@ -200,27 +185,12 @@ class ProjectResource(GenericResource):
                     features,
                 )
 
-        if 'help_improve_mage' in payload:
-            if payload['help_improve_mage']:
-                should_log_project = True
+        if 'help_improve_mage' in payload or 'deny_improve_mage' in payload:
+            data['help_improve_mage'] = False
 
-                if not repo_config.project_uuid:
-                    data['project_uuid'] = uuid.uuid4().hex
-
-            data['help_improve_mage'] = payload['help_improve_mage']
-
-        if 'deny_improve_mage' in payload:
-            await UsageStatisticLogger().project_deny_improve_mage(
-                repo_config.project_uuid or data.get('project_uuid'),
-            )
-
-        if 'openai_api_key' in payload:
-            openai_api_key = payload.get('openai_api_key')
-            if repo_config.openai_api_key != openai_api_key:
-                data['openai_api_key'] = payload.get('openai_api_key')
-
-        if 'emr_config' in payload:
-            data['emr_config'] = payload['emr_config']
+        for key in ('openai_api_key', 'openai_base_url', 'openai_model'):
+            if key in payload:
+                data[key] = payload[key]
 
         if 'pipelines' in payload:
             data['pipelines'] = payload['pipelines']
@@ -237,9 +207,6 @@ class ProjectResource(GenericResource):
             repo_config.save(**data)
 
         self.model = await build_project(repo_config, user=self.current_user)
-
-        if should_log_project:
-            await UsageStatisticLogger().project_impression()
 
         project = Project(repo_config=repo_config)
         if project.is_feature_enabled(FeatureUUID.DATA_INTEGRATION_IN_BATCH_PIPELINE):

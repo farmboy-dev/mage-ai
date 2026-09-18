@@ -1,3 +1,4 @@
+from mage_ai.shared.cloud_features import reject_removed_connector
 import importlib
 import os
 import time
@@ -16,9 +17,6 @@ from mage_ai.streaming.constants import SinkType
 from mage_ai.streaming.sinks.base import BaseSink
 
 IO_CLASS_MAP = {
-    SinkType.BIGQUERY: {
-        'class_name': 'BigQuery',
-    },
     SinkType.CLICKHOUSE: {
         'class_name': 'ClickHouse',
     },
@@ -46,6 +44,7 @@ class GenericIOSink(BaseSink):
     config_class = GenericIOConfig
 
     def init_client(self):
+        reject_removed_connector(self.connector_type)
         config_path = os.path.join(get_repo_path(), 'io_config.yaml')
         config_file_loader = ConfigFileLoader(config_path, self.config.profile)
 

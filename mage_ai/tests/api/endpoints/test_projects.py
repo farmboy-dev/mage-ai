@@ -38,6 +38,9 @@ build_list_endpoint_tests(
         'latest_version',
         'name',
         'openai_api_key',
+        'openai_base_url',
+        'openai_model',
+        'ai_configured',
         'pipelines',
         'project_uuid',
         'projects',
@@ -69,6 +72,9 @@ build_list_endpoint_tests(
         'latest_version',
         'name',
         'openai_api_key',
+        'openai_base_url',
+        'openai_model',
+        'ai_configured',
         'pipelines',
         'project_uuid',
         'projects',
@@ -102,8 +108,11 @@ async def _assert_after_update(self, result, model_before_update, **kwargs):
     ])
     after_update = all([
         all([v for v in model_after_update['features'].values()]),
-        model_after_update['help_improve_mage'] == result['help_improve_mage'],
+        model_after_update['help_improve_mage'] is False and result['help_improve_mage'] is False,
         model_after_update['openai_api_key'] == result['openai_api_key'],
+        model_after_update['openai_base_url'] == 'http://ai.internal:8000/v1',
+        model_after_update['openai_model'] == 'internal-model',
+        model_after_update['ai_configured'],
     ])
 
     mocks[0].assert_called_once_with('project_name', user=ANY)
@@ -122,6 +131,8 @@ build_update_endpoint_tests(
             key.value: True,
         }), [f for f in FeatureUUID], {}),
         openai_api_key=self.faker.unique.name(),
+        openai_base_url='http://ai.internal:8000/v1',
+        openai_model='internal-model',
     ),
     get_model_before_update=_get_model_before_update,
     assert_after_update=_assert_after_update,

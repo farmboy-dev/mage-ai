@@ -1,3 +1,4 @@
+from mage_ai.shared.cloud_features import reject_removed_connector
 import importlib
 import json
 import os
@@ -61,6 +62,7 @@ class IntegrationPipeline(Pipeline):
 
     @property
     def destination(self) -> Any:
+        reject_removed_connector(self.destination_uuid)
         if self.destination_uuid:
             return importlib.import_module(
                 f'mage_integrations.destinations.{self.destination_uuid}',
@@ -68,6 +70,7 @@ class IntegrationPipeline(Pipeline):
 
     @property
     def destination_file_path(self) -> str:
+        reject_removed_connector(self.destination_uuid)
         try:
             if self.destination:
                 return os.path.abspath(self.destination.__file__)
@@ -97,11 +100,13 @@ class IntegrationPipeline(Pipeline):
 
     @property
     def source(self) -> Any:
+        reject_removed_connector(self.source_uuid)
         if self.source_uuid:
             return importlib.import_module(f'mage_integrations.sources.{self.source_uuid}')
 
     @property
     def source_file_path(self) -> str:
+        reject_removed_connector(self.source_uuid)
         try:
             if self.source:
                 return os.path.abspath(self.source.__file__)

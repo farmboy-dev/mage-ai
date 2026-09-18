@@ -5,20 +5,6 @@ variables_dir: ~/.mage_data
 
 variables_retention_period: '90d'
 
-emr_config:
-  # You can customize the EMR cluster instance size with the two parameters
-  master_instance_type: 'r5.4xlarge'
-  slave_instance_type: 'r5.4xlarge'
-
-  # Configure security groups for EMR cluster instances.
-  # The default managed security groups are ElasticMapReduce-master and ElasticMapReduce-slave
-  # master_security_group: 'sg-xxxxxxxxxxxx'
-  # slave_security_group: 'sg-yyyyyyyyyyyy'
-
-  # If you want to ssh tunnel into EMR cluster, ec2_key_name must be configured.
-  # You can create a key pair in page https://console.aws.amazon.com/ec2#KeyPairs and download the key file.
-  # ec2_key_name: '[ec2_key_pair_name]'
-
 spark_config:
   # Application name
   app_name: 'my spark app'
@@ -43,7 +29,7 @@ spark_config:
   # e.g. kwargs['context']['spark'] = spark_session
   custom_session_var_name: 'spark'
 
-help_improve_mage: true
+help_improve_mage: false
 notification_config:
   alert_on:
     - trigger_failure

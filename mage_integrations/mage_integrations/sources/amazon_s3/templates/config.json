@@ -7,5 +7,8 @@
   "file_type": "infer",
   "prefix": null,
   "search_pattern": null,
-  "single_stream_in_prefix": false
+  "single_stream_in_prefix": false,
+  "aws_endpoint": null,
+  "aws_s3_addressing_style": "path",
+  "aws_session_token": null
 }

@@ -383,7 +383,7 @@ function OverviewPage({ tab }: { tab?: TimePeriodEnum }) {
     () =>
       getNewPipelineButtonMenuItems(createPipeline, {
         showAIModal: () => {
-          if (!project?.openai_api_key) {
+          if (!project?.ai_configured) {
             showConfigureProjectModal({
               onSaveSuccess: () => {
                 showAIModal();

@@ -7,8 +7,6 @@ from typing import Callable, Dict
 
 import newrelic.agent
 import psutil
-import sentry_sdk
-from sentry_sdk import capture_exception
 
 from mage_ai.orchestration.db.process import start_session_and_run
 from mage_ai.orchestration.queue.config import QueueConfig
@@ -18,9 +16,6 @@ from mage_ai.services.redis.redis import init_redis_client
 from mage_ai.settings import (
     HOSTNAME,
     REDIS_URL,
-    SENTRY_DSN,
-    SENTRY_SERVER_NAME,
-    SENTRY_TRACES_SAMPLE_RATE,
     SERVER_LOGGING_FORMAT,
     SERVER_VERBOSITY,
 )
@@ -277,21 +272,11 @@ class Worker(mp.Process):
         Attributes:
             queue (mp.Queue): The multiprocessing queue from which jobs are fetched.
             job_dict: The shared job dictionary.
-            dsn (str): The Sentry DSN for error reporting.
 
         """
         super().__init__()
         self.queue = queue
         self.job_dict = job_dict
-        self.dsn = SENTRY_DSN
-        if self.dsn:
-            sentry_sdk.init(
-                self.dsn,
-                traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
-                server_name=SENTRY_SERVER_NAME,
-            )
-            import atexit
-            atexit.register(lambda: sentry_sdk.flush(timeout=5))
         initialize_new_relic()
 
         set_logging_format(
@@ -317,10 +302,6 @@ class Worker(mp.Process):
 
             try:
                 start_session_and_run(args[1], *args[2], **args[3])
-            except Exception as e:
-                if self.dsn:
-                    capture_exception(e)
-                raise
             finally:
                 self.job_dict[job_id] = JobStatus.COMPLETED
 

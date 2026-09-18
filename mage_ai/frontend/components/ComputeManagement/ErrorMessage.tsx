@@ -1,5 +1,4 @@
 import { renderToString } from 'react-dom/server';
-
 import Text from '@oracle/elements/Text';
 import { ErrorMessageType } from '@interfaces/ComputeServiceType';
 

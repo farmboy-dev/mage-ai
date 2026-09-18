@@ -255,7 +255,7 @@ function AddNewBlocksV2({
     refTextInput,
   ]);
 
-  const hasOpenAIAPIKey = useMemo(() => !!project?.openai_api_key, [project]);
+  const isAIConfigured = useMemo(() => !!project?.ai_configured, [project]);
 
   return (
     <ClickOutside
@@ -407,10 +407,10 @@ function AddNewBlocksV2({
                               <BlockCubePolygon muted size={ICON_SIZE} />
                             )}
 
-                            {isGenerateBlock && hasOpenAIAPIKey && (
+                            {isGenerateBlock && isAIConfigured && (
                               <AISparkle muted size={ICON_SIZE} />
                             )}
-                            {isGenerateBlock && !hasOpenAIAPIKey && (
+                            {isGenerateBlock && !isAIConfigured && (
                               <AlertTriangle muted size={ICON_SIZE} />
                             )}
                           </RowStyle>
@@ -425,7 +425,7 @@ function AddNewBlocksV2({
                       object_type: objectType,
                     } = blockActionObject;
 
-                    if (ObjectType.GENERATE_BLOCK === objectType && !hasOpenAIAPIKey) {
+                    if (ObjectType.GENERATE_BLOCK === objectType && !isAIConfigured) {
                       showConfigureProjectModal?.({
                         cancelButtonText: 'Set this up later',
                         header: <Setup />,
@@ -433,7 +433,7 @@ function AddNewBlocksV2({
                           setSetupAILater(true);
                         },
                         onSaveSuccess: (project: ProjectType) => {
-                          if (project?.openai_api_key) {
+                          if (project?.ai_configured) {
                             addNewBlock({
                               block_action_object: blockActionObject,
                             });

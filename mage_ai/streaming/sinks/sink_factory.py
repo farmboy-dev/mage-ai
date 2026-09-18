@@ -1,3 +1,4 @@
+from mage_ai.shared.cloud_features import reject_removed_connector
 from typing import Dict
 
 from mage_ai.data_preparation.decorators import collect_decorated_objs
@@ -7,6 +8,7 @@ from mage_ai.streaming.constants import GENERIC_IO_SINK_TYPES, SinkType
 class SinkFactory:
     @classmethod
     def get_sink(self, config: Dict, **kwargs):
+        reject_removed_connector(config.get('connector_type'))
         connector_type = config['connector_type']
         if connector_type == SinkType.ACTIVEMQ:
             from mage_ai.streaming.sinks.activemq import ActiveMQSink
@@ -34,12 +36,6 @@ class SinkFactory:
             )
 
             return GoogleCloudPubSubSink(config, **kwargs)
-        elif connector_type == SinkType.GOOGLE_CLOUD_STORAGE:
-            from mage_ai.streaming.sinks.google_cloud_storage import (
-                GoogleCloudStorageSink,
-            )
-
-            return GoogleCloudStorageSink(config, **kwargs)
         elif connector_type == SinkType.INFLUXDB:
             from mage_ai.streaming.sinks.influxdb import InfluxDbSink
 

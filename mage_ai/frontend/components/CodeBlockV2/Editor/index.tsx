@@ -228,12 +228,12 @@ function Editor({
   );
 
   const itemsAIActions = useMemo(() => {
-    const shouldShowModal = !project?.openai_api_key;
+    const shouldShowModal = !project?.ai_configured;
     const showModal = (llm: LLMType) => {
       showConfigureProjectModal?.({
         header: <Setup />,
         onSaveSuccess: (project: ProjectType) => {
-          if (project?.openai_api_key) {
+          if (project?.ai_configured) {
             // @ts-ignore
             updatePipeline({
               pipeline: {
@@ -594,7 +594,7 @@ function Editor({
   registerOnKeyDown(
     componentUUID,
     (event, keyMapping, keyHistory) => {
-      if (project?.openai_api_key
+      if (project?.ai_configured
         && selected
         && onlyKeysPresent([KEY_CODE_CONTROL, KEY_CODE_PERIOD], keyMapping)
       ) {
@@ -620,7 +620,7 @@ function Editor({
 
   return (
     <EditorWrapperStyle>
-      {!!project?.openai_api_key && (
+      {!!project?.ai_configured && (
         <ButtonStyle ref={refButton}>
           <KeyboardShortcutButton
             noBackground

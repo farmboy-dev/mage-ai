@@ -9,6 +9,7 @@ export enum EventSourceReadyState {
 
 export enum ResultType {
   DATA = 'data',
+  STATUS = 'status',
   STDOUT = 'stdout',
 }
 
@@ -49,6 +50,7 @@ export interface ProcessDetailsType {
 }
 
 export interface ExecutionResultType {
+  type?: ResultType;
   error?: ErrorDetailsType;
   output?: any;
   output_text?: string;

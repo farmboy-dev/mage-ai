@@ -151,10 +151,6 @@ class Project:
         return {}
 
     @property
-    def emr_config(self) -> Dict:
-        return self.repo_config.emr_config or None
-
-    @property
     def spark_config(self) -> Dict:
         return self.repo_config.spark_config or None
 

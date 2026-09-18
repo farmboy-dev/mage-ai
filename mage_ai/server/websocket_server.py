@@ -27,7 +27,6 @@ from mage_ai.data_preparation.models.constants import (
     PipelineType,
 )
 from mage_ai.data_preparation.models.pipeline import Pipeline
-from mage_ai.data_preparation.repo_manager import get_repo_config
 from mage_ai.data_preparation.variable_manager import get_global_variables
 from mage_ai.orchestration.db.models.oauth import Oauth2Application
 from mage_ai.server.active_kernel import (
@@ -51,9 +50,7 @@ from mage_ai.server.utils.output_display import (
     add_execution_code,
     add_internal_output_info,
     get_block_output_process_code,
-    get_pipeline_execution_code,
 )
-from mage_ai.services.spark.constants import ComputeServiceUUID
 from mage_ai.settings import (
     DISABLE_NOTEBOOK_EDIT_ACCESS,
     HIDE_ENV_VAR_VALUES,
@@ -458,21 +455,9 @@ class WebSocketServer(tornado.websocket.WebSocketHandler):
             )
         else:
             if block is not None and block.type in CUSTOM_EXECUTION_BLOCK_TYPES:
-                if kernel_name == KernelName.PYSPARK and not widget:
-                    remote_execution = True
-                else:
-                    remote_execution = False
+                remote_execution = False
 
                 execution_uuid = None
-                # Need to cache everything here
-                if (
-                    block.should_track_spark()
-                    and ComputeServiceUUID.AWS_EMR == block.compute_service_uuid
-                ):
-                    execution_uuid = str(uuid.uuid4()).split('-')[0]
-                    block.clear_spark_jobs_cache()
-                    block.cache_spark_application()
-                    block.set_spark_job_execution_start(execution_uuid=execution_uuid)
 
                 pipeline_config = pipeline.get_config_from_yaml()
                 repo_config = pipeline.repo_config.to_dict(remote=remote_execution)
@@ -496,7 +481,6 @@ class WebSocketServer(tornado.websocket.WebSocketHandler):
                     repo_config_json_encoded=base64.b64encode(
                         simplejson.dumps(repo_config).encode()
                     ).decode(),
-                    # repo_config=get_repo_config().to_dict(remote=remote_execution),
                     run_incomplete_upstream=run_incomplete_upstream,
                     # The UI can execute a block and send run_settings to control the behavior
                     # of the block run while executing it from the notebook.
@@ -520,6 +504,12 @@ from mage_ai.orchestration.db import db_connection
 db_connection.start_session()
 """
                 client.execute(initialize_db_connection)
+
+            if kernel_name == KernelName.PYSPARK:
+                from mage_ai.server.utils.output_display import get_internal_spark_init_code
+                code = get_internal_spark_init_code(
+                    pipeline.spark_config or pipeline.repo_config.spark_config,
+                ) + code
 
             msg_id = client.execute(
                 add_internal_output_info(
@@ -569,79 +559,64 @@ db_connection.start_session()
     ) -> None:
         pipeline_uuid = pipeline.uuid
 
-        if kernel_name == KernelName.PYSPARK:
-            code = get_pipeline_execution_code(
-                pipeline_uuid,
+        # TODO: save config for other kernel types.
+        def save_pipeline_config() -> str:
+            pipeline_copy = f'{pipeline.uuid}_{str(uuid.uuid4())}'
+            new_pipeline_directory = os.path.join(
                 pipeline.repo_path,
-                global_vars=global_vars,
-                kernel_name=kernel_name,
-                pipeline_config=pipeline.to_dict(include_content=True),
-                repo_config=get_repo_config().to_dict(remote=True),
-                update_status=False if kernel_name == KernelName.PYSPARK else True,
+                PIPELINES_FOLDER,
+                pipeline_copy,
             )
-            client = self.init_kernel_client(kernel_name)
-            msg_id = client.execute(code)
+            os.makedirs(new_pipeline_directory, exist_ok=True)
+            copy_file(
+                os.path.join(pipeline.dir_path, PIPELINE_CONFIG_FILE),
+                os.path.join(new_pipeline_directory, PIPELINE_CONFIG_FILE),
+            )
+            set_previous_config_path(new_pipeline_directory)
+            return new_pipeline_directory
 
-            WebSocketServer.running_executions_mapping[msg_id] = dict(pipeline_uuid=pipeline_uuid)
+        reset_execution_manager()
+
+        if pipeline.type in [PipelineType.PYTHON, PipelineType.PYSPARK]:
+            publish_pipeline_message(
+                'Saving current pipeline config for backup. This may take some time...',
+                metadata=dict(pipeline_uuid=pipeline_uuid),
+            )
+
+            # The pipeline state can potentially break when the execution is cancelled,
+            # so we save the pipeline config before execution if the user cancels the
+            # excecution.
+            config_copy_path = save_pipeline_config()
         else:
-            # TODO: save config for other kernel types.
-            def save_pipeline_config() -> str:
-                pipeline_copy = f'{pipeline.uuid}_{str(uuid.uuid4())}'
-                new_pipeline_directory = os.path.join(
-                    pipeline.repo_path,
-                    PIPELINES_FOLDER,
-                    pipeline_copy,
-                )
-                os.makedirs(new_pipeline_directory, exist_ok=True)
-                copy_file(
-                    os.path.join(pipeline.dir_path, PIPELINE_CONFIG_FILE),
-                    os.path.join(new_pipeline_directory, PIPELINE_CONFIG_FILE),
-                )
-                set_previous_config_path(new_pipeline_directory)
-                return new_pipeline_directory
+            config_copy_path = None
 
-            reset_execution_manager()
+        queue = multiprocessing.Queue()
+        proc = multiprocessing.Process(
+            target=run_pipeline, args=(pipeline, config_copy_path, global_vars, queue)
+        )
+        proc.start()
+        set_current_pipeline_process(proc)
 
-            if pipeline.type == PipelineType.PYTHON:
-                publish_pipeline_message(
-                    'Saving current pipeline config for backup. This may take some time...',
-                    metadata=dict(pipeline_uuid=pipeline_uuid),
-                )
+        async def check_for_messages():
+            loop = True
+            while loop:
+                while not queue.empty():
+                    msg = queue.get()
+                    metadata = msg.get('metadata')
+                    execution_state = msg.get('execution_state')
+                    publish_pipeline_message(
+                        msg.get('message'),
+                        execution_state=execution_state,
+                        metadata=metadata,
+                        msg_type=msg.get('msg_type'),
+                    )
+                    if execution_state == 'idle' and metadata.get('block_uuid') is None:
+                        loop = False
+                        break
+                await asyncio.sleep(0.5)
 
-                # The pipeline state can potentially break when the execution is cancelled,
-                # so we save the pipeline config before execution if the user cancels the
-                # excecution.
-                config_copy_path = save_pipeline_config()
-            else:
-                config_copy_path = None
-
-            queue = multiprocessing.Queue()
-            proc = multiprocessing.Process(
-                target=run_pipeline, args=(pipeline, config_copy_path, global_vars, queue)
-            )
-            proc.start()
-            set_current_pipeline_process(proc)
-
-            async def check_for_messages():
-                loop = True
-                while loop:
-                    while not queue.empty():
-                        msg = queue.get()
-                        metadata = msg.get('metadata')
-                        execution_state = msg.get('execution_state')
-                        publish_pipeline_message(
-                            msg.get('message'),
-                            execution_state=execution_state,
-                            metadata=metadata,
-                            msg_type=msg.get('msg_type'),
-                        )
-                        if execution_state == 'idle' and metadata.get('block_uuid') is None:
-                            loop = False
-                            break
-                    await asyncio.sleep(0.5)
-
-            task = asyncio.create_task(check_for_messages())
-            set_current_message_task(task)
+        task = asyncio.create_task(check_for_messages())
+        set_current_message_task(task)
 
     @classmethod
     def format_error(cls, error: List[str], block_uuid: str = None) -> List[str]:

@@ -28,8 +28,8 @@ import api from '@api';
 import useCustomDesign from '@utils/models/customDesign/useCustomDesign';
 import useDelayFetch from '@api/utils/useDelayFetch';
 import useProject from '@utils/models/project/useProject';
-import { BLUE_TRANSPARENT, YELLOW } from '@oracle/styles/colors/main';
-import { BranchAlt, MageProLetters, Planet, Slack, UFO } from '@oracle/icons';
+import { BLUE_TRANSPARENT } from '@oracle/styles/colors/main';
+import { BranchAlt, Planet, UFO } from '@oracle/icons';
 import {
   ButtonInputStyle,
   CUSTOM_LOGO_HEIGHT,
@@ -253,7 +253,6 @@ function Header({
   ]);
   const { pipeline: pipelineUUID } = router.query;
 
-  const { latest_version: latestVersion } = project || {};
 
   const [customMediaSize, setCustomMediaSize] = useState<{
     height?: number;
@@ -310,15 +309,6 @@ function Header({
           href: '/settings/workspace/preferences',
         },
         uuid: 'user_settings',
-      },
-      {
-        label: () => 'Light mode',
-        linkProps: {
-          href: 'https://www.mage.ai/build?ref=oss',
-          openNewWindow: true,
-        },
-        tag: 'Pro',
-        uuid: 'light_mode',
       },
     ];
 
@@ -475,36 +465,11 @@ function Header({
               </Spacing>
             )}
 
-            {latestVersion && version && latestVersion !== version && (
-              <Button
-                backgroundColor={YELLOW}
-                borderLess
-                compact
-                linkProps={{
-                  href: 'https://docs.mage.ai/about/releases',
-                }}
-                noHoverUnderline
-                pill
-                sameColorAsText
-                target="_blank"
-                title={`Update to version ${latestVersion}`}
-              >
-                <Text black bold>Update</Text>
-              </Button>
-            )}
-
             {version && typeof (version) !== 'undefined' && (
               <Spacing px={1}>
-                <Link
-                  href="https://www.mage.ai/changelog"
-                  monospace
-                  noWrapping
-                  openNewWindow
-                  sameColorAsText
-                  small
-                >
+                <Text monospace noWrapping small>
                   {`v${version}`}
-                </Link>
+                </Text>
               </Spacing>
             )}
 
@@ -514,46 +479,6 @@ function Header({
                 disabled={hideActions}
                 projectName={project?.name}
               />
-            </Spacing>
-
-            <Spacing ml={1}>
-              <KeyboardShortcutButton
-                beforeElement={<Slack />}
-                compact
-                highlightOnHoverAlt
-                inline
-                linkProps={{
-                  as: 'https://www.mage.ai/chat',
-                  href: 'https://www.mage.ai/chat',
-                }}
-                noBackground
-                noHoverUnderline
-                openNewTab
-                sameColorAsText
-                uuid="Header/live_chat"
-              >
-                Live help
-              </KeyboardShortcutButton>
-            </Spacing>
-
-            <Spacing ml={1}>
-              <KeyboardShortcutButton
-                compact
-                highlightOnHoverAlt
-                inline
-                linkProps={{
-                  as: 'https://cloud.mage.ai/sign-up?ref=oss',
-                  href: 'https://cloud.mage.ai/sign-up?ref=oss',
-                }}
-                openNewTab
-                noBackground
-                noHoverUnderline
-                sameColorAsText
-                afterElement={<MageProLetters size={24} />}
-                uuid="Header/pro"
-              >
-                Try
-              </KeyboardShortcutButton>
             </Spacing>
 
             {menuItems &&

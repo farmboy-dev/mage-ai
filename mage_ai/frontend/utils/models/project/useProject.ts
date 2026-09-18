@@ -112,12 +112,7 @@ function useProject({
     project,
     projectPlatformActivated: project && rootProject && project?.name !== rootProject?.name,
     rootProject,
-    sparkEnabled: computeManagementEnabled
-      && (project.spark_config || project.emr_config)
-      && (
-        Object.keys(project.spark_config || {})?.length >= 1
-          || Object.keys(project.emr_config || {})?.length >= 1
-      ),
+    sparkEnabled: computeManagementEnabled && Object.keys(project?.spark_config || {}).length >= 1,
     updateProject,
   };
 }

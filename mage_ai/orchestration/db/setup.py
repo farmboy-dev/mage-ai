@@ -1,4 +1,3 @@
-import json
 import os
 from typing import Optional
 
@@ -23,27 +22,14 @@ def get_postgres_connection_url() -> Optional[str]:
     db_host = None
     db_port = None
     if os.getenv(AWS_DB_SECRETS_NAME):
-        try:
-            from mage_ai.services.aws.secrets_manager.secrets_manager import get_secret
-            response = get_secret(os.getenv(AWS_DB_SECRETS_NAME))
-            secrets = json.loads(response)
-
-            if secrets and secrets.get('engine') == 'postgres':
-                db_user = secrets.get('username')
-                db_pass = secrets.get('password')
-                db_name = secrets.get('dbname')
-                db_host = secrets.get('host')
-                db_port = secrets.get('port', DEFAULT_POSTGRES_PORT)
-
-        except Exception as ex:
-            print("Unable to fetch secrets from AWS Secrets Manager", ex)
+        raise ValueError('AWS_DB_SECRETS_NAME is removed. Set MAGE_DATABASE_CONNECTION_URL or POSTGRES credentials directly.')
     elif os.getenv(AZURE_SECRET_DB_CONN_URL):
         try:
             from mage_ai.services.azure.key_vault.key_vault import get_secret
             conn_url = get_secret(os.getenv(AZURE_SECRET_DB_CONN_URL))
             return conn_url
         except Exception as ex:
-            print("Unable to fetch secrets from AWS Secrets Manager", ex)
+            print("Unable to fetch secrets from Azure Key Vault", ex)
     elif os.getenv(PG_DB_USER):
         db_user = os.getenv(PG_DB_USER)
         db_pass = os.getenv(PG_DB_PASS)

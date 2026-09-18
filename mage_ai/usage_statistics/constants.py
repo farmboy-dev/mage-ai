@@ -1,7 +1,5 @@
 from mage_ai.shared.enum import StrEnum
 
-API_ENDPOINT = 'https://api.mage.ai/v1/usage_statistics'
-
 
 class EventNameType(StrEnum):
     API_ERROR = 'api_error'

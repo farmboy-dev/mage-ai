@@ -1,54 +1,28 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useMutation } from 'react-query';
-
 import Button from '@oracle/elements/Button';
-import Clusters from './Clusters';
 import Flex from '@oracle/components/Flex';
 import FlexContainer from '@oracle/components/FlexContainer';
 import Headline from '@oracle/elements/Headline';
 import Link from '@oracle/elements/Link';
 import Monitoring from './Monitoring';
+import System from './System';
 import ProjectType, { SparkConfigType } from '@interfaces/ProjectType';
 import ResourceManagement from './ResourceManagement';
 import SetupSettings from './SetupSettings';
-import SetupProgress from './SetupProgress';
-import SetupSteps from './Clusters/SetupSteps';
 import Spacing from '@oracle/elements/Spacing';
 import SparkGraph from './SparkGraph';
-import System from './System';
 import Text from '@oracle/elements/Text';
 import TripleLayout from '@components/TripleLayout';
 import api from '@api';
-import useComputeService from '@utils/models/computeService/useComputeService'
-import {
-  AlertTriangle,
-  PowerOnOffButton,
-} from '@oracle/icons';
+import useComputeService from '@utils/models/computeService/useComputeService';
 import { CardStyle, NavigationStyle } from './index.style';
 import { ComputeServiceUUIDEnum } from '@interfaces/ComputeServiceType';
-import {
-  COMPUTE_SERVICES,
-  COMPUTE_SERVICE_DISPLAY_NAME,
-  COMPUTE_SERVICE_KICKER,
-  COMPUTE_SERVICE_RENDER_ICON_MAPPING,
-  ComputeServiceEnum,
-  MAIN_NAVIGATION_TAB_DISPLAY_NAME_MAPPING,
-  MainNavigationTabEnum,
-  ObjectAttributesType,
-  TabType,
-  buildTabs,
-} from './constants';
+import { ComputeServiceEnum, COMPUTE_SERVICES, COMPUTE_SERVICE_DISPLAY_NAME, COMPUTE_SERVICE_KICKER, COMPUTE_SERVICE_RENDER_ICON_MAPPING, MAIN_NAVIGATION_TAB_DISPLAY_NAME_MAPPING, MainNavigationTabEnum, ObjectAttributesType, TabType, buildTabs } from './constants';
 import { DEFAULT_BEFORE_RESIZE_OFFSET } from '@components/TripleLayout/useTripleLayout';
 import { HEADER_HEIGHT } from '@components/shared/Header/index.style';
-import {
-  SparkApplicationType,
-  SparkJobType,
-  SparkSQLType,
-} from '@interfaces/SparkType';
-import {
-  PADDING_UNITS,
-  UNIT,
-} from '@oracle/styles/units/spacing';
+import { SparkApplicationType, SparkJobType, SparkSQLType } from '@interfaces/SparkType';
+import { PADDING_UNITS, UNIT } from '@oracle/styles/units/spacing';
 import { get, set } from '@storage/localStorage';
 import { getComputeServiceFromProject } from './utils';
 import { goToWithQuery } from '@utils/routing';
@@ -59,6 +33,8 @@ import { useError } from '@context/Error';
 import { useWindowSize } from '@utils/sizes';
 
 const QUERY_PARAM_TAB = 'tab';
+const DEFAULT_BEFORE_WIDTH = 320;
+const MIN_BEFORE_WIDTH = 280;
 
 type ComputeManagementProps = {
   contained?: boolean;
@@ -134,13 +110,17 @@ function ComputeManagement({
 
   const [afterMousedownActive, setAfterMousedownActive] = useState(false);
   const [beforeWidth, setBeforeWidthState] = useState(Math.max(
-    get(localStorageKeyBefore),
-    UNIT * 20,
+    get(localStorageKeyBefore, DEFAULT_BEFORE_WIDTH),
+    MIN_BEFORE_WIDTH,
   ));
   const setBeforeWidth = useCallback((width: number) => {
     // If the DEFAULT_BEFORE_RESIZE_OFFSET is not subtracted, the before panel jumps forward a bit when resizing.
-    setBeforeWidthState((width || UNIT * 20) - DEFAULT_BEFORE_RESIZE_OFFSET);
-    set(localStorageKeyBefore, width || UNIT * 20);
+    const nextWidth = Math.max(
+      width ? width - DEFAULT_BEFORE_RESIZE_OFFSET : DEFAULT_BEFORE_WIDTH,
+      MIN_BEFORE_WIDTH,
+    );
+    setBeforeWidthState(nextWidth);
+    set(localStorageKeyBefore, nextWidth);
   }, [
     localStorageKeyBefore,
     setBeforeWidthState,
@@ -290,7 +270,6 @@ function ComputeManagement({
       ...objectAttributes,
       ...data,
     }, [
-      'emr_config',
       'remote_variables_dir',
       'spark_config',
     ]),
@@ -365,74 +344,8 @@ function ComputeManagement({
 
       if (displayName && kicker && renderIcon) {
         let setupStepsTooltipMessage;
-        if (computeService?.setup_steps) {
-          if (setupComplete) {
-            if (activeCluster) {
-              if (activeCluster?.ready) {
-                setupStepsTooltipMessage = 'Cluster is ready, commence coding.';
-              } else {
-                setupStepsTooltipMessage = 'Cluster activated and initializing.';
-              }
-            } else {
-              setupStepsTooltipMessage = 'Setup complete but no clusters activated.';
-            }
-          } else {
-            setupStepsTooltipMessage = 'All setup steps have not been completed yet.';
-          }
-        }
 
         const connectionStatusesEl = [];
-
-        if (computeService?.setup_steps) {
-          connectionStatusesEl.push(
-            <Spacing key="compute-service-setup-steps" py={1}>
-              <FlexContainer
-                alignItems="center"
-              >
-                {setupComplete && (
-                  <PowerOnOffButton
-                    muted={!activeCluster?.ready}
-                    size={1.5 * UNIT}
-                    success={activeCluster?.ready}
-                  />
-                )}
-                {!setupComplete && (
-                  <AlertTriangle
-                    danger
-                    size={1.5 * UNIT}
-                  />
-                )}
-
-                <Spacing mr={1} />
-
-                <Flex flex={1} flexDirection="column">
-                  <Text default={!setupComplete || !activeCluster} small>
-                    {setupComplete && activeCluster
-                      ? 'Compute service connected'
-                      : 'Compute service unconnected'
-                    }
-                  </Text>
-
-                  {setupStepsTooltipMessage && (
-                    <Text muted xsmall>
-                      {setupStepsTooltipMessage}
-                    </Text>
-                  )}
-                </Flex>
-              </FlexContainer>
-            </Spacing>
-          );
-        }
-
-        if (computeService?.setup_steps?.length >= 1 && !setupComplete) {
-          arr.unshift(
-            <SetupProgress
-              computeService={computeService}
-              key="setupProgress"
-              onClick={() => setAfterHidden(false)}
-            />
-          );
-        }
 
         arr.unshift(
           <Spacing
@@ -440,7 +353,7 @@ function ComputeManagement({
             p={PADDING_UNITS}
           >
             <CardStyle inline>
-              <FlexContainer alignItems="flex-start">
+              <FlexContainer alignItems="flex-start" style={{ gap: UNIT * 2 }}>
                 <Flex flex={1}>
                   {renderIcon()}
                 </Flex>
@@ -453,6 +366,7 @@ function ComputeManagement({
                   }}
                   secondary
                   small
+                  style={{ flexShrink: 0 }}
                 >
                   Change
                 </Button>
@@ -510,17 +424,6 @@ function ComputeManagement({
       );
     }
 
-    if (computeService?.setup_steps?.length >= 1) {
-      return (
-        <SetupSteps
-          onClickStep={(tab: string) => setSelectedTab(() => ({
-            // @ts-ignore
-            main: tab,
-          }))}
-          setupSteps={computeService?.setup_steps}
-        />
-      );
-    }
   }, [
     buttonTabsRect?.height,
     computeService,
@@ -569,7 +472,6 @@ function ComputeManagement({
 
   const monitoringMemo = useMemo(() => {
     if ([
-      ComputeServiceEnum.AWS_EMR,
       ComputeServiceEnum.STANDALONE_CLUSTER,
     ].includes(selectedComputeService)) {
       return (
@@ -609,7 +511,6 @@ function ComputeManagement({
 
   const systemMemo = useMemo(() => {
     if ([
-      ComputeServiceEnum.AWS_EMR,
       ComputeServiceEnum.STANDALONE_CLUSTER,
     ].includes(selectedComputeService)) {
       return (
@@ -688,24 +589,6 @@ function ComputeManagement({
     updateProject,
   ]);
 
-  const clustersMemo = useMemo(() => (
-    <Clusters
-      clusters={clusters}
-      computeService={computeService}
-      fetchAll={fetchAll}
-      includeAllStates={includeAllStates}
-      loading={clustersLoading}
-      setIncludeAllStates={setIncludeAllStates}
-    />
-  ), [
-    clusters,
-    clustersLoading,
-    computeService,
-    fetchAll,
-    includeAllStates,
-    setIncludeAllStates,
-  ]);
-
   const contentMemo = useMemo(() => {
     if (!selectedComputeService && objectAttributes) {
       return computeServicesMemo;
@@ -730,22 +613,16 @@ function ComputeManagement({
         return systemMemo;
       }
 
-      if (MainNavigationTabEnum.CLUSTERS === uuid) {
-        return clustersMemo;
-      }
     }
-  }, [
-    clustersMemo,
-    computeServicesMemo,
-    monitoringMemo,
-    objectAttributes,
-    project,
-    resourcesMemo,
-    selectedComputeService,
-    selectedTab,
-    setupMemo,
-    systemMemo,
-  ]);
+  }, [computeServicesMemo,
+monitoringMemo,
+objectAttributes,
+project,
+resourcesMemo,
+selectedComputeService,
+selectedTab,
+setupMemo,
+systemMemo]);
 
   return (
     <TripleLayout

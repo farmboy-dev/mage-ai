@@ -15,8 +15,6 @@ from mage_ai.data_preparation.models.constants import (
     DATAFRAME_SAMPLE_COUNT_PREVIEW,
     BlockType,
 )
-from mage_ai.server.kernels import KernelName
-from mage_ai.shared.code import is_pyspark_code
 
 REGEX_PATTERN = r'^[ ]{2,}[\w]+'
 
@@ -236,17 +234,7 @@ def add_execution_code(
 
     magic_header = ''
     spark_session_init = ''
-    if kernel_name == KernelName.PYSPARK:
-        if block_type == BlockType.CHART or (
-            block_type == BlockType.SENSOR and not is_pyspark_code(code)
-        ):
-            magic_header = '%%local'
-            run_incomplete_upstream = False
-            run_upstream = False
-        else:
-            if block_type in [BlockType.DATA_LOADER, BlockType.TRANSFORMER]:
-                magic_header = '%%spark -o df --maxrows 10000'
-    elif pipeline_config and pipeline_config['type'] == 'databricks':
+    if pipeline_config and pipeline_config['type'] == 'databricks':
         spark_session_init = """
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.getOrCreate()
@@ -307,28 +295,8 @@ def get_block_output_process_code(
     block_type: Optional[BlockType] = None,
     kernel_name: Optional[str] = None,
 ):
-    if kernel_name != KernelName.PYSPARK or block_type not in [
-        BlockType.DATA_LOADER,
-        BlockType.TRANSFORMER,
-    ]:
-        return None
-    return f"""%%local
-from mage_ai.data_preparation.models.constants import BlockStatus
-from mage_ai.data_preparation.models.pipeline import Pipeline
-
-import pandas
-
-block_uuid=\'{block_uuid}\'
-pipeline = Pipeline(
-    uuid=\'{pipeline_uuid}\',
-    repo_path=\'{repo_path}\',
-)
-block = pipeline.get_block(block_uuid)
-variable_mapping = dict(df=df)
-block.store_variables(variable_mapping)
-block.analyze_outputs(variable_mapping)
-block.update_status(BlockStatus.EXECUTED)
-    """
+    # Local IPython execution stores and previews Spark outputs directly.
+    return None
 
 
 def get_pipeline_execution_code(
@@ -376,3 +344,13 @@ def execute_pipeline():
     ))
 execute_pipeline()
     """
+
+
+def get_internal_spark_init_code(spark_config=None):
+    config_json = json.dumps(spark_config or {})
+    return (
+        "import json as _mage_spark_json\n"
+        "from mage_ai.services.spark.config import SparkConfig as _MageSparkConfig\n"
+        "from mage_ai.services.spark.spark import get_spark_session as _mage_spark_session\n"
+        f"spark = _mage_spark_session(_MageSparkConfig.load(config=_mage_spark_json.loads({config_json!r})))\n"
+    )

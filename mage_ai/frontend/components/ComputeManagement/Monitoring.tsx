@@ -1,50 +1,20 @@
-import moment from 'moment';
 import { ThemeContext } from 'styled-components';
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-
-import ButtonTabs, { TabType } from '@oracle/components/Tabs/ButtonTabs';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import ButtonTabs from '@oracle/components/Tabs/ButtonTabs';
 import ComputeConnectionType from '@interfaces/ComputeConnectionType';
 import ComputeServiceType, { ComputeServiceUUIDEnum } from '@interfaces/ComputeServiceType';
-import ConnectionSettings from './ConnectionSettings';
 import Divider from '@oracle/elements/Divider';
-import Flex from '@oracle/components/Flex';
-import FlexContainer from '@oracle/components/FlexContainer';
 import JobsTable from './Jobs/JobsTable';
-import Headline from '@oracle/elements/Headline';
-import Panel from '@oracle/components/Panel';
 import Spacing from '@oracle/elements/Spacing';
 import SparkJobSqls from './SparkJobSqls';
 import Table from '@components/shared/Table';
-import TasksWaterfallChart from './TasksWaterfallChart';
 import Text from '@oracle/elements/Text';
-import Tooltip from '@oracle/components/Tooltip';
 import api from '@api';
-import {
-  MainNavigationTabEnum,
-  ObjectAttributesType,
-  SHARED_TEXT_PROPS,
-} from './constants';
-import {
-  DATE_FORMAT_LONG,
-  DATE_FORMAT_SPARK,
-  dateFormatLongFromUnixTimestamp,
-  datetimeInLocalTimezone,
-} from '@utils/date';
+import { MainNavigationTabEnum, ObjectAttributesType, SHARED_TEXT_PROPS } from './constants';
+import { dateFormatLongFromUnixTimestamp, datetimeInLocalTimezone } from '@utils/date';
 import { PADDING_UNITS } from '@oracle/styles/units/spacing';
-import {
-  SparkApplicationType,
-  SparkJobStatusEnum,
-  SparkJobType,
-  SparkSQLType,
-  SparkStageAttemptType,
-  SparkStageStatusEnum,
-  SparkStageType,
-  SparkTaskStatusEnum,
-  SparkTaskType,
-} from '@interfaces/SparkType';
-import { formatNumberToDuration, pluralize } from '@utils/string';
+import { SparkApplicationType, SparkJobType, SparkSQLType, SparkStageType } from '@interfaces/SparkType';
 import { shouldDisplayLocalTimezone } from '@components/settings/workspace/utils';
-import { sortByKey } from '@utils/array';
 
 const TAB_APPLICATIONS = 'Applications';
 const TAB_CONNECTIONS = 'Connections';
@@ -118,26 +88,6 @@ function Monitoring({
   }, {}),
   [
     dataStages,
-  ]);
-
-  const connectionsMemo = useMemo(() => {
-    return (
-      <ConnectionSettings
-        computeService={computeService}
-        computeConnections={computeConnections}
-        fetchAll={fetchAll}
-        // @ts-ignore
-        onClickStep={(tab: string) => setSelectedTab(() => ({
-          // @ts-ignore
-          main: tab,
-        }))}
-      />
-    );
-  }, [
-    computeConnections,
-    computeService,
-    fetchAll,
-    setSelectedTab,
   ]);
 
   const applicationsMemo = useMemo(() => (
@@ -355,8 +305,6 @@ function Monitoring({
       </Spacing>
 
       <Divider light />
-
-      {TAB_CONNECTIONS === selectedSubheaderTabUUID && connectionsMemo}
 
       {TAB_APPLICATIONS === selectedSubheaderTabUUID && applicationsMemo}
 

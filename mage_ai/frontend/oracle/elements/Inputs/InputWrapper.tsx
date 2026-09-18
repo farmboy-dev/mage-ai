@@ -66,6 +66,7 @@ export type InputWrapperProps = {
   inputWidth?: number;
   invertedTheme?: boolean;
   isFocused?: boolean;
+  id?: string;
   label?: any;
   labelDescription?: any;
   labelFixed?: string;

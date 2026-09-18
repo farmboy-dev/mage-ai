@@ -26,8 +26,6 @@ class StatusResource(GenericResource):
     @safe_db_query
     def collection(self, query, meta, user, **kwargs):
         from mage_ai.cluster_manager.constants import (
-            ECS_CLUSTER_NAME,
-            GCP_PROJECT_ID,
             KUBE_NAMESPACE,
         )
 
@@ -37,10 +35,6 @@ class StatusResource(GenericResource):
         project_type = get_project_type(repo_config=repo_config)
         if repo_config.cluster_type:
             instance_type = repo_config.cluster_type
-        elif os.getenv(ECS_CLUSTER_NAME):
-            instance_type = ClusterType.ECS
-        elif os.getenv(GCP_PROJECT_ID):
-            instance_type = ClusterType.CLOUD_RUN
         else:
             try:
                 from mage_ai.cluster_manager.kubernetes.workload_manager import (

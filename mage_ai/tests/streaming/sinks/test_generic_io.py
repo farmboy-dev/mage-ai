@@ -9,11 +9,6 @@ from mage_ai.tests.base_test import TestCase
 
 TEST_DATABASES = [
     dict(
-        connector_type='bigquery',
-        class_name='BigQuery',
-        module_path='mage_ai.io.bigquery',
-    ),
-    dict(
         connector_type='clickhouse',
         class_name='ClickHouse',
         module_path='mage_ai.io.clickhouse',
@@ -32,16 +27,6 @@ TEST_DATABASES = [
         connector_type='mysql',
         class_name='MySQL',
         module_path='mage_ai.io.mysql',
-    ),
-    dict(
-        connector_type='redshift',
-        class_name='Redshift',
-        module_path='mage_ai.io.redshift',
-    ),
-    dict(
-        connector_type='snowflake',
-        class_name='Snowflake',
-        module_path='mage_ai.io.snowflake',
     ),
     dict(
         connector_type='trino',

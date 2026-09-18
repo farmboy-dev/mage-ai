@@ -86,7 +86,6 @@ from mage_ai.server.terminal_server import (
 from mage_ai.server.websocket_server import WebSocketServer
 from mage_ai.services.redis.redis import init_redis_client
 from mage_ai.services.spark.models.applications import Application
-from mage_ai.services.ssh.aws.emr.utils import file_path as file_path_aws_emr
 from mage_ai.settings import (
     AUTHENTICATION_MODE,
     DEFAULT_OWNER_EMAIL,
@@ -466,16 +465,9 @@ def make_app(
     else:
         updated_routes = routes
 
-    file_path = file_path_aws_emr()
-    if not os.path.exists(file_path):
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        with open(file_path, 'w') as f:
-            f.write(json.dumps({}))
-
     if is_dev() and not DISABLE_AUTORELOAD:
         should_autoreload = True
         autoreload.add_reload_hook(scheduler_manager.stop_scheduler)
-        autoreload.watch(file_path)
     else:
         should_autoreload = False
 
@@ -701,18 +693,6 @@ async def main(
                     print(f'[ERROR] FileCache.initialize_cache_with_settings: {err}.')
                     if is_debug():
                         raise err
-
-        try:
-            from mage_ai.services.ssh.aws.emr.models import create_tunnel
-
-            tunnel = create_tunnel(
-                clean_up_on_failure=True,
-                project=project_model,
-            )
-            if tunnel:
-                print(f'SSH tunnel active: {tunnel.is_active()}')
-        except Exception as err:
-            print(f'[WARNING] SSH tunnel failed to create and connect: {err}')
 
     if ProjectType.MAIN == project_type:
         # Check scheduler status periodically

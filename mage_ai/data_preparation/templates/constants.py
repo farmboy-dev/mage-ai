@@ -36,22 +36,6 @@ TEMPLATES = [
     ),
     dict(
         block_type=BlockType.DATA_LOADER,
-        description='Load a Delta Table from Azure Blob Storage.',
-        groups=[GROUP_DELTA_LAKE],
-        language=BlockLanguage.PYTHON,
-        name='Azure Blob Storage',
-        path='data_loaders/deltalake/azure_blob_storage.py',
-    ),
-    dict(
-        block_type=BlockType.DATA_LOADER,
-        description='Load a Delta Table from Google Cloud Storage.',
-        groups=[GROUP_DELTA_LAKE],
-        language=BlockLanguage.PYTHON,
-        name='Google Cloud Storage',
-        path='data_loaders/deltalake/gcs.py',
-    ),
-    dict(
-        block_type=BlockType.DATA_LOADER,
         description='Load data from MongoDB.',
         groups=[GROUP_DATABASES_NO_SQL],
         language=BlockLanguage.PYTHON,
@@ -73,22 +57,6 @@ TEMPLATES = [
         language=BlockLanguage.PYTHON,
         name='Amazon S3',
         path='data_exporters/deltalake/s3.py',
-    ),
-    dict(
-        block_type=BlockType.DATA_EXPORTER,
-        description='Export data to a Delta Table in Azure Blob Storage.',
-        groups=[GROUP_DELTA_LAKE],
-        language=BlockLanguage.PYTHON,
-        name='Azure Blob Storage',
-        path='data_exporters/deltalake/azure_blob_storage.py',
-    ),
-    dict(
-        block_type=BlockType.DATA_EXPORTER,
-        description='Export data to a Delta Table in Google Cloud Storage.',
-        groups=[GROUP_DELTA_LAKE],
-        language=BlockLanguage.PYTHON,
-        name='Google Cloud Storage',
-        path='data_exporters/deltalake/gcs.py',
     ),
     dict(
         block_type=BlockType.DATA_EXPORTER,
@@ -161,43 +129,7 @@ TEMPLATES_ONLY_FOR_V2 = [
         name='Amazon S3',
         path='data_loaders/s3.py',
     ),
-    dict(
-        block_type=BlockType.DATA_LOADER,
-        groups=[GROUP_DATA_LAKES],
-        language=BlockLanguage.PYTHON,
-        name='Azure Blob Storage',
-        path='data_loaders/azure_blob_storage.py',
-    ),
-    dict(
-        block_type=BlockType.DATA_LOADER,
-        groups=[GROUP_DATA_LAKES],
-        language=BlockLanguage.PYTHON,
-        name='Google Cloud Storage',
-        path='data_loaders/google_cloud_storage.py',
-    ),
     #   Data warehouses
-    dict(
-        block_type=BlockType.DATA_LOADER,
-        groups=[GROUP_DATA_WAREHOUSES],
-        language=BlockLanguage.PYTHON,
-        name='Amazon Redshift',
-        path='data_loaders/redshift.py',
-    ),
-    dict(
-        block_type=BlockType.DATA_LOADER,
-        description='Load data from Google BigQuery.',
-        groups=[GROUP_DATA_WAREHOUSES],
-        language=BlockLanguage.PYTHON,
-        name='Google BigQuery',
-        path='data_loaders/bigquery.py',
-    ),
-    dict(
-        block_type=BlockType.DATA_LOADER,
-        groups=[GROUP_DATA_WAREHOUSES],
-        language=BlockLanguage.PYTHON,
-        name='Snowflake',
-        path='data_loaders/snowflake.py',
-    ),
     #   Databases
     dict(
         block_type=BlockType.DATA_LOADER,
@@ -271,13 +203,6 @@ TEMPLATES_ONLY_FOR_V2 = [
     ),
     dict(
         block_type=BlockType.DATA_LOADER,
-        description='Load data from a worksheet in Google Sheets.',
-        language=BlockLanguage.PYTHON,
-        name='Google Sheets',
-        path='data_loaders/google_sheets.py',
-    ),
-    dict(
-        block_type=BlockType.DATA_LOADER,
         language=BlockLanguage.PYTHON,
         name='Druid',
         path='data_loaders/druid.py',
@@ -290,42 +215,6 @@ TEMPLATES_ONLY_FOR_V2 = [
         path='transformers/default.jinja',
     ),
     #   Data warehouses
-    dict(
-        block_type=BlockType.TRANSFORMER,
-        groups=[GROUP_DATA_WAREHOUSES],
-        language=BlockLanguage.PYTHON,
-        name='Amazon Redshift',
-        path='transformers/data_warehouse_transformer.jinja',
-        template_variables=dict(
-            additional_args='\n        loader.commit() # Permanently apply database changes',
-            data_source=DataSource.REDSHIFT.value,
-            data_source_handler='Redshift',
-        ),
-    ),
-    dict(
-        block_type=BlockType.TRANSFORMER,
-        groups=[GROUP_DATA_WAREHOUSES],
-        language=BlockLanguage.PYTHON,
-        name='Google BigQuery',
-        path='transformers/data_warehouse_transformer.jinja',
-        template_variables=dict(
-            additional_args='',
-            data_source=DataSource.BIGQUERY.value,
-            data_source_handler='BigQuery',
-        ),
-    ),
-    dict(
-        block_type=BlockType.TRANSFORMER,
-        groups=[GROUP_DATA_WAREHOUSES],
-        language=BlockLanguage.PYTHON,
-        name='Snowflake',
-        path='transformers/data_warehouse_transformer.jinja',
-        template_variables=dict(
-            additional_args='\n        loader.commit() # Permanently apply database changes',
-            data_source=DataSource.SNOWFLAKE.value,
-            data_source_handler='Snowflake',
-        ),
-    ),
     #   Databases
     dict(
         block_type=BlockType.TRANSFORMER,
@@ -536,12 +425,6 @@ TEMPLATES_ONLY_FOR_V2 = [
         name='Local file',
         path='data_exporters/file.py',
     ),
-    dict(
-        block_type=BlockType.DATA_EXPORTER,
-        language=BlockLanguage.PYTHON,
-        name='Google Sheets',
-        path='data_exporters/google_sheets.py',
-    ),
     #   Data lakes
     dict(
         block_type=BlockType.DATA_EXPORTER,
@@ -550,42 +433,7 @@ TEMPLATES_ONLY_FOR_V2 = [
         name='Amazon S3',
         path='data_exporters/s3.py',
     ),
-    dict(
-        block_type=BlockType.DATA_EXPORTER,
-        groups=[GROUP_DATA_LAKES],
-        language=BlockLanguage.PYTHON,
-        name='Azure Blob Storage',
-        path='data_exporters/azure_blob_storage.py',
-    ),
-    dict(
-        block_type=BlockType.DATA_EXPORTER,
-        groups=[GROUP_DATA_LAKES],
-        language=BlockLanguage.PYTHON,
-        name='Google Cloud Storage',
-        path='data_exporters/google_cloud_storage.py',
-    ),
     #   Data warehouses
-    dict(
-        block_type=BlockType.DATA_EXPORTER,
-        groups=[GROUP_DATA_WAREHOUSES],
-        language=BlockLanguage.PYTHON,
-        name='Amazon Redshift',
-        path='data_exporters/redshift.py',
-    ),
-    dict(
-        block_type=BlockType.DATA_EXPORTER,
-        groups=[GROUP_DATA_WAREHOUSES],
-        language=BlockLanguage.PYTHON,
-        name='Google BigQuery',
-        path='data_exporters/bigquery.py',
-    ),
-    dict(
-        block_type=BlockType.DATA_EXPORTER,
-        groups=[GROUP_DATA_WAREHOUSES],
-        language=BlockLanguage.PYTHON,
-        name='Snowflake',
-        path='data_exporters/snowflake.py',
-    ),
     #   Databases
     dict(
         block_type=BlockType.DATA_EXPORTER,
@@ -658,35 +506,7 @@ TEMPLATES_ONLY_FOR_V2 = [
         name='Amazon S3',
         path='sensors/s3.py',
     ),
-    dict(
-        block_type=BlockType.SENSOR,
-        groups=[GROUP_DATA_LAKES],
-        language=BlockLanguage.PYTHON,
-        name='Google Cloud Storage',
-        path='sensors/google_cloud_storage.py',
-    ),
     #   Data warehouses
-    dict(
-        block_type=BlockType.SENSOR,
-        groups=[GROUP_DATA_WAREHOUSES],
-        language=BlockLanguage.PYTHON,
-        name='Amazon Redshift',
-        path='sensors/redshift.py',
-    ),
-    dict(
-        block_type=BlockType.SENSOR,
-        groups=[GROUP_DATA_WAREHOUSES],
-        language=BlockLanguage.PYTHON,
-        name='Google BigQuery',
-        path='sensors/bigquery.py',
-    ),
-    dict(
-        block_type=BlockType.SENSOR,
-        groups=[GROUP_DATA_WAREHOUSES],
-        language=BlockLanguage.PYTHON,
-        name='Snowflake',
-        path='sensors/snowflake.py',
-    ),
     #   Databases
     dict(
         block_type=BlockType.SENSOR,

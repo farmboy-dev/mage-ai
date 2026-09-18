@@ -24,6 +24,7 @@ from mage_ai.settings.repo import get_repo_path as get_repo_path_new
 from mage_ai.settings.repo import get_variables_dir
 from mage_ai.settings.repo import set_repo_path as set_repo_path_new
 from mage_ai.settings.utils import base_repo_path
+from mage_ai.shared.cloud_features import REMOVED_PROJECT_CONFIGS
 from mage_ai.shared.enum import StrEnum
 from mage_ai.shared.environments import is_debug
 from mage_ai.shared.yaml import load_yaml, trim_strings
@@ -64,17 +65,15 @@ class RepoConfig:
 
         self.remote_variables_dir = None
         self.ai_config = None
-        self.azure_container_instance_config = None
-        self.ecs_config = None
-        self.emr_config = None
         self.features = None
-        self.gcp_cloud_run_config = None
         self.k8s_executor_config = None
         self.spark_config = None
         self.notification_config = None
         self.queue_config = None
-        self.help_improve_mage = None
+        self.help_improve_mage = False
         self.openai_api_key = None
+        self.openai_base_url = None
+        self.openai_model = None
         self._pipelines = None
         self.retry_config = None
         self.ldap_config = None
@@ -128,20 +127,16 @@ class RepoConfig:
 
             # Executor configs
             self.ai_config = repo_config.get('ai_config', dict())
-            self.azure_container_instance_config = repo_config.get(
-                'azure_container_instance_config'
-            )
-            self.ecs_config = repo_config.get('ecs_config')
-            self.emr_config = repo_config.get('emr_config') or dict()
             self.features = repo_config.get('features', {})
-            self.gcp_cloud_run_config = repo_config.get('gcp_cloud_run_config')
             self.k8s_executor_config = repo_config.get('k8s_executor_config')
             self.spark_config = repo_config.get('spark_config')
             self.notification_config = repo_config.get('notification_config', dict())
             self.queue_config = repo_config.get('queue_config', dict())
             self.project_uuid = repo_config.get('project_uuid')
-            self.help_improve_mage = repo_config.get('help_improve_mage')
+            self.help_improve_mage = False  # Legacy opt-in values do not enable telemetry.
             self.openai_api_key = repo_config.get('openai_api_key')
+            self.openai_base_url = repo_config.get('openai_base_url')
+            self.openai_model = repo_config.get('openai_model')
             self.pipelines = repo_config.get('pipelines')
             self.retry_config = repo_config.get('retry_config')
             self.workspace_config_defaults = repo_config.get(
@@ -211,14 +206,12 @@ class RepoConfig:
     def to_dict(self, remote: bool = False) -> Dict:
         return dict(
             ai_config=self.ai_config,
-            azure_container_instance_config=self.azure_container_instance_config,
-            ecs_config=self.ecs_config,
-            emr_config=self.emr_config,
             features=self.features,
-            gcp_cloud_run_config=self.gcp_cloud_run_config,
             help_improve_mage=self.help_improve_mage,
             notification_config=self.notification_config,
             openai_api_key=self.openai_api_key,
+            openai_base_url=self.openai_base_url,
+            openai_model=self.openai_model,
             pipelines=self.pipelines.to_dict() if self.pipelines else self.pipelines,
             project_type=self.project_type,
             project_uuid=self.project_uuid,
@@ -238,7 +231,11 @@ class RepoConfig:
         else:
             data = {}
 
+        if REMOVED_PROJECT_CONFIGS.intersection(kwargs):
+            raise ValueError('Cloud executor configuration is removed. Use k8s_executor_config or spark_config.')
         for key, value in kwargs.items():
+            if key == 'help_improve_mage':
+                value = False
             data[key] = value
 
             if 'pipelines' == key:

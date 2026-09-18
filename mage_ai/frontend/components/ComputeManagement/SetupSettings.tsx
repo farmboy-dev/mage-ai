@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-
 import Button from '@oracle/elements/Button';
 import ComputeServiceType from '@interfaces/ComputeServiceType';
 import Divider from '@oracle/elements/Divider';
@@ -13,21 +12,12 @@ import Spacing from '@oracle/elements/Spacing';
 import Text from '@oracle/elements/Text';
 import TextInput from '@oracle/elements/Inputs/TextInput';
 import ToggleSwitch from '@oracle/elements/Inputs/ToggleSwitch';
-import {
-  Add,
-  Edit,
-  Save,
-  Trash,
-} from '@oracle/icons';
+import { Add, Edit, Save, Trash } from '@oracle/icons';
 import { ComputeServiceUUIDEnum } from '@interfaces/ComputeServiceType';
 import { ContainerStyle, ICON_SIZE } from '@components/shared/index.style';
-import { EMRConfigType, SparkConfigType } from '@interfaces/ProjectType';
+import { SparkConfigType } from '@interfaces/ProjectType';
 import { JarFileConfigEnum, ObjectAttributesType } from './constants';
-import {
-  PADDING_UNITS,
-  UNIT,
-  UNITS_BETWEEN_SECTIONS,
-} from '@oracle/styles/units/spacing';
+import { PADDING_UNITS, UNIT, UNITS_BETWEEN_SECTIONS } from '@oracle/styles/units/spacing';
 import { pauseEvent } from '@utils/events';
 import { removeAtIndex } from '@utils/array';
 
@@ -59,16 +49,7 @@ function ConnectionSettings({
   selectedComputeService,
   setObjectAttributes,
 }: ConnectionSettingsProps) {
-  const setObjectAttributesEMRConfig =
-    useCallback((data: EMRConfigType) => setObjectAttributes({
-      emr_config: {
-        ...objectAttributes?.emr_config,
-        ...data,
-      },
-    }), [
-      objectAttributes,
-      setObjectAttributes,
-    ]);
+
   const setObjectAttributesSparkConfig =
     useCallback((data: SparkConfigType) => setObjectAttributes({
       spark_config: {
@@ -80,9 +61,6 @@ function ConnectionSettings({
       setObjectAttributes,
     ]);
 
-  const objectAttributesEMRConfig = useMemo(() => objectAttributes?.emr_config || {}, [
-    objectAttributes,
-  ]);
   const objectAttributesSparkConfig = useMemo(() => objectAttributes?.spark_config || {}, [
     objectAttributes,
   ]);
@@ -98,20 +76,11 @@ function ConnectionSettings({
     })),
     [objectAttributesSparkConfig],
   );
-  const emrJarFiles: JarFileType[] = useMemo(() => (objectAttributesEMRConfig?.spark_jars || [])
-    .map(val => ({
-      config: JarFileConfigEnum.EMR,
-      value: val,
-    })),
-    [objectAttributesEMRConfig],
-  );
-  const allJarFiles: JarFileType[] = useMemo(() => sparkJarFiles.concat(emrJarFiles), [
-    emrJarFiles,
-    sparkJarFiles,
-  ]);
+
+  const allJarFiles: JarFileType[] = useMemo(() => sparkJarFiles, [sparkJarFiles]);
   const hasJarFiles = useMemo(() => allJarFiles?.length >= 1, [allJarFiles]);
   const jarFileExists = useMemo(() => (allJarFiles || [])
-    .some(jarFile => jarFile.value === newJarFile), 
+    .some(jarFile => jarFile.value === newJarFile),
     [
       allJarFiles,
       newJarFile,
@@ -178,14 +147,7 @@ function ConnectionSettings({
               pauseEvent(e);
 
               if (!jarFileExists) {
-                if (selectedComputeService === ComputeServiceUUIDEnum.AWS_EMR) {
-                  const updatedJarFiles = emrJarFiles
-                    .map(({ value }) => value)
-                    .concat(newJarFile);
-                  setObjectAttributesEMRConfig({
-                    spark_jars: updatedJarFiles,
-                  });
-                } else {
+                {
                   const updatedJarFiles = sparkJarFiles
                     .map(({ value }) => value)
                     .concat(newJarFile);
@@ -222,17 +184,13 @@ function ConnectionSettings({
         </>
       )}
     </FlexContainer>
-  ), [
-    isAddingNewJarFile,
-    hasJarFiles,
-    jarFileExists,
-    newJarFile,
-    emrJarFiles,
-    selectedComputeService,
-    setObjectAttributesEMRConfig,
-    sparkJarFiles,
-    setObjectAttributesSparkConfig,
-  ]);
+  ), [isAddingNewJarFile,
+hasJarFiles,
+jarFileExists,
+newJarFile,
+selectedComputeService,
+sparkJarFiles,
+setObjectAttributesSparkConfig]);
 
   const jarFilesMemo = useMemo(() => allJarFiles?.map(({ config, value }: JarFileType, idx: number) => (
     <div key={value}>
@@ -246,12 +204,7 @@ function ConnectionSettings({
             noBorder
             noPadding
             onClick={() => {
-              if (config === JarFileConfigEnum.EMR) {
-                const jarFiles = emrJarFiles.map(({ value }) => value);
-                setObjectAttributesEMRConfig({
-                  spark_jars: removeAtIndex(jarFiles, idx - sparkJarFiles.length),
-                });
-              } else {
+              {
                 const jarFiles = sparkJarFiles.map(({ value }) => value);
                 setObjectAttributesSparkConfig({
                   spark_jars: removeAtIndex(jarFiles, idx),
@@ -285,86 +238,9 @@ function ConnectionSettings({
         </FlexContainer>
       </Spacing>
     </div>
-  )), [
-    allJarFiles,
-    emrJarFiles,
-    setObjectAttributesEMRConfig,
-    setObjectAttributesSparkConfig,
-    sparkJarFiles,
-  ]);
-
-  const awsEMRSetupMemo = useMemo(() => {
-    const remoteVariablesDirKey = 'remote_variables_dir';
-    const steps = computeService?.setup_steps;
-    const remoteVariablesDirStep = steps?.find(({ uuid }) => uuid === remoteVariablesDirKey);
-
-    return (
-      <>
-        <Divider light />
-
-        <Spacing p={PADDING_UNITS}>
-          <FlexContainer alignItems="flex-start">
-            <FlexContainer flexDirection="column">
-              <Text
-                danger={!objectAttributes?.[remoteVariablesDirKey]
-                  || !!remoteVariablesDirStep?.error
-                }
-                default
-                large
-              >
-                Remote variables directory {!objectAttributes?.[remoteVariablesDirKey] && (
-                  <Text danger inline large>
-                    is required
-                  </Text>
-                )}
-              </Text>
-
-              <Text muted small>
-                This S3 bucket will be used by Spark.
-              </Text>
-            </FlexContainer>
-
-            <Spacing mr={PADDING_UNITS} />
-
-            <Flex flex={1} flexDirection="column">
-              <TextInput
-                afterIcon={<Edit />}
-                afterIconClick={(_, inputRef) => {
-                  inputRef?.current?.focus();
-                }}
-                afterIconSize={ICON_SIZE}
-                alignRight
-                fullWidth
-                large
-                monospace
-                noBackground
-                noBorder
-                onChange={e => setObjectAttributes({
-                  remote_variables_dir: e.target.value,
-                })}
-                paddingHorizontal={0}
-                paddingVertical={0}
-                placeholder="e.g. s3://magically-powerful-bucket"
-                value={objectAttributes?.remote_variables_dir || ''}
-              />
-
-              {remoteVariablesDirStep?.error && (
-                <FlexContainer justifyContent="flex-end">
-                  <Spacing mt={1}>
-                    <ErrorMessage error={remoteVariablesDirStep?.error} />
-                  </Spacing>
-                </FlexContainer>
-              )}
-            </Flex>
-          </FlexContainer>
-        </Spacing>
-      </>
-    );
-  }, [
-    computeService,
-    objectAttributes,
-    setObjectAttributes,
-  ]);
+  )), [allJarFiles,
+setObjectAttributesSparkConfig,
+sparkJarFiles]);
 
   return (
     <ContainerStyle>
@@ -510,12 +386,11 @@ function ConnectionSettings({
           </FlexContainer>
         </Spacing>
 
-        {ComputeServiceUUIDEnum.AWS_EMR === selectedComputeService && awsEMRSetupMemo}
       </Panel>
 
       <Spacing mb={UNITS_BETWEEN_SECTIONS} />
 
-      {computeService?.connection_credentials && (
+      {computeService?.connection_credentials?.length >= 1 && (
         <>
           <Panel noPadding>
             <Spacing p={PADDING_UNITS}>
@@ -714,49 +589,6 @@ function ConnectionSettings({
           </>
         )}
 
-        {ComputeServiceUUIDEnum.AWS_EMR === selectedComputeService && (
-          <Spacing p={PADDING_UNITS}>
-            <FlexContainer alignItems="center">
-              <FlexContainer flexDirection="column">
-                <Text
-                  default
-                  large
-                >
-                  Bootstrap script path
-                </Text>
-
-                <Text muted small>
-                  Use a custom script to bootstrap the EMR cluster.
-                </Text>
-              </FlexContainer>
-
-              <Spacing mr={PADDING_UNITS} />
-
-              <Flex flex={1}>
-                <TextInput
-                  afterIcon={<Edit />}
-                  afterIconClick={(_, inputRef) => {
-                    inputRef?.current?.focus();
-                  }}
-                  afterIconSize={ICON_SIZE}
-                  alignRight
-                  autoComplete="off"
-                  fullWidth
-                  large
-                  noBackground
-                  noBorder
-                  onChange={e => setObjectAttributesEMRConfig({
-                    bootstrap_script_path: e.target.value,
-                  })}
-                  paddingHorizontal={0}
-                  paddingVertical={0}
-                  placeholder="e.g. /path/to/emr_bootstrap.sh"
-                  value={objectAttributesEMRConfig?.bootstrap_script_path || ''}
-                />
-              </Flex>
-            </FlexContainer>
-          </Spacing>
-        )}
       </Panel>
 
       <Spacing mb={UNITS_BETWEEN_SECTIONS} />

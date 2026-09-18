@@ -8,10 +8,6 @@ export enum ExecutorTypeEnum {
 }
 
 export const EXECUTOR_TYPES = [
-  ExecutorTypeEnum.AZURE_CONTAINER_INSTANCE,
-  ExecutorTypeEnum.ECS,
-  ExecutorTypeEnum.GCP_CLOUD_RUN,
-  ExecutorTypeEnum.K8S,
   ExecutorTypeEnum.LOCAL_PYTHON,
-  ExecutorTypeEnum.PYSPARK,
+  ExecutorTypeEnum.K8S,
 ];

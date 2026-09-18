@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import dark from '@oracle/styles/themes/dark';
 import { BORDER_RADIUS_XXXLARGE } from '@oracle/styles/units/borders';
 import { PADDING_UNITS, UNIT } from '@oracle/styles/units/spacing';
@@ -12,6 +11,11 @@ export const CardStyle = styled.div<{
 
   border-radius: ${BORDER_RADIUS_XXXLARGE}px;
   padding: ${UNIT * 2.5}px;
+
+  ${props => props.inline && `
+    box-sizing: border-box;
+    width: 100%;
+  `}
 
   ${props => `
     background-color: ${(props.theme.background || dark.background).panel};

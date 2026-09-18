@@ -1,13 +1,10 @@
 DESTINATIONS = [
     dict(name='Airtable'),
     dict(name='Amazon S3'),
-    dict(name='BigQuery'),
     dict(name='Clickhouse'),
-    dict(name='Delta Lake Azure'),
     dict(name='Delta Lake S3'),
     dict(name='Doris'),
     dict(name='Elasticsearch'),
-    dict(name='Google Cloud Storage'),
     dict(name='Kafka'),
     dict(name='MongoDB'),
     dict(
@@ -19,9 +16,7 @@ DESTINATIONS = [
     dict(name='Opensearch'),
     dict(name='OracleDB'),
     dict(name='PostgreSQL'),
-    dict(name='Redshift'),
     dict(name='Salesforce'),
-    dict(name='Snowflake'),
     dict(name='Teradata'),
     dict(name='Trino'),
 ]

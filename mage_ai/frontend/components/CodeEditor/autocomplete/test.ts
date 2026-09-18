@@ -1,4 +1,6 @@
-export function createDependencyProposals(range) {
+import type * as Monaco from 'monaco-editor';
+
+export function createDependencyProposals(range: Monaco.IRange, monaco: typeof Monaco) {
   // returning a static list of proposals, not even looking at the prefix (filtering is done by the Monaco editor),
   // here you could do a server side lookup
   return [
@@ -34,7 +36,11 @@ export function createDependencyProposals(range) {
   ];
 }
 
-export function sample(model, position) {
+export function sample(
+  model: Monaco.editor.ITextModel,
+  position: Monaco.Position,
+  monaco: typeof Monaco,
+) {
   // find out if we are completing a property in the 'dependencies' object.
   var textUntilPosition = model.getValueInRange({
     startLineNumber: 1,
@@ -56,6 +62,6 @@ export function sample(model, position) {
     endColumn: word.endColumn
   };
   return {
-    suggestions: createDependencyProposals(range)
+    suggestions: createDependencyProposals(range, monaco)
   };
 }

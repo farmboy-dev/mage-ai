@@ -698,7 +698,7 @@ function PipelineListPage() {
     createPipeline,
     {
       showAIModal: () => {
-        if (!project?.openai_api_key) {
+        if (!project?.ai_configured) {
           showConfigureProjectModal({
             onSaveSuccess: () => {
               showAIModal();

@@ -1,3 +1,4 @@
+from mage_ai.shared.cloud_features import reject_removed_connector_config
 import asyncio
 import functools
 import importlib.util
@@ -1061,6 +1062,8 @@ class Block(
         widget: bool = False,
         downstream_block_uuids: List[str] = None,
     ) -> 'Block':
+        reject_removed_connector_config(config)
+        reject_removed_connector_config(configuration)
         from mage_ai.data_preparation.models.block.block_factory import BlockFactory
 
         """
@@ -1463,6 +1466,7 @@ class Block(
         override_outputs: bool = True,
         **kwargs,
     ) -> Dict:
+        reject_removed_connector_config(self.configuration)
         def __execute(
             self=self,
             analyze_outputs=analyze_outputs,
@@ -1704,6 +1708,7 @@ class Block(
         update_status: bool = True,
         parallel: bool = True,
     ) -> None:
+        reject_removed_connector_config(self.configuration)
         if parallel:
             loop = asyncio.get_event_loop()
             await loop.run_in_executor(
@@ -1984,6 +1989,7 @@ class Block(
         execution_partition_previous: str = None,
         **kwargs,
     ) -> List:
+        reject_removed_connector_config(self.configuration)
         if logging_tags is None:
             logging_tags = dict()
 
@@ -3091,6 +3097,7 @@ class Block(
         return data
 
     def update(self, data, **kwargs) -> 'Block':
+        reject_removed_connector_config(data)
         if 'name' in data and data['name'] != self.name:
             detach = kwargs.get('detach', False)
             self.__update_name(data['name'], detach=detach)
@@ -3582,10 +3589,14 @@ class Block(
         if global_vars is None:
             global_vars = dict()
         if (
-            self.pipeline is not None and self.pipeline.type == PipelineType.DATABRICKS
+            self.pipeline is not None
+            and self.pipeline.type in [PipelineType.DATABRICKS, PipelineType.PYSPARK]
         ) or is_spark_env():
             if not global_vars.get('spark'):
-                spark = self.get_spark_session()
+                if self.pipeline and self.pipeline.type == PipelineType.PYSPARK:
+                    spark = self.get_spark_session(raise_errors=True)
+                else:
+                    spark = self.get_spark_session()
                 if spark is not None:
                     global_vars['spark'] = spark
         if 'env' not in global_vars:
@@ -3620,8 +3631,10 @@ class Block(
 
         return global_vars
 
-    def get_spark_session(self):
+    def get_spark_session(self, raise_errors: bool = False):
         if not SPARK_ENABLED:
+            if raise_errors:
+                raise ImportError('PySpark execution requires PySpark and Java in the runtime image.')
             return None
         if self.spark_init and (not self.pipeline or not self.pipeline.spark_config):
             return self.spark
@@ -3631,9 +3644,11 @@ class Block(
                 spark_config = SparkConfig.load(config=self.pipeline.spark_config)
             else:
                 repo_config = RepoConfig(repo_path=self.repo_path)
-                spark_config = SparkConfig.load(config=repo_config.spark_config)
+                spark_config = SparkConfig.load(config=repo_config.spark_config or {})
             self.spark = get_spark_session(spark_config)
         except Exception:
+            if raise_errors:
+                raise
             self.spark = None
 
         if not self.spark and self.global_vars and self.global_vars.get('spark'):

@@ -66,14 +66,7 @@ class Workspace(abc.ABC):
             from mage_ai.cluster_manager.workspace.kubernetes import KubernetesWorkspace
 
             return KubernetesWorkspace
-        elif cluster_type == ClusterType.CLOUD_RUN:
-            from mage_ai.cluster_manager.workspace.cloud_run import CloudRunWorkspace
-
-            return CloudRunWorkspace
-        elif cluster_type == ClusterType.ECS:
-            from mage_ai.cluster_manager.workspace.ecs import EcsWorkspace
-
-            return EcsWorkspace
+        raise ValueError('Only Kubernetes workspaces are supported; cloud workspace execution is removed.')
 
     @classmethod
     def get_workspace(cls, cluster_type: ClusterType, name: str) -> 'Workspace':

@@ -1,3 +1,4 @@
+from mage_ai.shared.cloud_features import reject_removed_connector_config
 from datetime import datetime
 from os import path
 from time import sleep
@@ -9,15 +10,12 @@ from mage_ai.data_preparation.models.block.dynamic.utils import (
     is_dynamic_block_child,
 )
 from mage_ai.data_preparation.models.block.sql import (
-    bigquery,
     clickhouse,
     druid,
     duckdb,
     mssql,
     mysql,
     postgres,
-    redshift,
-    snowflake,
     trino,
 )
 from mage_ai.data_preparation.models.block.sql.utils.shared import (
@@ -87,10 +85,11 @@ def execute_sql_code(
 
     Note:
         This method executes the provided SQL query within the context of the given block.
-        It supports various data sources such as BigQuery, ClickHouse, Druid, MSSQL, MySQL,
-        PostgreSQL, Redshift, Snowflake, and Trino, applying relevant configurations and
+        It supports internal data sources such as ClickHouse, Druid, MSSQL, MySQL,
+        PostgreSQL, and Trino, applying relevant configurations and
         returning the query execution results.
     """
+    reject_removed_connector_config(configuration or block.configuration)
     is_dynamic = is_dynamic_block(block) or is_dynamic_block_child(block)
 
     configuration = configuration if configuration else block.configuration
@@ -154,67 +153,7 @@ def execute_sql_code(
         global_vars=global_vars,
     )
 
-    if DataSource.BIGQUERY.value == data_provider:
-        from mage_ai.io.bigquery import BigQuery
-
-        loader = BigQuery.with_config(config_file_loader)
-        database = database or loader.default_database()
-
-        not is_dynamic and bigquery.create_upstream_block_tables(
-            loader,
-            block,
-            **create_upstream_block_tables_kwargs,
-        )
-
-        query_string = bigquery.interpolate_input_data(
-            block,
-            query,
-            loader,
-            **interpolate_input_data_kwargs,
-        )
-        query_string = interpolate_vars(query_string, **interpolate_vars_options)
-
-        if use_raw_sql:
-            return execute_raw_sql(
-                loader,
-                block,
-                query_string,
-                disable_query_preprocessing=disable_query_preprocessing,
-                configuration=configuration,
-                should_query=should_query,
-            )
-        else:
-            loader.export(
-                None,
-                f'{schema}.{table_name}',
-                database=database,
-                if_exists=export_write_policy,
-                query_string=query_string,
-                verbose=BlockType.DATA_EXPORTER == block.type,
-            )
-
-            if should_query:
-                """
-                An error is thrown because the table doesn’t exist until you re-run the query
-                NotFound: 404 Not found: Table database:schema.table_name
-                    was not found in location XX
-                """
-                total_retries = 5
-                tries = 0
-                while tries < total_retries:
-                    sleep(tries)
-                    tries += 1
-                    try:
-                        result = loader.load(
-                            f'SELECT * FROM {database}.{schema}.{table_name}',
-                            limit=limit,
-                            verbose=False,
-                        )
-                        return [result]
-                    except Exception as err:
-                        if '404' not in str(err) or tries == total_retries:
-                            raise err
-    elif DataSource.CLICKHOUSE.value == data_provider:
+    if DataSource.CLICKHOUSE.value == data_provider:
         from mage_ai.io.clickhouse import ClickHouse
 
         loader = ClickHouse.with_config(config_file_loader)
@@ -480,117 +419,6 @@ def execute_sql_code(
                     return [
                         loader.load(
                             f'SELECT * FROM {schema}.{table_name}',
-                            limit=limit,
-                            verbose=False,
-                        ),
-                    ]
-    elif DataSource.REDSHIFT.value == data_provider:
-        from mage_ai.io.redshift import Redshift
-
-        with Redshift.with_config(config_file_loader) as loader:
-            not is_dynamic and redshift.create_upstream_block_tables(
-                loader,
-                block,
-                **create_upstream_block_tables_kwargs,
-            )
-
-            database = database or loader.default_database()
-            schema = schema or loader.default_schema()
-
-            query_string = redshift.interpolate_input_data(
-                block,
-                query,
-                loader,
-                **interpolate_input_data_kwargs,
-            )
-            query_string = interpolate_vars(query_string, **interpolate_vars_options)
-
-            if use_raw_sql:
-                return execute_raw_sql(
-                    loader,
-                    block,
-                    query_string,
-                    disable_query_preprocessing=disable_query_preprocessing,
-                    configuration=configuration,
-                    should_query=should_query,
-                )
-            else:
-                loader.export(
-                    None,
-                    table_name,
-                    schema=schema,
-                    query_string=query_string,
-                    **kwargs_shared,
-                )
-
-                if should_query:
-                    return [
-                            loader.load(
-                                f'SELECT * FROM {schema}.{table_name}',
-                                limit=limit,
-                                verbose=False,
-                            ),
-                        ]
-    elif DataSource.SNOWFLAKE.value == data_provider:
-        from mage_ai.io.snowflake import Snowflake
-
-        if not use_raw_sql:
-            table_name_parts = table_name_parts_from_query(query)
-            if table_name_parts is not None:
-                db_from_query, schema_from_query, _ = table_name_parts
-                database = db_from_query or database
-                schema = schema_from_query or schema
-
-        table_name = table_name.upper() if table_name else table_name
-
-        with Snowflake.with_config(config_file_loader, database=database, schema=schema) as loader:
-            database = database or loader.default_database()
-            database = database.upper() if database else database
-
-            schema = schema or loader.default_schema()
-            schema = schema.upper() if schema else schema
-
-            not is_dynamic and snowflake.create_upstream_block_tables(
-                loader,
-                block,
-                **create_upstream_block_tables_kwargs,
-            )
-
-            query_string = snowflake.interpolate_input_data(
-                block,
-                query,
-                loader,
-                **interpolate_input_data_kwargs,
-            )
-            query_string = interpolate_vars(query_string, **interpolate_vars_options)
-
-            if use_raw_sql:
-                return execute_raw_sql(
-                    loader,
-                    block,
-                    query_string,
-                    disable_query_preprocessing=disable_query_preprocessing,
-                    configuration=configuration,
-                    should_query=should_query,
-                )
-            else:
-                loader.export(
-                    None,
-                    table_name,
-                    database,
-                    schema,
-                    if_exists=export_write_policy,
-                    query_string=query_string,
-                    verbose=BlockType.DATA_EXPORTER == block.type,
-                )
-
-                if should_query:
-                    return [
-                        loader.load(
-                            f'SELECT * FROM "{database}"."{schema}"."{table_name}"',
-                            database=database,
-                            schema=schema,
-                            table_name=table_name,
                             limit=limit,
                             verbose=False,
                         ),

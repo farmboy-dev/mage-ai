@@ -163,7 +163,6 @@ export enum IntegrationDestinationEnum {
 
 export const DESTINATIONS_NO_UNIQUE_OR_KEY_SUPPORT: IntegrationDestinationEnum[] = [
   IntegrationDestinationEnum.AMAZON_S3,
-  IntegrationDestinationEnum.GOOGLE_CLOUD_STORAGE,
   IntegrationDestinationEnum.KAFKA,
 ];
 

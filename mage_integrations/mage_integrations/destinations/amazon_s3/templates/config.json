@@ -6,5 +6,8 @@
   "file_type": "parquet",
   "object_key_path": null,
   "table": null,
-  "date_partition_format": null
+  "date_partition_format": null,
+  "aws_endpoint": null,
+  "aws_s3_addressing_style": "path",
+  "aws_session_token": null
 }

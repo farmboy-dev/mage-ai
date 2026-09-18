@@ -9,6 +9,7 @@ from pandas import DataFrame
 
 from mage_ai.io.base import QUERY_ROW_LIMIT, BaseFile, FileFormat
 from mage_ai.io.config import BaseConfigLoader, ConfigKey
+from mage_ai.services.aws.s3.config import client_options
 
 
 class S3(BaseFile):
@@ -39,7 +40,7 @@ class S3(BaseFile):
         - `region_name` - name of AWS Region associated with profile
         """
         super().__init__(verbose=verbose)
-        self.client = boto3.client('s3', **kwargs)
+        self.client = boto3.client('s3', **client_options(**kwargs))
 
     def load(
         self,
@@ -158,11 +159,13 @@ class S3(BaseFile):
         Args:
             config (BaseConfigLoader): Configuration loader object
         """
-        return cls(
+        options = dict(
             aws_access_key_id=config[ConfigKey.AWS_ACCESS_KEY_ID],
             aws_secret_access_key=config[ConfigKey.AWS_SECRET_ACCESS_KEY],
             aws_session_token=config[ConfigKey.AWS_SESSION_TOKEN],
             region_name=config[ConfigKey.AWS_REGION],
             endpoint_url=config[ConfigKey.AWS_ENDPOINT],
-            **kwargs,
+            addressing_style=config[ConfigKey.AWS_S3_ADDRESSING_STYLE],
         )
+        options.update(kwargs)
+        return cls(**options)

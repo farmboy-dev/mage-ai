@@ -4,16 +4,12 @@ import traceback
 from contextlib import nullcontext
 
 import newrelic.agent
-import sentry_sdk
 
 from mage_ai.orchestration.db.database_manager import database_manager
 from mage_ai.orchestration.db.process import create_process
 from mage_ai.server.logger import Logger
 from mage_ai.services.newrelic import initialize_new_relic
 from mage_ai.settings import (
-    SENTRY_DSN,
-    SENTRY_SERVER_NAME,
-    SENTRY_TRACES_SAMPLE_RATE,
     SERVER_LOGGING_FORMAT,
     SERVER_VERBOSITY,
 )
@@ -31,13 +27,6 @@ def run_scheduler():
 
     job_manager = get_job_manager()
 
-    sentry_dsn = SENTRY_DSN
-    if sentry_dsn:
-        sentry_sdk.init(
-            sentry_dsn,
-            traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
-            server_name=SENTRY_SERVER_NAME,
-        )
     (enable_new_relic, application) = initialize_new_relic()
     try:
         with (

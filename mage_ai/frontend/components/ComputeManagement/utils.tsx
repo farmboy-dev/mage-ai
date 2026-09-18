@@ -6,11 +6,7 @@ import { isEmptyObject } from '@utils/hash';
 
 export function getComputeServiceFromProject(project: ProjectType): ComputeServiceUUIDEnum {
   if (!isEmptyObject(project?.spark_config || {})) {
-    if (!isEmptyObject(project?.emr_config || {})) {
-      return ComputeServiceUUIDEnum.AWS_EMR;
-    } else {
-      return ComputeServiceUUIDEnum.STANDALONE_CLUSTER;
-    }
+    return ComputeServiceUUIDEnum.STANDALONE_CLUSTER;
   }
 }
 

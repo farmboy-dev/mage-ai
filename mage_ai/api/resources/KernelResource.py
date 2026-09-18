@@ -9,8 +9,7 @@ from mage_ai.kernels.default.utils import find_ipykernel_launchers_info_async
 from mage_ai.kernels.magic.kernels.manager import KernelManager
 from mage_ai.orchestration.db import safe_db_query
 from mage_ai.server.active_kernel import switch_active_kernel
-from mage_ai.server.kernels import DEFAULT_KERNEL_NAME, KernelName, kernel_managers
-from mage_ai.services.ssh.aws.emr.utils import tunnel
+from mage_ai.server.kernels import DEFAULT_KERNEL_NAME, kernel_managers
 from mage_ai.settings.server import KERNEL_MAGIC, MEMORY_MANAGER_V2
 
 
@@ -38,7 +37,7 @@ class KernelResource(GenericResource):
                         'GBs if memory freed.'
                     )
 
-        for kernel_name in KernelName:
+        for kernel_name in kernel_managers:
             kernel = kernel_managers[kernel_name]
             if kernel.has_kernel:
                 kernels.append(KernelWrapper(kernel))
@@ -60,7 +59,7 @@ class KernelResource(GenericResource):
         kernel_fallback = None
         kernels_by_id = {}
 
-        for kernel_name in KernelName:
+        for kernel_name in kernel_managers:
             kernel = kernel_managers[kernel_name]
             if kernel.has_kernel:
                 kernels_by_id[kernel.kernel_id] = kernel
@@ -108,14 +107,5 @@ class KernelResource(GenericResource):
                 # RuntimeError: Cannot restart the kernel. No previous call to 'start_kernel'.
                 if 'start_kernel' in str(e):
                     self.model.start()
-
-        def _callback(*args, **kwargs):
-            tunnel(
-                kernel_name=self.model.kernel_name,
-                reconnect=True,
-                validate_conditions=True,
-            )
-
-        self.on_update_callback = _callback
 
         return self

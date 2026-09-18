@@ -1,6 +1,24 @@
-FROM python:3.10-bookworm
-LABEL description="Deploy Mage on ECS"
-ARG FEATURE_BRANCH
+FROM python:3.10-bookworm AS source-wheels
+
+# Build both distributions from this checkout, including the bundled frontend.
+# Keep separate source roots so setuptools does not discover unrelated packages.
+COPY setup.py pyproject.toml requirements.txt MANIFEST.in README.md LICENSE /src/mage/
+COPY mage_ai /src/mage/mage_ai
+COPY LICENSE mage_integrations/setup.py mage_integrations/pyproject.toml mage_integrations/requirements.txt mage_integrations/MANIFEST.in mage_integrations/README.md /src/mage-integrations/
+COPY mage_integrations/mage_integrations /src/mage-integrations/mage_integrations
+# The LTS CPU wheel exposes the same Polars API on hosts without AVX support.
+# Change the staged requirement so wheel metadata matches the installed package.
+ARG POLARS_PACKAGE=polars
+RUN case "$POLARS_PACKAGE" in \
+      polars|polars-lts-cpu) ;; \
+      *) echo "POLARS_PACKAGE must be polars or polars-lts-cpu" >&2; exit 1 ;; \
+    esac && \
+    sed -i "s/^polars==/${POLARS_PACKAGE}==/" /src/mage/requirements.txt && \
+    python -m pip wheel --no-cache-dir --no-deps --wheel-dir /wheels \
+      /src/mage /src/mage-integrations
+
+FROM python:3.10-bookworm AS runtime
+LABEL description="Mage built from the local checkout"
 USER root
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -47,22 +65,16 @@ RUN \
   uv pip install --system --no-cache-dir "git+https://github.com/mage-ai/dbt-mysql.git#egg=dbt-mysql" && \
   uv pip install --system --no-cache-dir "git+https://github.com/mage-ai/sqlglot#egg=sqlglot" && \
   # faster-fifo is not supported on Windows: https://github.com/alex-petrenko/faster-fifo/issues/17
-  uv pip install --system --no-cache-dir faster-fifo && \
-  if [ -z "$FEATURE_BRANCH" ] || [ "$FEATURE_BRANCH" = "null" ]; then \
-  uv pip install --system --no-cache-dir "git+https://github.com/mage-ai/mage-ai.git#egg=mage-integrations&subdirectory=mage_integrations"; \
-  else \
-  uv pip install --system --no-cache-dir "git+https://github.com/mage-ai/mage-ai.git@$FEATURE_BRANCH#egg=mage-integrations&subdirectory=mage_integrations"; \
-  fi
+  uv pip install --system --no-cache-dir faster-fifo
 
-# Mage
-COPY ./mage_ai/server/constants.py /tmp/constants.py
-RUN if [ -z "$FEATURE_BRANCH" ] || [ "$FEATURE_BRANCH" = "null" ] ; then \
-  tag=$(tail -n 1 /tmp/constants.py) && \
-  VERSION=$(echo "$tag" | tr -d "'") && \
-  uv pip install --system --no-cache-dir "mage-ai[all]==$VERSION"; \
-  else \
-  uv pip install --system --no-cache-dir "git+https://github.com/mage-ai/mage-ai.git@$FEATURE_BRANCH#egg=mage-ai[all]"; \
-  fi
+# Preserve the existing feature set while installing our own distributions.
+# FEATURE_BRANCH is no longer used: select the source by checking it out locally.
+COPY --from=source-wheels /wheels /tmp/mage-wheels
+RUN --mount=type=cache,target=/root/.cache/uv \
+    set -- /tmp/mage-wheels/mage_ai-*.whl && \
+    uv pip install --system "$1[all]" \
+      /tmp/mage-wheels/mage_integrations-*.whl && \
+    rm -rf /tmp/mage-wheels
 
 
 ## Startup Script

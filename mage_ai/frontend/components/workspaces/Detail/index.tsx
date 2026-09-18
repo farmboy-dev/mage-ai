@@ -117,46 +117,6 @@ function WorkspaceDetail({
       props: any,
     }[] = [];
     
-    if (clusterType === 'ecs') {
-      if (status === 'STOPPED') {
-        items.unshift({
-          label: 'Resume instance',
-          // @ts-ignore
-          onClick: () => updateWorkspace({
-            workspace: {
-              action: 'resume',
-              cluster_type: clusterType,
-              name: instance.name,
-              task_arn: instance.task_arn,
-            },
-          }),
-          props: {
-            loading: isLoadingUpdateWorkspace,
-            primary: true,
-          },
-          uuid: 'resume_instance',
-        });
-      } else if (status === 'RUNNING') {
-        items.unshift({
-          label: 'Stop instance',
-          // @ts-ignore
-          onClick: () => updateWorkspace({
-            workspace: {
-              action: 'stop',
-              cluster_type: clusterType,
-              name: instance.name,
-              task_arn: instance.task_arn,
-            },
-          }),
-          props: {
-            loading: isLoadingUpdateWorkspace,
-            warning: true,
-          },
-          uuid: 'stop_instance',
-        });
-      }
-    }
-
     if (clusterType === 'k8s') {
       if (status === 'STOPPED') {
         items.unshift({

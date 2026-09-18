@@ -119,7 +119,7 @@ def get_spark_session(spark_config: SparkConfig):
         SparkSession: The Spark session.
     """
     if not SPARK_ENABLED:
-        raise ImportError('Spark is not supported in current environment.')
+        raise ImportError('PySpark is unavailable. Install PySpark and a compatible Java runtime in the execution image.')
 
     if spark_config:
         active_session = SparkSession.getActiveSession()
@@ -137,8 +137,7 @@ def get_spark_session(spark_config: SparkConfig):
             conf = SparkConf()
             if spark_config.app_name:
                 conf.setAppName(spark_config.app_name)
-            if spark_config.spark_master:
-                conf.setMaster(spark_config.spark_master)
+            conf.setMaster(spark_config.spark_master or os.getenv('SPARK_MASTER_HOST', 'local'))
             if spark_config.spark_home:
                 conf.setSparkHome(spark_config.spark_home)
             if spark_config.executor_env:

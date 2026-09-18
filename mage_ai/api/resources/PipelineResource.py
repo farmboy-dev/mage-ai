@@ -52,10 +52,11 @@ from mage_ai.orchestration.pipeline_scheduler import (
     retry_pipeline_run,
 )
 from mage_ai.server.active_kernel import switch_active_kernel
-from mage_ai.server.kernels import PIPELINE_TO_KERNEL_NAME, KernelName
+from mage_ai.server.kernels import PIPELINE_TO_KERNEL_NAME
 from mage_ai.settings.platform import project_platform_activated
 from mage_ai.settings.platform.utils import get_pipeline_from_platform_async
 from mage_ai.settings.repo import get_repo_path
+from mage_ai.shared.cloud_features import reject_removed_executor
 from mage_ai.shared.array import find, find_index
 from mage_ai.shared.hash import group_by, ignore_keys, merge_dict
 from mage_ai.shared.strings import is_number
@@ -410,6 +411,7 @@ class PipelineResource(BaseResource):
     @classmethod
     @safe_db_query
     async def create(self, payload, user, **kwargs):
+        reject_removed_executor((payload or {}).get('executor_type'))
         context_data = kwargs.get('context_data')
 
         clone_pipeline_uuid = payload.get('clone_pipeline_uuid')
@@ -581,10 +583,7 @@ class PipelineResource(BaseResource):
         api_operation_action = kwargs.get('api_operation_action', None)
         if api_operation_action != DELETE:
             kernel_name = PIPELINE_TO_KERNEL_NAME[pipeline.type]
-            switch_active_kernel(
-                kernel_name,
-                emr_config=pipeline.executor_config if kernel_name == KernelName.PYSPARK else None,
-            )
+            switch_active_kernel(kernel_name)
 
         if api_operation_action == DETAIL:
             if Project(
@@ -651,6 +650,7 @@ class PipelineResource(BaseResource):
 
     @safe_db_query
     async def update(self, payload, **kwargs):
+        reject_removed_executor((payload or {}).get('executor_type'))
         context_data = kwargs.get('context_data')
         if 'add_upstream_for_block_uuid' in payload:
             block_uuid = payload['add_upstream_for_block_uuid']
@@ -743,12 +743,7 @@ class PipelineResource(BaseResource):
         )
         try:
             kernel_name = PIPELINE_TO_KERNEL_NAME[self.model.type]
-            switch_active_kernel(
-                kernel_name,
-                emr_config=self.model.executor_config
-                if kernel_name == KernelName.PYSPARK
-                else None,
-            )
+            switch_active_kernel(kernel_name)
         except Exception as e:
             pipeline_type_updated = payload.get('type')
             if pipeline_type_updated is not None and pipeline_type_updated != pipeline_type:

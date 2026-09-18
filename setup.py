@@ -175,7 +175,7 @@ setuptools.setup(
             'great-expectations==0.18.12',
             'gspread==5.7.2',
             'influxdb_client==1.36.1',
-            'kafka-python==2.0.2',
+            'kafka-python==2.3.0',
             'kubernetes==33.1.0',
             'langchain==0.2.5',
             'langchain_community==0.2.5',

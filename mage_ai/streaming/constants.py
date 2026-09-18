@@ -45,12 +45,9 @@ class SinkType(StrEnum):
 
 
 GENERIC_IO_SINK_TYPES = frozenset([
-    SinkType.BIGQUERY,
     SinkType.CLICKHOUSE,
     SinkType.DUCKDB,
     SinkType.MSSQL,
     SinkType.MYSQL,
-    SinkType.REDSHIFT,
-    SinkType.SNOWFLAKE,
     SinkType.TRINO,
 ])

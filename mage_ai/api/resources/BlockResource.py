@@ -1,3 +1,4 @@
+from mage_ai.shared.cloud_features import reject_removed_connector_config
 import os
 import urllib.parse
 
@@ -31,8 +32,16 @@ from mage_ai.orchestration.db import safe_db_query
 from mage_ai.orchestration.db.models.schedules import PipelineRun
 from mage_ai.presenters.blocks.graph import build_blocks_for_pipeline_run
 from mage_ai.settings.repo import get_repo_path
+from mage_ai.shared.cloud_features import reject_removed_executor
 from mage_ai.shared.hash import merge_dict
 from mage_ai.usage_statistics.logger import UsageStatisticLogger
+
+
+def validate_connector_payload(payload):
+    try:
+        reject_removed_connector_config(payload)
+    except ValueError as error:
+        raise ApiError({**ApiError.RESOURCE_INVALID, 'message': str(error)}) from error
 
 
 class BlockResource(GenericResource):
@@ -101,6 +110,8 @@ class BlockResource(GenericResource):
     @classmethod
     @safe_db_query
     async def create(self, payload, user, **kwargs):
+        validate_connector_payload(payload)
+        reject_removed_executor((payload or {}).get('executor_type'))
         pipeline = kwargs.get('parent_model')
         block = None
 
@@ -367,6 +378,8 @@ class BlockResource(GenericResource):
 
     @safe_db_query
     async def update(self, payload, **kwargs):
+        validate_connector_payload(payload)
+        reject_removed_executor((payload or {}).get('executor_type'))
         cache_block_action_object = await BlockActionObjectCache.initialize_cache()
         cache_block_action_object.update_block(self.model, remove=True)
 

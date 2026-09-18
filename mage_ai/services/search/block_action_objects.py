@@ -9,6 +9,7 @@ from mage_ai.cache.block_action_object.constants import (
     OBJECT_TYPE_MAGE_TEMPLATE,
 )
 from mage_ai.shared.custom_logger import DX_PRINTER
+from mage_ai.shared.cloud_features import reject_removed_connector_config
 
 DEFAULT_RATIO = 50
 
@@ -24,6 +25,14 @@ async def search(query: str, ratio: float = None, limit: int = None) -> List:
 
     for object_type, mapping in cache.load_all_data().items():
         for uuid, block_action_object in mapping.items():
+            if object_type == OBJECT_TYPE_MAGE_TEMPLATE:
+                try:
+                    reject_removed_connector_config({
+                        **block_action_object,
+                        'template_path': block_action_object.get('path'),
+                    })
+                except ValueError:
+                    continue
             text = get_searchable_text(object_type, block_action_object)
             if not text:
                 continue

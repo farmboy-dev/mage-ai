@@ -30,6 +30,7 @@ class BaseAPI(ABC):
         application_id: str = None,
         application_spark_ui_url: str = None,
         spark_session=None,
+        repo_config=None,
     ):
         self.application_id = application_id
         self.spark_session = None
@@ -37,8 +38,8 @@ class BaseAPI(ABC):
         if spark_session:
             self.spark_session = spark_session
         else:
-            repo_config = RepoConfig(repo_path=get_repo_path())
-            spark_config = SparkConfig.load(config=repo_config.spark_config)
+            repo_config = repo_config or RepoConfig(repo_path=get_repo_path())
+            spark_config = SparkConfig.load(config=repo_config.spark_config or {})
 
             try:
                 self.spark_session = get_spark_session(spark_config)

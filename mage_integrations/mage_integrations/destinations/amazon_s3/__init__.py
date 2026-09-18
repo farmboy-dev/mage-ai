@@ -37,6 +37,9 @@ class AmazonS3(Destination):
 
     def build_client(self):
         config = Config(
+            s3={'addressing_style': self.config.get('aws_s3_addressing_style')
+                or ('path' if self.endpoint else 'auto')},
+            signature_version='s3v4',
            retries={
               'max_attempts': 10,
               'mode': 'standard',
@@ -67,12 +70,14 @@ class AmazonS3(Destination):
                 's3',
                 config=config,
                 region_name=self.region,
+                endpoint_url=self.endpoint,
             )
 
         return boto3.client(
             's3',
             aws_access_key_id=self.config.get('aws_access_key_id'),
             aws_secret_access_key=self.config.get('aws_secret_access_key'),
+            aws_session_token=self.config.get('aws_session_token'),
             config=config,
             region_name=self.region,
             endpoint_url=self.endpoint,

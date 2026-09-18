@@ -16,7 +16,12 @@ function getHostCore(
   if (windowDefined) {
     host = window.location.hostname;
   }
-  if ((host === defaultHost && !opts?.forceCurrentPort) || opts?.forceDefaultPort) {
+  const devApiPort = process.env.NODE_ENV === 'development'
+    ? process.env.NEXT_PUBLIC_DEV_API_PORT
+    : undefined;
+  if (devApiPort && !opts?.forceCurrentPort) {
+    host = `${host}:${devApiPort}`;
+  } else if ((host === defaultHost && !opts?.forceCurrentPort) || opts?.forceDefaultPort) {
     host = `${host}:${defaultPort}`;
   } else if (windowDefined && !!window.location.port) {
     host = `${host}:${window.location.port}`;

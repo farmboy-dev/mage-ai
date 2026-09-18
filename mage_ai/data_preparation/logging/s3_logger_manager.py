@@ -15,6 +15,9 @@ class S3Config(BaseConfig):
     aws_access_key_id: str = None
     aws_secret_access_key: str = None
     endpoint_url: str = None
+    region_name: str = None
+    aws_session_token: str = None
+    addressing_style: str = None
 
 
 class S3LoggerManager(LoggerManager):
@@ -30,6 +33,9 @@ class S3LoggerManager(LoggerManager):
             aws_secret_access_key=self.s3_config.aws_secret_access_key,
             bucket=self.s3_config.bucket,
             endpoint_url=self.s3_config.endpoint_url,
+            region_name=self.s3_config.region_name,
+            aws_session_token=self.s3_config.aws_session_token,
+            addressing_style=self.s3_config.addressing_style,
         )
 
     def create_log_filepath_dir(self, path):

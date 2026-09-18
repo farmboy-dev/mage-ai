@@ -25,23 +25,6 @@ export enum ProjectTypeEnum {
   SUB = 'sub',
 }
 
-export interface EMRConfigType {
-  bootstrap_script_path?: string;
-  ec2_key_name?: string;
-  ec2_key_path?: string;
-  master_instance_type?: string;
-  master_security_group?: string;
-  master_spark_properties?: {
-    [key: string]: boolean | number | string;
-  };
-  slave_instance_count?: number;
-  slave_instance_type?: string;
-  slave_security_group?: string;
-  slave_spark_properties?: {
-    [key: string]: boolean | number | string;
-  };
-  spark_jars?: string[];
-}
 
 export interface SparkConfigType {
   app_name?: string;
@@ -95,11 +78,13 @@ export type ProjectRequestPayloadType = {
   };
   help_improve_mage?: boolean;
   openai_api_key?: string;
+  openai_base_url?: string;
+  openai_model?: string;
   pipelines?: ProjectPipelinesType;
 };
 
 export default interface ProjectType {
-  emr_config?: EMRConfigType;
+  ai_configured?: boolean;
   features?: {
     [key: string]: boolean;
   };
@@ -113,6 +98,8 @@ export default interface ProjectType {
   latest_version?: string;
   name?: string;
   openai_api_key?: string;
+  openai_base_url?: string;
+  openai_model?: string;
   pipelines?: ProjectPipelinesType;
   platform_settings?: PlatformType;
   project_uuid?: string;

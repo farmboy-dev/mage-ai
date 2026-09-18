@@ -3,7 +3,6 @@ import App, { AppProps } from 'next/app';
 import Cookies from 'js-cookie';
 import LoadingBar from 'react-top-loading-bar';
 import dynamic from 'next/dynamic';
-import { GoogleAnalytics } from '@next/third-parties/google';
 import { GridThemeProvider } from 'styled-bootstrap-grid';
 import { ThemeProvider } from 'styled-components';
 import { createRoot } from 'react-dom/client';
@@ -23,7 +22,6 @@ import useGlobalKeyboardShortcuts from '@utils/hooks/keyboardShortcuts/useGlobal
 import useProject from '@utils/models/project/useProject';
 import useStatus from '@utils/models/status/useStatus';
 import { CustomEventUUID } from '@utils/events/constants';
-import { DEMO_GA_MEASUREMENT_ID } from '@utils/gtag';
 import { ErrorProvider } from '@context/Error';
 import { LOCAL_STORAGE_KEY_HIDE_PUBLIC_DEMO_WARNING } from '@storage/constants';
 import { ModalProvider } from '@context/Modal';
@@ -334,7 +332,6 @@ function MyApp(props: MyAppProps & AppProps) {
         </ThemeProvider>
       </KeyboardContext.Provider>
 
-      {isDemoApp && <GoogleAnalytics gaId={DEMO_GA_MEASUREMENT_ID} />}
     </>
   );
 }

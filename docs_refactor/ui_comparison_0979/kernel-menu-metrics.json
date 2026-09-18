@@ -1,0 +1,38 @@
+{
+  "modified": [
+    {
+      "text": "PySpark",
+      "font": "\"Roboto Regular\", \"Helvetica Neue\", Helvetica, sans-serif",
+      "size": "14px",
+      "weight": "400",
+      "color": "rgb(255, 255, 255)",
+      "lineHeight": "20px",
+      "rect": {
+        "x": 720,
+        "y": 126.5,
+        "w": 52,
+        "h": 16
+      },
+      "parent": "P",
+      "grandparent": "DIV"
+    }
+  ],
+  "original": [
+    {
+      "text": "PySpark",
+      "font": "\"Roboto Regular\", \"Helvetica Neue\", Helvetica, sans-serif",
+      "size": "14px",
+      "weight": "400",
+      "color": "rgb(255, 255, 255)",
+      "lineHeight": "20px",
+      "rect": {
+        "x": 720,
+        "y": 126.5,
+        "w": 52,
+        "h": 16
+      },
+      "parent": "P",
+      "grandparent": "DIV"
+    }
+  ]
+}

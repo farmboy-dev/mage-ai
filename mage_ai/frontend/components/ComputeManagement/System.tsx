@@ -1,6 +1,5 @@
 import { ThemeContext } from 'styled-components';
 import { useContext, useMemo, useState } from 'react';
-
 import Accordion from '@oracle/components/Accordion';
 import AccordionPanel  from '@oracle/components/Accordion/AccordionPanel';
 import ButtonTabs, { TabType } from '@oracle/components/Tabs/ButtonTabs';

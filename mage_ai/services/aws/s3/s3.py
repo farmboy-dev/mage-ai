@@ -2,6 +2,8 @@ import boto3
 import boto3.s3.transfer as s3transfer
 import botocore
 
+from mage_ai.services.aws.s3.config import client_options
+
 MAX_POOL_CONNECTIONS = 100
 MAX_KEYS = 10000
 
@@ -9,26 +11,23 @@ MAX_KEYS = 10000
 class Client:
     def __init__(self, bucket, **kwargs):
         self.bucket = bucket
-        self.client = kwargs.get(
-            'client',
-            boto3.client(
-                's3',
-                aws_access_key_id=kwargs.get('aws_access_key_id'),
-                aws_secret_access_key=kwargs.get('aws_secret_access_key'),
-                config=botocore.client.Config(max_pool_connections=MAX_POOL_CONNECTIONS),
-                endpoint_url=kwargs.get('endpoint_url'),
-            ),
+        self.client_options = client_options(
+            **{**kwargs, 'config': kwargs.get('config') or botocore.client.Config(
+                max_pool_connections=MAX_POOL_CONNECTIONS)},
         )
+        self.client = kwargs.get('client')
+        if self.client is None:
+            self.client = boto3.client('s3', **self.client_options)
         self.transfer_config = s3transfer.TransferConfig(
             use_threads=True,
             max_concurrency=MAX_POOL_CONNECTIONS,
         )
 
     def download_file(self, object_key: str, filename_destination):
-        return self.resource().Bucket(self.bucket).download_file(object_key, filename_destination)
+        return self.client.download_file(self.bucket, object_key, filename_destination)
 
     def resource(self):
-        return boto3.resource('s3')
+        return boto3.resource('s3', **self.client_options)
 
     def read(self, object_key: str):
         return self.get_object(object_key).read()

@@ -147,45 +147,6 @@ function Preferences({
           </Text>
         </Spacing>
 
-        <Divider light />
-
-        <Spacing p={PADDING_UNITS}>
-          <FlexContainer
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Flex flexDirection="column">
-              <Spacing mb={1}>
-                <Headline level={5}>
-                  Help improve Mage
-                </Headline>
-              </Spacing>
-
-              <Text default>
-                Please contribute usage statistics to help improve the developer experience
-                for you and everyone in the community. Learn more <Link
-                  href="https://docs.mage.ai/contributing/statistics/overview"
-                  openNewWindow
-                >
-                  here
-                </Link>.
-              </Text>
-            </Flex>
-
-            <Spacing mr={PADDING_UNITS} />
-
-            <ToggleSwitch
-              checked={projectAttributes?.help_improve_mage}
-              compact
-              id="help_improve_mage_toggle"
-              onCheck={() => setProjectAttributes(prev => ({
-                ...prev,
-                help_improve_mage: !projectAttributes?.help_improve_mage,
-              }))}
-            />
-          </FlexContainer>
-        </Spacing>
-
         {/*<Divider light />
 
         <Spacing p={PADDING_UNITS}>
@@ -327,9 +288,31 @@ function Preferences({
         <Spacing p={PADDING_UNITS}>
           <Spacing mb={1}>
             <Headline level={5}>
-              OpenAI
+              OpenAI-compatible AI
             </Headline>
           </Spacing>
+
+          <Text default small>
+            Set your internal API base URL (including /v1) and model name.
+            No default external endpoint is used. Leave the API key empty if your server requires none.
+          </Text>
+          {[
+            ['openai_base_url', 'API base URL', 'http://ai.internal:8000/v1'],
+            ['openai_model', 'Model', 'internal-model'],
+          ].map(([key, label, placeholder]) => (
+            <Spacing key={key} mt={2} mb={2}>
+              <TextInput
+                disabled={isDemoApp}
+                id={key}
+                aria-label={label}
+                label={label}
+                placeholder={placeholder}
+                onChange={e => setProjectAttributes(prev => ({ ...prev, [key]: e.target.value }))}
+                primary
+                value={projectAttributes?.[key] || ''}
+              />
+            </Spacing>
+          ))}
 
           {(openaiApiKey && !editingOpenAIKey)
             ?
@@ -357,6 +340,7 @@ function Preferences({
                 }))}
                 primary
                 setContentOnMount
+                type="password"
                 value={projectAttributes?.openai_api_key || ''}
               />
           }
@@ -372,15 +356,11 @@ function Preferences({
           onClick={() => {
             const updateProjectPayload: ProjectRequestPayloadType = {
               features: projectAttributes?.features,
-              help_improve_mage: projectAttributes?.help_improve_mage,
               openai_api_key: projectAttributes?.openai_api_key,
+              openai_base_url: projectAttributes?.openai_base_url,
+              openai_model: projectAttributes?.openai_model,
               pipelines: projectAttributes?.pipelines,
             };
-            if (project?.help_improve_mage === true
-              && projectAttributes?.help_improve_mage === false
-            ) {
-              updateProjectPayload.deny_improve_mage = true;
-            }
             updateProject(updateProjectPayload);
           }}
           primary

@@ -1,0 +1,458 @@
+[
+  {
+    "width": 1440,
+    "saved": false,
+    "tabs": {
+      "Setup": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 320
+      },
+      "Resources": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 320
+      },
+      "Monitoring": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 320
+      },
+      "System": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 320
+      }
+    },
+    "dragged": {
+      "buttonInside": true,
+      "counts": [
+        {
+          "text": "0 applications",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        },
+        {
+          "text": "0 jobs",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        }
+      ],
+      "panelWidth": 280
+    },
+    "reloaded": {
+      "buttonInside": true,
+      "counts": [
+        {
+          "text": "0 applications",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        },
+        {
+          "text": "0 jobs",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        }
+      ],
+      "panelWidth": 280
+    }
+  },
+  {
+    "width": 1440,
+    "saved": true,
+    "tabs": {
+      "Setup": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 280
+      },
+      "Resources": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 280
+      },
+      "Monitoring": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 280
+      },
+      "System": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 280
+      }
+    },
+    "dragged": {
+      "buttonInside": true,
+      "counts": [
+        {
+          "text": "0 applications",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        },
+        {
+          "text": "0 jobs",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        }
+      ],
+      "panelWidth": 280
+    },
+    "reloaded": {
+      "buttonInside": true,
+      "counts": [
+        {
+          "text": "0 applications",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        },
+        {
+          "text": "0 jobs",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        }
+      ],
+      "panelWidth": 280
+    }
+  },
+  {
+    "width": 1024,
+    "saved": false,
+    "tabs": {
+      "Setup": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 320
+      },
+      "Resources": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 320
+      },
+      "Monitoring": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 320
+      },
+      "System": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 320
+      }
+    },
+    "dragged": {
+      "buttonInside": true,
+      "counts": [
+        {
+          "text": "0 applications",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        },
+        {
+          "text": "0 jobs",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        }
+      ],
+      "panelWidth": 280
+    },
+    "reloaded": {
+      "buttonInside": true,
+      "counts": [
+        {
+          "text": "0 applications",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        },
+        {
+          "text": "0 jobs",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        }
+      ],
+      "panelWidth": 280
+    }
+  },
+  {
+    "width": 1024,
+    "saved": true,
+    "tabs": {
+      "Setup": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 280
+      },
+      "Resources": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 280
+      },
+      "Monitoring": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 280
+      },
+      "System": {
+        "buttonInside": true,
+        "counts": [
+          {
+            "text": "0 applications",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "0 jobs",
+            "height": 12,
+            "lineHeight": 12,
+            "whiteSpace": "nowrap"
+          }
+        ],
+        "panelWidth": 280
+      }
+    },
+    "dragged": {
+      "buttonInside": true,
+      "counts": [
+        {
+          "text": "0 applications",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        },
+        {
+          "text": "0 jobs",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        }
+      ],
+      "panelWidth": 280
+    },
+    "reloaded": {
+      "buttonInside": true,
+      "counts": [
+        {
+          "text": "0 applications",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        },
+        {
+          "text": "0 jobs",
+          "height": 12,
+          "lineHeight": 12,
+          "whiteSpace": "nowrap"
+        }
+      ],
+      "panelWidth": 280
+    }
+  }
+]

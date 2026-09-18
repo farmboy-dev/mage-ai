@@ -3,7 +3,7 @@ from mage_ai.api.presenters.BasePresenter import BasePresenter
 
 class ProjectPresenter(BasePresenter):
     default_attributes = [
-        'emr_config',
+        'ai_configured',
         'features',
         'features_defined',
         'features_override',
@@ -11,6 +11,8 @@ class ProjectPresenter(BasePresenter):
         'latest_version',
         'name',
         'openai_api_key',
+        'openai_base_url',
+        'openai_model',
         'pipelines',
         'platform_settings',
         'project_uuid',

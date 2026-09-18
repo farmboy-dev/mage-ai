@@ -124,39 +124,6 @@ def test_output(output, *args) -> None:
         self.assertEqual(expected_template, new_template2)
 
     def test_template_generation_data_loader_specific(self):
-        redshift_template = """from mage_ai.settings.repo import get_repo_path
-from mage_ai.io.config import ConfigFileLoader
-from mage_ai.io.redshift import Redshift
-from os import path
-if 'data_loader' not in globals():
-    from mage_ai.data_preparation.decorators import data_loader
-if 'test' not in globals():
-    from mage_ai.data_preparation.decorators import test
-
-
-@data_loader
-def load_data_from_redshift(*args, **kwargs):
-    \"\"\"
-    Template for loading data from a Redshift cluster.
-    Specify your configuration settings in 'io_config.yaml'.
-
-    Docs: https://docs.mage.ai/design/data-loading#redshift
-    \"\"\"
-    query = 'your_redshift_selection_query'
-    config_path = path.join(get_repo_path(), 'io_config.yaml')
-    config_profile = 'default'
-
-    with Redshift.with_config(ConfigFileLoader(config_path, config_profile)) as loader:
-        return loader.load(query)
-
-
-@test
-def test_output(output, *args) -> None:
-    \"\"\"
-    Template code for testing the output of the block.
-    \"\"\"
-    assert output is not None, 'The output is undefined'
-"""
         s3_template = """from mage_ai.settings.repo import get_repo_path
 from mage_ai.io.config import ConfigFileLoader
 from mage_ai.io.s3 import S3
@@ -197,9 +164,9 @@ def test_output(output, *args) -> None:
 
         config1 = {'data_source': DataSource.REDSHIFT}
         config2 = {'data_source': DataSource.S3}
-        new_redshift_template = fetch_template_source(BlockType.DATA_LOADER, config1)
+        with self.assertRaisesRegex(ValueError, "removed from this internal deployment"):
+            fetch_template_source(BlockType.DATA_LOADER, config1)
         new_s3_template = fetch_template_source(BlockType.DATA_LOADER, config2)
-        self.assertEqual(redshift_template, new_redshift_template)
         self.assertEqual(s3_template, new_s3_template)
 
     def test_template_generation_data_loader_api(self):
@@ -519,74 +486,13 @@ def export_data(data, *args, **kwargs):
         self.assertEqual(expected_template, new_template2)
 
     def test_template_generation_data_exporter_specific(self):
-        bigquery_template = """from mage_ai.settings.repo import get_repo_path
-from mage_ai.io.bigquery import BigQuery
-from mage_ai.io.config import ConfigFileLoader
-from pandas import DataFrame
-from os import path
-
-if 'data_exporter' not in globals():
-    from mage_ai.data_preparation.decorators import data_exporter
-
-
-@data_exporter
-def export_data_to_big_query(df: DataFrame, **kwargs) -> None:
-    \"\"\"
-    Template for exporting data to a BigQuery warehouse.
-    Specify your configuration settings in 'io_config.yaml'.
-
-    Docs: https://docs.mage.ai/design/data-loading#bigquery
-    \"\"\"
-    table_id = 'your-project.your_dataset.your_table_name'
-    config_path = path.join(get_repo_path(), 'io_config.yaml')
-    config_profile = 'default'
-
-    BigQuery.with_config(ConfigFileLoader(config_path, config_profile)).export(
-        df,
-        table_id,
-        if_exists='replace',  # Specify resolution policy if table name already exists
-    )
-"""
-        snowflake_template = """from mage_ai.settings.repo import get_repo_path
-from mage_ai.io.config import ConfigFileLoader
-from mage_ai.io.snowflake import Snowflake
-from pandas import DataFrame
-from os import path
-
-if 'data_exporter' not in globals():
-    from mage_ai.data_preparation.decorators import data_exporter
-
-
-@data_exporter
-def export_data_to_snowflake(df: DataFrame, **kwargs) -> None:
-    \"\"\"
-    Template for exporting data to a Snowflake warehouse.
-    Specify your configuration settings in 'io_config.yaml'.
-
-    Docs: https://docs.mage.ai/design/data-loading#snowflake
-    \"\"\"
-    table_name = 'your_table_name'
-    database = 'your_database_name'
-    schema = 'your_schema_name'
-    config_path = path.join(get_repo_path(), 'io_config.yaml')
-    config_profile = 'default'
-
-    with Snowflake.with_config(ConfigFileLoader(config_path, config_profile)) as loader:
-        loader.export(
-            df,
-            table_name,
-            database,
-            schema,
-            if_exists='replace',  # Specify resolution policy if table already exists
-        )
-"""
 
         config1 = {'data_source': DataSource.BIGQUERY}
         config2 = {'data_source': DataSource.SNOWFLAKE}
-        new_bigquery_template = fetch_template_source(BlockType.DATA_EXPORTER, config1)
-        new_snowflake_template = fetch_template_source(BlockType.DATA_EXPORTER, config2)
-        self.assertEqual(bigquery_template, new_bigquery_template)
-        self.assertEqual(snowflake_template, new_snowflake_template)
+        with self.assertRaisesRegex(ValueError, "removed from this internal deployment"):
+            fetch_template_source(BlockType.DATA_EXPORTER, config1)
+        with self.assertRaisesRegex(ValueError, "removed from this internal deployment"):
+            fetch_template_source(BlockType.DATA_EXPORTER, config2)
 
     def test_template_generation_data_exporter_streaming(self):
         opensearch_template = """connector_type: opensearch
@@ -643,7 +549,6 @@ def transform_in_postgres(*args, **kwargs) -> DataFrame:
     with Postgres.with_config(ConfigFileLoader(config_path, config_profile)) as loader:
         # Write queries to transform your dataset with
         loader.execute(query)
-        loader.commit() # Permanently apply database changes
         return loader.sample(sample_schema, sample_size, sample_table)
 
 
@@ -655,51 +560,10 @@ def test_output(output, *args) -> None:
     assert output is not None, 'The output is undefined'
 """
 
-        bigquery_template = """from mage_ai.settings.repo import get_repo_path
-from mage_ai.io.config import ConfigFileLoader
-from mage_ai.io.bigquery import BigQuery
-from os import path
-from pandas import DataFrame
-
-if 'transformer' not in globals():
-    from mage_ai.data_preparation.decorators import transformer
-if 'test' not in globals():
-    from mage_ai.data_preparation.decorators import test
-
-
-@transformer
-def transform_in_bigquery(*args, **kwargs) -> DataFrame:
-    \"\"\"
-    Performs a transformation in BigQuery
-    \"\"\"
-    config_path = path.join(get_repo_path(), 'io_config.yaml')
-    config_profile = 'default'
-
-    # Specify your SQL transformation query
-    query = 'your transformation_query'
-
-    # Specify table to sample data from. Use to visualize changes to table.
-    sample_table = 'table_to_sample_data_from'
-    sample_schema = 'schema_of_table_to_sample'
-    sample_size = 10_000
-
-    with BigQuery.with_config(ConfigFileLoader(config_path, config_profile)) as loader:
-        # Write queries to transform your dataset with
-        loader.execute(query)
-        return loader.sample(sample_schema, sample_size, sample_table)
-
-
-@test
-def test_output(output, *args) -> None:
-    \"\"\"
-    Template code for testing the output of the block.
-    \"\"\"
-    assert output is not None, 'The output is undefined'
-"""
 
         config1 = {'data_source': DataSource.POSTGRES}
         config2 = {'data_source': DataSource.BIGQUERY}
         expected_postgres_template = fetch_template_source(BlockType.TRANSFORMER, config1)
-        expected_bigquery_template = fetch_template_source(BlockType.TRANSFORMER, config2)
+        with self.assertRaisesRegex(ValueError, "removed from this internal deployment"):
+            fetch_template_source(BlockType.TRANSFORMER, config2)
         self.assertEqual(postgres_template, expected_postgres_template)
-        self.assertEqual(bigquery_template, expected_bigquery_template)

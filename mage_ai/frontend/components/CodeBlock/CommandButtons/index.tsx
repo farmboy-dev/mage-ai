@@ -229,12 +229,12 @@ function CommandButtons({
   );
 
   const itemsAIActions = useMemo(() => {
-    const shouldShowModal = !project?.openai_api_key;
+    const shouldShowModal = !project?.ai_configured;
     const showModal = (llm: LLMType) => {
       showConfigureProjectModal?.({
         header: <Setup />,
         onSaveSuccess: (project: ProjectType) => {
-          if (project?.openai_api_key) {
+          if (project?.ai_configured) {
             // @ts-ignore
             updatePipeline({
               pipeline: {

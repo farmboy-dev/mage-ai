@@ -1,3 +1,4 @@
+from mage_ai.shared.cloud_features import reject_removed_connector_config
 import json
 from typing import Mapping, Union
 
@@ -21,10 +22,7 @@ from mage_ai.io.base import DataSource
 
 
 MAP_DATASOURCE_TO_HANDLER = {
-    DataSource.BIGQUERY: 'BigQuery',
     DataSource.POSTGRES: 'Postgres',
-    DataSource.REDSHIFT: 'Redshift',
-    DataSource.SNOWFLAKE: 'Snowflake',
 }
 
 
@@ -58,6 +56,7 @@ def fetch_template_source(
     language: BlockLanguage = BlockLanguage.PYTHON,
     pipeline_type: PipelineType = PipelineType.PYTHON,
 ) -> str:
+    reject_removed_connector_config(config)
     template_source = ''
 
     if language not in [BlockLanguage.PYTHON, BlockLanguage.R, BlockLanguage.YAML]:
@@ -228,7 +227,6 @@ def __fetch_transformer_data_warehouse_template(data_source: DataSource):
     if data_source_handler is None:
         raise ValueError(f'No associated database/warehouse for data source \'{data_source}\'')
 
-    if data_source != DataSource.BIGQUERY:
         additional_args = '\n        loader.commit() # Permanently apply database changes'
     else:
         additional_args = ''

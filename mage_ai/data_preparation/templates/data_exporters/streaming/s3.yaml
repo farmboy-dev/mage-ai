@@ -4,3 +4,9 @@ prefix: prefix
 file_type: parquet
 buffer_size_mb: 5
 buffer_timeout_seconds: 300
+# Set your MinIO/Ceph S3 endpoint and credentials (or use environment credentials).
+endpoint_url: null
+region_name: us-east-1
+addressing_style: path
+aws_access_key_id: null
+aws_secret_access_key: null

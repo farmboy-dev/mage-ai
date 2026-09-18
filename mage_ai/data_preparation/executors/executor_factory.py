@@ -4,18 +4,18 @@ from typing import Union
 from mage_ai.data_preparation.executors.block_executor import BlockExecutor
 from mage_ai.data_preparation.executors.pipeline_executor import PipelineExecutor
 from mage_ai.data_preparation.models.constants import (
-    BlockType,
     ExecutorType,
     PipelineType,
 )
 from mage_ai.data_preparation.models.pipeline import Pipeline
-from mage_ai.shared.code import is_pyspark_code
+from mage_ai.shared.cloud_features import reject_removed_executor
 
 
 class ExecutorFactory:
     @classmethod
     def get_default_executor_type(self):
         executor_type = os.getenv('DEFAULT_EXECUTOR_TYPE', ExecutorType.LOCAL_PYTHON)
+        reject_removed_executor(executor_type)
         if ExecutorType.is_valid_type(executor_type):
             return executor_type
         return ExecutorType.LOCAL_PYTHON
@@ -27,13 +27,10 @@ class ExecutorFactory:
         executor_type: Union[ExecutorType, str, None] = None,
     ):
         if executor_type is None:
-            if pipeline.type == PipelineType.PYSPARK:
-                executor_type = ExecutorType.PYSPARK
-            else:
-                executor_type = pipeline.get_executor_type()
-                if executor_type == ExecutorType.LOCAL_PYTHON or executor_type is None:
-                    # Use default executor type
-                    executor_type = self.get_default_executor_type()
+            executor_type = pipeline.get_executor_type()
+            if executor_type == ExecutorType.LOCAL_PYTHON or executor_type is None:
+                executor_type = self.get_default_executor_type()
+        reject_removed_executor(executor_type)
         return executor_type
 
     @classmethod
@@ -46,7 +43,7 @@ class ExecutorFactory:
         """Get the pipeline executor based on pipeline type or pipeline executor_type.
         If the executor_type is not specified in the method. Infer the executor_type with the
         following rules:
-        1. If the pipeline type is PYSPARK, then use PYSPARK executor.
+        1. Python and PySpark pipelines use the configured executor, without EMR inference.
         2. If the pipeline executor_type is LOCAL_PYTHON (default one) or None, and the
             "DEFAULT_EXECUTOR_TYPE" environment variable is set, use the executor type from
             "DEFAULT_EXECUTOR_TYPE" environment variable. Otherwise, use the executor type from
@@ -55,7 +52,6 @@ class ExecutorFactory:
             b. If the pipeline type is STREAMING, use StreamingPipelineExecutor.
             c. Otherwise, use default PipelineExecutor.
 
-        TODO: Add pipeline executor for GCP_CLOUD_RUN executor_type
 
         Args:
             pipeline (Pipeline): The pipeline to be executed.
@@ -65,19 +61,7 @@ class ExecutorFactory:
                 specified. Use this executor_type directly.        """
 
         executor_type = self.get_pipeline_executor_type(pipeline, executor_type=executor_type)
-        if executor_type == ExecutorType.PYSPARK:
-            from mage_ai.data_preparation.executors.pyspark_pipeline_executor import (
-                PySparkPipelineExecutor,
-            )
-
-            # Run pipeline on EMR cluster
-            return PySparkPipelineExecutor(pipeline)
-        elif executor_type == ExecutorType.ECS:
-            from mage_ai.data_preparation.executors.ecs_pipeline_executor import (
-                EcsPipelineExecutor,
-            )
-            return EcsPipelineExecutor(pipeline, execution_partition=execution_partition)
-        elif executor_type == ExecutorType.K8S:
+        if executor_type == ExecutorType.K8S:
             from mage_ai.data_preparation.executors.k8s_pipeline_executor import (
                 K8sPipelineExecutor,
             )
@@ -103,8 +87,7 @@ class ExecutorFactory:
         """Get the block executor based on block executor_type.
         If the executor_type is not specified in the method. Infer the executor_type with the
         following rules:
-        1. If the pipeline type is PYSPARK and block code contains "spark", then use
-            PYSPARK executor.
+        1. Python and PySpark blocks use the configured executor, without EMR inference.
         2. If the block executor_type is LOCAL_PYTHON (default one) and the "DEFAULT_EXECUTOR_TYPE"
             environment variable is set, use the executor type from "DEFAULT_EXECUTOR_TYPE"
             environment variable.
@@ -127,37 +110,12 @@ class ExecutorFactory:
         if executor_type is None:
             block = pipeline.get_block(block_uuid, check_template=True)
             if block:
-                if pipeline.type == PipelineType.PYSPARK and (
-                    block.type != BlockType.SENSOR or is_pyspark_code(block.content)
-                ):
-                    executor_type = ExecutorType.PYSPARK
-                else:
-                    executor_type = block.get_executor_type()
-                    if executor_type == ExecutorType.LOCAL_PYTHON or not executor_type:
-                        # Use default executor type
-                        executor_type = self.get_default_executor_type()
+                executor_type = block.get_executor_type()
+                if executor_type == ExecutorType.LOCAL_PYTHON or not executor_type:
+                    executor_type = self.get_default_executor_type()
 
-        if executor_type == ExecutorType.PYSPARK:
-            from mage_ai.data_preparation.executors.pyspark_block_executor import (
-                PySparkBlockExecutor,
-            )
-            return PySparkBlockExecutor(**executor_kwargs)
-        elif executor_type == ExecutorType.AZURE_CONTAINER_INSTANCE:
-            from mage_ai.data_preparation.executors.azure_container_instance_executor import (
-                AzureContainerInstanceExecutor,
-            )
-            return AzureContainerInstanceExecutor(**executor_kwargs)
-        elif executor_type == ExecutorType.ECS:
-            from mage_ai.data_preparation.executors.ecs_block_executor import (
-                EcsBlockExecutor,
-            )
-            return EcsBlockExecutor(**executor_kwargs)
-        elif executor_type == ExecutorType.GCP_CLOUD_RUN:
-            from mage_ai.data_preparation.executors.gcp_cloud_run_block_executor import (
-                GcpCloudRunBlockExecutor,
-            )
-            return GcpCloudRunBlockExecutor(**executor_kwargs)
-        elif executor_type == ExecutorType.K8S:
+        reject_removed_executor(executor_type)
+        if executor_type == ExecutorType.K8S:
             from mage_ai.data_preparation.executors.k8s_block_executor import (
                 K8sBlockExecutor,
             )

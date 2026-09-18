@@ -3,10 +3,6 @@ from datetime import datetime
 from typing import Dict, List
 
 from mage_ai.cluster_manager.constants import (
-    ECS_CLUSTER_NAME,
-    GCP_PATH_TO_KEYFILE,
-    GCP_PROJECT_ID,
-    GCP_REGION,
     KUBE_NAMESPACE,
     ClusterType,
 )
@@ -27,25 +23,8 @@ def get_instances(cluster_type: str, **kwargs) -> List[Dict]:
             workload_manager = WorkloadManager(namespace)
 
             instances = workload_manager.list_workloads()
-    elif cluster_type == ClusterType.ECS:
-        from mage_ai.cluster_manager.aws.ecs_task_manager import EcsTaskManager
-
-        cluster_name = os.getenv(ECS_CLUSTER_NAME)
-        ecs_instance_manager = EcsTaskManager(cluster_name)
-        instances = ecs_instance_manager.list_tasks()
-    elif cluster_type == ClusterType.CLOUD_RUN:
-        from mage_ai.cluster_manager.gcp.cloud_run_service_manager import (
-            CloudRunServiceManager,
-        )
-
-        project_id = os.getenv(GCP_PROJECT_ID)
-        path_to_credentials = os.getenv(GCP_PATH_TO_KEYFILE)
-        region = os.getenv(GCP_REGION)
-        cloud_run_service_manager = CloudRunServiceManager(
-            project_id, path_to_credentials, region=region
-        )
-
-        instances = cloud_run_service_manager.list_services()
+    else:
+        raise ValueError('Only Kubernetes workspaces are supported; cloud workspace execution is removed.')
 
     return instances
 

@@ -1,0 +1,89 @@
+# C1 전용 파일 제거 후보 목록
+
+상태 갱신: C1 승인 후 아래 81개 파일을 제거했다. 이 목록은 승인 당시의 경로 기록이며, 현재 소스에 존재하지 않는다. [구현 결과](CLOUD_CONNECTOR_C1_REMOVAL.ko.md)를 참고한다.
+
+2026-09-18 로컬 소스에서 실제 존재하는 경로를 수집했다. 삭제 실행 목록이 아닌 승인 검토용 목록이다. 공통 코드 수정 대상은 [변경 계획](CLOUD_CONNECTOR_REMOVAL_PLAN.ko.md)에 별도로 기록한다.
+
+총 81개 파일. 테스트 파일과 공통 SDK는 이 목록에 포함하지 않는다.
+
+- `mage_ai/data_preparation/models/block/sql/bigquery.py`
+- `mage_ai/data_preparation/models/block/sql/redshift.py`
+- `mage_ai/data_preparation/models/block/sql/snowflake.py`
+- `mage_ai/data_preparation/templates/data_exporters/azure_blob_storage.py`
+- `mage_ai/data_preparation/templates/data_exporters/bigquery.py`
+- `mage_ai/data_preparation/templates/data_exporters/deltalake/azure_blob_storage.py`
+- `mage_ai/data_preparation/templates/data_exporters/deltalake/gcs.py`
+- `mage_ai/data_preparation/templates/data_exporters/google_cloud_storage.py`
+- `mage_ai/data_preparation/templates/data_exporters/google_sheets.py`
+- `mage_ai/data_preparation/templates/data_exporters/redshift.py`
+- `mage_ai/data_preparation/templates/data_exporters/snowflake.py`
+- `mage_ai/data_preparation/templates/data_exporters/streaming/bigquery.yaml`
+- `mage_ai/data_preparation/templates/data_exporters/streaming/google_cloud_storage.yaml`
+- `mage_ai/data_preparation/templates/data_exporters/streaming/redshift.yaml`
+- `mage_ai/data_preparation/templates/data_exporters/streaming/snowflake.yaml`
+- `mage_ai/data_preparation/templates/data_loaders/azure_blob_storage.py`
+- `mage_ai/data_preparation/templates/data_loaders/bigquery.py`
+- `mage_ai/data_preparation/templates/data_loaders/deltalake/azure_blob_storage.py`
+- `mage_ai/data_preparation/templates/data_loaders/deltalake/gcs.py`
+- `mage_ai/data_preparation/templates/data_loaders/google_cloud_storage.py`
+- `mage_ai/data_preparation/templates/data_loaders/google_sheets.py`
+- `mage_ai/data_preparation/templates/data_loaders/redshift.py`
+- `mage_ai/data_preparation/templates/data_loaders/snowflake.py`
+- `mage_ai/data_preparation/templates/sensors/bigquery.py`
+- `mage_ai/data_preparation/templates/sensors/google_cloud_storage.py`
+- `mage_ai/data_preparation/templates/sensors/redshift.py`
+- `mage_ai/data_preparation/templates/sensors/snowflake.py`
+- `mage_ai/io/azure_blob_storage.py`
+- `mage_ai/io/bigquery.py`
+- `mage_ai/io/google_cloud_storage.py`
+- `mage_ai/io/google_sheets.py`
+- `mage_ai/io/redshift.py`
+- `mage_ai/io/snowflake.py`
+- `mage_integrations/mage_integrations/connections/bigquery/__init__.py`
+- `mage_integrations/mage_integrations/connections/google_cloud_storage/__init__.py`
+- `mage_integrations/mage_integrations/connections/google_sheets/__init__.py`
+- `mage_integrations/mage_integrations/connections/redshift/__init__.py`
+- `mage_integrations/mage_integrations/connections/snowflake/__init__.py`
+- `mage_integrations/mage_integrations/destinations/bigquery/README.md`
+- `mage_integrations/mage_integrations/destinations/bigquery/__init__.py`
+- `mage_integrations/mage_integrations/destinations/bigquery/constants.py`
+- `mage_integrations/mage_integrations/destinations/bigquery/templates/config.json`
+- `mage_integrations/mage_integrations/destinations/bigquery/utils.py`
+- `mage_integrations/mage_integrations/destinations/delta_lake_azure/README.md`
+- `mage_integrations/mage_integrations/destinations/delta_lake_azure/__init__.py`
+- `mage_integrations/mage_integrations/destinations/delta_lake_azure/templates/config.json`
+- `mage_integrations/mage_integrations/destinations/google_cloud_storage/README.md`
+- `mage_integrations/mage_integrations/destinations/google_cloud_storage/__init__.py`
+- `mage_integrations/mage_integrations/destinations/google_cloud_storage/templates/config.json`
+- `mage_integrations/mage_integrations/destinations/redshift/README.md`
+- `mage_integrations/mage_integrations/destinations/redshift/__init__.py`
+- `mage_integrations/mage_integrations/destinations/redshift/constants.py`
+- `mage_integrations/mage_integrations/destinations/redshift/templates/config.json`
+- `mage_integrations/mage_integrations/destinations/redshift/utils.py`
+- `mage_integrations/mage_integrations/destinations/snowflake/README.md`
+- `mage_integrations/mage_integrations/destinations/snowflake/__init__.py`
+- `mage_integrations/mage_integrations/destinations/snowflake/constants.py`
+- `mage_integrations/mage_integrations/destinations/snowflake/templates/config.json`
+- `mage_integrations/mage_integrations/destinations/snowflake/utils.py`
+- `mage_integrations/mage_integrations/sources/azure_blob_storage/README.md`
+- `mage_integrations/mage_integrations/sources/azure_blob_storage/__init__.py`
+- `mage_integrations/mage_integrations/sources/azure_blob_storage/templates/config.json`
+- `mage_integrations/mage_integrations/sources/bigquery/README.md`
+- `mage_integrations/mage_integrations/sources/bigquery/__init__.py`
+- `mage_integrations/mage_integrations/sources/bigquery/templates/config.json`
+- `mage_integrations/mage_integrations/sources/google_cloud_storage/README.md`
+- `mage_integrations/mage_integrations/sources/google_cloud_storage/__init__.py`
+- `mage_integrations/mage_integrations/sources/google_cloud_storage/templates/config.json`
+- `mage_integrations/mage_integrations/sources/google_sheets/README.md`
+- `mage_integrations/mage_integrations/sources/google_sheets/__init__.py`
+- `mage_integrations/mage_integrations/sources/google_sheets/templates/config.json`
+- `mage_integrations/mage_integrations/sources/google_sheets/transform.py`
+- `mage_integrations/mage_integrations/sources/redshift/README.md`
+- `mage_integrations/mage_integrations/sources/redshift/__init__.py`
+- `mage_integrations/mage_integrations/sources/redshift/constants.py`
+- `mage_integrations/mage_integrations/sources/redshift/templates/config.json`
+- `mage_integrations/mage_integrations/sources/redshift/utils.py`
+- `mage_integrations/mage_integrations/sources/snowflake/README.md`
+- `mage_integrations/mage_integrations/sources/snowflake/__init__.py`
+- `mage_integrations/mage_integrations/sources/snowflake/constants.py`
+- `mage_integrations/mage_integrations/sources/snowflake/templates/config.json`

@@ -12,7 +12,7 @@ class SparkApplicationChild:
         return API.build()
 
     @classmethod
-    async def get_application_id(self, **kwargs) -> str:
+    async def get_application_id(self, required: bool = True, **kwargs) -> str:
         application_id = None
         parent_model = kwargs.get('parent_model')
         if parent_model and isinstance(parent_model, Application):
@@ -22,7 +22,7 @@ class SparkApplicationChild:
             if models and len(models) >= 1:
                 application_id = models[0].calculated_id()
 
-        if not application_id:
+        if not application_id and required:
             error = ApiError(ApiError.RESOURCE_NOT_FOUND)
             error.message = \
                 'No application found, cannot retrieve stages without an application specified.'

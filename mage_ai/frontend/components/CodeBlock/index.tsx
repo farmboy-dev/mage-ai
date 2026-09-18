@@ -884,8 +884,7 @@ function CodeBlock(
       sparkEnabledInit &&
         !isStreamingPipeline &&
         !isDataIntegration &&
-        BlockLanguageEnum.PYTHON === blockLanguage &&
-        (PipelineTypeEnum.PYSPARK === pipeline?.type || !project?.emr_config),
+        BlockLanguageEnum.PYTHON === blockLanguage,
     );
   }, [blockLanguage, isDataIntegration, isStreamingPipeline, pipeline, project, sparkEnabledInit]);
 

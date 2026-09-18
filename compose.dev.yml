@@ -1,0 +1,58 @@
+name: mage-fork-dev
+
+services:
+  server:
+    image: localhost/mage-fork-dev:backend
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+      target: backend
+      args:
+        MAGE_RUNTIME_IMAGE: ${MAGE_RUNTIME_IMAGE:-localhost/mage-fork:dev-base}
+    init: true
+    environment:
+      ENV: dev
+      DEBUG: ${DEBUG:-0}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      AWS_ENDPOINT_URL_S3: ${AWS_ENDPOINT_URL_S3:-}
+      AWS_S3_ADDRESSING_STYLE: ${AWS_S3_ADDRESSING_STYLE:-path}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-}
+      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN:-}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-us-east-1}
+      MAGE_DATABASE_CONNECTION_URL: sqlite:////var/lib/mage/orchestration.db
+      REQUIRE_USER_AUTHENTICATION: ${REQUIRE_USER_AUTHENTICATION:-True}
+      REQUIRE_USER_PERMISSIONS: ${REQUIRE_USER_PERMISSIONS:-False}
+    ports:
+      - "127.0.0.1:6789:6789"
+      - "172.16.0.134:6789:6789"
+    volumes:
+      - .:/workspace
+      - dev_data:/var/lib/mage
+
+  app:
+    image: localhost/mage-fork-dev:frontend
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+      target: frontend
+    init: true
+    environment:
+      NEXT_TELEMETRY_DISABLED: "1"
+      NEXT_PUBLIC_DEV_API_PORT: "6789"
+    ports:
+      - "127.0.0.1:3000:3000"
+      - "172.16.0.134:3000:3000"
+    volumes:
+      - ./mage_ai/frontend:/workspace/mage_ai/frontend
+      - frontend_modules:/workspace/mage_ai/frontend/node_modules
+      - frontend_next:/workspace/mage_ai/frontend/.next
+    depends_on:
+      - server
+
+volumes:
+  dev_data:
+  frontend_modules:
+  frontend_next:

@@ -1,0 +1,55 @@
+[
+  {
+    "v2": false,
+    "visible": [
+      "Python",
+      "API",
+      "Airtable",
+      "Amazon S3",
+      "Databases",
+      "Databases (NoSQL)",
+      "Delta Lake",
+      "Druid",
+      "Generic (no template)",
+      "Local file",
+      "MongoDB",
+      "MySQL",
+      "OracleDB",
+      "Orchestration",
+      "Pinot",
+      "PostgreSQL",
+      "SQL",
+      "R",
+      "Custom template"
+    ],
+    "errors": []
+  },
+  {
+    "v2": true,
+    "visible": [
+      "Data loader",
+      "API",
+      "Airtable",
+      "Base template (generic)",
+      "Data lakes",
+      "Amazon S3",
+      "Databases",
+      "Databases (NoSQL)",
+      "Delta Lake",
+      "Druid",
+      "Local file",
+      "Orchestration",
+      "Base template (generic)",
+      "Base template (generic)",
+      "Sources",
+      "Transformer",
+      "Data exporter",
+      "dbt",
+      "Sensor",
+      "Global data product",
+      "Browse templates",
+      "Create new template"
+    ],
+    "errors": []
+  }
+]

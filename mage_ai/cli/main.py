@@ -184,7 +184,6 @@ def run(
     from contextlib import nullcontext
 
     import newrelic.agent
-    import sentry_sdk
 
     from mage_ai.data_preparation.executors.executor_factory import ExecutorFactory
     from mage_ai.data_preparation.models.pipeline import Pipeline
@@ -194,24 +193,10 @@ def run(
     from mage_ai.orchestration.db.models.schedules import PipelineRun
     from mage_ai.orchestration.utils.git import log_git_sync, run_git_sync
     from mage_ai.server.logger import Logger
-    from mage_ai.settings import (
-        SENTRY_DSN,
-        SENTRY_SERVER_NAME,
-        SENTRY_TRACES_SAMPLE_RATE,
-    )
     from mage_ai.shared.hash import merge_dict
 
     logger = Logger().new_server_logger(__name__)
 
-    sentry_dsn = SENTRY_DSN
-    if sentry_dsn:
-        sentry_sdk.init(
-            sentry_dsn,
-            traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
-            server_name=SENTRY_SERVER_NAME,
-        )
-        import atexit
-        atexit.register(lambda: sentry_sdk.flush(timeout=5))
     (enable_new_relic, application) = initialize_new_relic()
 
     with (
@@ -317,10 +302,7 @@ def create_spark_cluster(
     """
     Create EMR cluster for Mage project.
     """
-    from mage_ai.services.aws.emr.launcher import create_cluster
-
-    project_path = os.path.abspath(project_path)
-    create_cluster(project_path)
+    raise ValueError('EMR cluster creation is removed. Configure your existing Spark cluster in spark_config.')
 
 
 if __name__ == '__main__':
