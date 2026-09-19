@@ -51,3 +51,19 @@ podman build --format docker -f Dockerfile \
 로그는 `/tmp/mage-upstream-build/`의 `build.log`, `dependency-check.log`, `import-check.log`에 보관한다. 임시 로그는 영구 보관을 보장하지 않는다.
 
 로컬 `refactor` 브랜치의 `4ec7e887e` 커밋에 기존 R3a/R3b 변경과 Dockerfile 분리를 포함했다. 업로드 대상 remote는 `fork` (`https://github.com/farmboy-dev/mage-ai.git`)이며 기존 `origin`은 보존했다. HTTPS push는 인증정보가 없어 실패했다. 토큰 등의 비밀정보는 저장소와 문서에 넣지 않는다.
+
+
+## Fork 주소만 변경한 비교 빌드
+
+사용자가 원본 빌드와 fork 주소만 변경한 빌드를 모두 검증하도록 승인했다. `/tmp/mage-fork-upstream-build/Dockerfile`을 준비했으며 원본 대비 Mage 저장소 URL 세 곳만 `https://github.com/farmboy-dev/mage-ai.git`으로 변경했다. Singer/dbt-mysql/sqlglot 등 다른 저장소 URL과 설치 옵션은 그대로다. 저장소의 `Dockerfile`은 원본으로 보존한다.
+
+원격 브랜치 게시 후 실행할 명령:
+
+```bash
+podman build --format docker \
+  --build-arg FEATURE_BRANCH=refactor \
+  -f /tmp/mage-fork-upstream-build/Dockerfile \
+  -t localhost/mage-fork:upstream-fork-check .
+```
+
+2026-09-19 재확인 시 `git ls-remote`에 fork의 `refs/heads/refactor`가 없고, push는 여전히 인증정보 부재로 실패했다. 따라서 fork 소스를 설치하는 빌드는 아직 시작하지 않았다. Git 인증 설정 후 로컬 브랜치를 게시하고 원격 커밋 일치를 확인한 다음 빌드·설치 출처·의존성 충돌·실행 진입을 검사해야 한다. 이 준비 상태를 fork 빌드 성공 또는 실패로 해석하지 않는다.
