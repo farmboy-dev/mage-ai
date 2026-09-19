@@ -118,3 +118,23 @@ podman run --rm --network none -v "$PWD:/workspace:ro" -w /tmp \
 ```
 
 개발 서버는 소스 마운트로 변경이 반영된다. 배포용 정적 UI와 실행 이미지는 이번 단계에서 새로 빌드하지 않았다. 배포 전에는 UI 정적 산출물 재생성과 이미지 재빌드가 필요하다.
+
+## Delta Lake S3
+
+R3a에서 Delta Lake S3 destination에도 내부 endpoint 설정을 연결했다. 일반 Amazon S3 connector와 별개로 다음 키를 설정한다.
+
+| 키 | 설정 |
+|---|---|
+| `aws_endpoint` | MinIO/Ceph의 전체 endpoint URL |
+| `aws_s3_addressing_style` | 일반적인 내부 구성은 `path` |
+| `aws_allow_http` | HTTP 테스트 서버인 경우에만 boolean `true`, 기본 false |
+| `aws_access_key_id`, `aws_secret_access_key` | 저장소 인증정보 |
+| `aws_session_token` | 임시 자격증명 사용 시 선택 |
+| `aws_region` | 해당 저장소의 서명 region |
+| `bucket`, `object_key_path`, `table` | 기존 bucket과 테이블 저장 prefix/name |
+
+boto3와 delta-rs에 동일 설정을 전달한다. HTTPS 인증서 검증을 끄는 옵션은 추가하지 않았다. 실제 사내 인증정보는 채팅 대신 프로젝트 설정/비밀값 관리 경로에 넣는다.
+
+partition 설정이 있으면 overwrite는 입력 batch의 partition 조합만 교체하고 나머지를 보존한다. 빈 batch는 기존 테이블을 지우지 않는다. Delta log 없이 기존 객체만 있는 경로는 삭제하지 않고 실패하므로 새 빈 경로를 지정한다. SDK 0.20.2 제약 때문에 큰따옴표를 포함한 partition 컬럼명은 overwrite 전에 거절한다.
+
+단일 writer 기준이다. 기존 unsafe rename 설정을 유지하므로 다중 writer 동시 쓰기 지원을 보장하지 않는다. [MinIO 검증 결과](DELTA_LAKE_R3_RESULT.ko.md)를 참고한다. Ceph 실서비스 연결 검증은 별도로 필요하다.

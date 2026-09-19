@@ -32,12 +32,11 @@ class Couchbase(Connection):
         collection_manager = self.get_bucket().collections()
 
         scopes = collection_manager.get_all_scopes()
-        collection_names = []
         for scope in scopes:
             if scope.name == self.scope:
-                collection_names = [c.name for c in scope.collections]
+                return [c.name for c in scope.collections]
 
-        return collection_names
+        raise ValueError(f'Couchbase scope {self.scope!r} does not exist in the selected bucket.')
 
     def load(self, query):
         return list(self.get_scope().query(query).rows())

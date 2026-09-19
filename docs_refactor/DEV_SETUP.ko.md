@@ -4,7 +4,7 @@
 
 내부 S3·AI 연결 설정은 [INTERNAL_SERVICES.ko.md](INTERNAL_SERVICES.ko.md)를 참고한다.
 
-`dev.Dockerfile`과 `compose.dev.yml`로 백엔드와 Next.js 개발 서버를 실행한다. Python 의존성은 루트 Dockerfile로 만든 실행 이미지에서 그대로 가져오고, 백엔드·integrations·UI 소스를 마운트해 수정 사항을 반영한다. GitHub push나 이미지 배포는 필요 없다.
+`dev.Dockerfile`과 `compose.dev.yml`로 백엔드와 Next.js 개발 서버를 실행한다. Python 의존성은 루트 Dockerfile_refactor로 만든 실행 이미지에서 그대로 가져오고, 백엔드·integrations·UI 소스를 마운트해 수정 사항을 반영한다. GitHub push나 이미지 배포는 필요 없다.
 
 ## 현재 머신에서 실행
 
@@ -33,7 +33,7 @@ podman-compose -f compose.dev.yml logs -f server app
 ```bash
 podman build --format docker \
   --build-arg POLARS_PACKAGE=polars-lts-cpu \
-  -t localhost/mage-fork:dev-base -f Dockerfile .
+  -t localhost/mage-fork:dev-base -f Dockerfile_refactor .
 podman-compose -f compose.dev.yml build
 podman-compose -f compose.dev.yml up -d
 ```

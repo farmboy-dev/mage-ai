@@ -1,14 +1,13 @@
 import argparse
+import json
 import sys
 from typing import Dict, List
 
 import pandas as pd
 import pyarrow as pa
-from deltalake.writer import try_get_deltatable
 
 from mage_integrations.destinations.base import Destination as BaseDestination
 from mage_integrations.destinations.constants import (
-    COLUMN_FORMAT_DATETIME,
     COLUMN_TYPE_ARRAY,
     COLUMN_TYPE_BOOLEAN,
     COLUMN_TYPE_INTEGER,
@@ -19,14 +18,8 @@ from mage_integrations.destinations.constants import (
     KEY_RECORD,
 )
 from mage_integrations.destinations.delta_lake.constants import MODE_APPEND
-from mage_integrations.destinations.delta_lake.raw_delta_table import RawDeltaTable
-
-# from mage_integrations.destinations.delta_lake.schema import (
-#     delta_arrow_schema_from_pandas,
-# )
-from mage_integrations.destinations.delta_lake.writer import write_deltalake
+from mage_integrations.destinations.delta_lake.writer import try_get_deltatable, write_deltalake
 from mage_integrations.destinations.utils import update_record_with_internal_columns
-from mage_integrations.utils.array import find
 from mage_integrations.utils.dictionary import merge_dict
 
 MAX_BYTE_SIZE_PER_WRITE = (5 * (1024 * 1024))
@@ -45,68 +38,53 @@ class DeltaLake(BaseDestination):
         raise Exception('Subclasses must implement the build_client method.')
 
     def build_schema(self, stream: str, df: 'pd.DataFrame'):
-        number_of_rows = len(df.index)
-
-        schema_out = []
+        fields = []
+        df = df.copy()
         for column_name, properties in self.schemas[stream]['properties'].items():
-            column_types = properties.get('type', [])
-            column_format = properties.get('format')
+            types = properties.get('type', [])
+            types = [types] if isinstance(types, str) else list(types)
+            for option in properties.get('anyOf', []):
+                extra = option.get('type', [])
+                types.extend([extra] if isinstance(extra, str) else extra)
+            kind = next((value for value in types if value != COLUMN_TYPE_NULL), COLUMN_TYPE_STRING)
+            arrow_type = {
+                COLUMN_TYPE_INTEGER: pa.int64(),
+                COLUMN_TYPE_NUMBER: pa.float64(),
+                COLUMN_TYPE_BOOLEAN: pa.bool_(),
+                COLUMN_TYPE_ARRAY: pa.list_(pa.string()),
+            }.get(kind, pa.string())
 
-            for any_of in properties.get('anyOf', []):
-                column_types += any_of.get('type', [])
+            def convert(value):
+                if value is None or (not isinstance(value, (list, dict)) and pd.isna(value)):
+                    return None
+                if kind == COLUMN_TYPE_BOOLEAN:
+                    if isinstance(value, bool):
+                        return value
+                    if isinstance(value, str) and value.lower() in ('true', 'false'):
+                        return value.lower() == 'true'
+                    raise ValueError(f'Invalid boolean value for {column_name}.')
+                if kind == COLUMN_TYPE_INTEGER:
+                    converted = int(value)
+                    if not isinstance(value, str) and converted != value:
+                        raise ValueError(f'Invalid integer value for {column_name}.')
+                    return converted
+                if kind == COLUMN_TYPE_NUMBER:
+                    return float(value)
+                if kind == COLUMN_TYPE_ARRAY:
+                    if not isinstance(value, list):
+                        raise ValueError(f'Expected an array for {column_name}.')
+                    return [None if item is None else str(item) for item in value]
+                if kind == COLUMN_TYPE_OBJECT:
+                    return json.dumps(value)
+                return str(value)
 
-            nullable = COLUMN_TYPE_NULL in column_types
-            col_type = find(lambda x: COLUMN_TYPE_NULL != x, column_types)
-
-            # pa.long_string() is not supported by Delta Lake library as of 2022/12/12
-            column_type = pa.string()
-            column_type_df = str
-
-            if COLUMN_TYPE_ARRAY == col_type:
-                column_type = pa.list_(pa.string())
-                column_type_df = str
-            elif COLUMN_TYPE_BOOLEAN == col_type:
-                column_type = pa.bool_()
-                column_type_df = bool
-            elif COLUMN_TYPE_INTEGER == col_type:
-                column_type = pa.int64()
-                column_type_df = int
-            elif COLUMN_TYPE_NUMBER == col_type:
-                column_type = pa.float64()
-                column_type_df = float
-            elif COLUMN_TYPE_OBJECT == col_type:
-                column_type = pa.string()
-                column_type_df = str
-            elif COLUMN_TYPE_STRING == col_type and COLUMN_FORMAT_DATETIME == column_format:
-                column_type = pa.string()
-                column_type_df = str
-            elif COLUMN_TYPE_STRING == col_type:
-                column_type = pa.string()
-                column_type_df = str
-
-            non_null = df[column_name].notnull()
-            df.loc[non_null, [column_name]] = df[non_null][column_name].apply(
-                lambda x, column_type_df=column_type_df: str(column_type_df(x)),
-            )
-
-            if df[column_name].dropna().count() != number_of_rows:
-                df[column_name] = df[column_name].fillna('')
-                column_type = pa.string()
-                column_type_df = str
-
-            df[column_name] = df[column_name].map(column_type_df)
-
-            f = pa.field(
-                name=column_name,
-                type=column_type,
-                nullable=nullable,
-                metadata={},
-            )
-            schema_out.append(f)
-
-        schema = pa.schema(schema_out, metadata={})
-
-        return df, schema
+            values = [convert(value) for value in df[column_name]]
+            nullable = COLUMN_TYPE_NULL in types
+            if not nullable and any(value is None for value in values):
+                raise ValueError(f'Null value in non-nullable column {column_name}.')
+            df[column_name] = pd.Series(values, index=df.index, dtype=object)
+            fields.append(pa.field(column_name, arrow_type, nullable=nullable))
+        return df, pa.schema(fields)
 
     def build_storage_options(self) -> Dict:
         raise Exception('Subclasses must implement the build_storage_options method.')
@@ -120,15 +98,11 @@ class DeltaLake(BaseDestination):
     def get_table_for_stream(self, stream: str):
         storage_options = self.build_storage_options()
         table_uri = self.build_table_uri(stream)
-        table = try_get_deltatable(table_uri, storage_options)
-
-        if table:
-            raw_dt = table._table
-            table._table = RawDeltaTable(raw_dt)
-
-        return table
+        return try_get_deltatable(table_uri, storage_options)
 
     def export_batch_data(self, record_data: List[Dict], stream: str, tags: Dict = None) -> None:
+        if not record_data:
+            return
         storage_options = self.build_storage_options()
         friendly_table_name = self.config['table']
         table_uri = self.build_table_uri(stream)
@@ -158,15 +132,8 @@ class DeltaLake(BaseDestination):
         for r in record_data:
             r['record'] = update_record_with_internal_columns(r['record'])
 
-        df = pd.DataFrame([d[KEY_RECORD] for d in record_data])
+        df = pd.DataFrame([d[KEY_RECORD] for d in record_data], dtype=object)
         df_count = len(df.index)
-
-        # if self.disable_column_type_check.get(stream):
-        #     for column_name in self.schemas[stream]['properties'].keys():
-        #         df[column_name] = df[column_name].fillna('')
-        #     dt, schema = delta_arrow_schema_from_pandas(df)
-        #     df = dt.to_pandas()
-        # else:
 
         df, schema = self.build_schema(stream, df)
 

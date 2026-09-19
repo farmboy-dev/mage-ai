@@ -5,5 +5,9 @@
   "bucket": null,
   "mode": "append",
   "object_key_path": null,
-  "table": null
+  "table": null,
+  "aws_endpoint": null,
+  "aws_s3_addressing_style": "path",
+  "aws_session_token": null,
+  "aws_allow_http": false
 }

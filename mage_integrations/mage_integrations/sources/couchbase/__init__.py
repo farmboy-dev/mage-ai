@@ -133,7 +133,7 @@ WITH {{"sample_size": 1000, "similarity_metric": 0.4, "dictionary_threshold": 3}
         return rows
 
     def test_connection(self):
-        self.build_connection().get_bucket()
+        self.build_connection().get_all_collections()
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-# Build the runtime image with Dockerfile first; both environments share its dependencies.
+# Build the runtime image with Dockerfile_refactor first; both environments share its dependencies.
 ARG MAGE_RUNTIME_IMAGE=localhost/mage-fork:dev-base
 
 FROM node:20-bookworm-slim AS frontend

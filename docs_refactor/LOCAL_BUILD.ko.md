@@ -1,8 +1,10 @@
 # 로컬 fork 이미지 빌드와 검증
 
+현재 `Dockerfile`은 upstream 원본 비교용이며 fork 소스를 설치하지 않는다. 로컬 리팩터링 소스 빌드는 `Dockerfile_refactor`를 명시한다.
+
 소스 수정과 UI 개발 서버 실행은 [DEV_SETUP.ko.md](DEV_SETUP.ko.md)의 `dev.Dockerfile` 및 `compose.dev.yml` 구성을 사용한다.
 
-루트 `Dockerfile`은 현재 작업 디렉터리의 `mage-ai`와 `mage-integrations`를 wheel로 빌드해 설치한다. 커밋하지 않은 소스 수정도 포함되며 GitHub에 push할 필요가 없다. 브랜치는 로컬에서 checkout한 것으로 결정된다. 기존 `FEATURE_BRANCH` build argument는 사용하지 않는다.
+루트 `Dockerfile_refactor`은 현재 작업 디렉터리의 `mage-ai`와 `mage-integrations`를 wheel로 빌드해 설치한다. 커밋하지 않은 소스 수정도 포함되며 GitHub에 push할 필요가 없다. 브랜치는 로컬에서 checkout한 것으로 결정된다. 기존 `FEATURE_BRANCH` build argument는 사용하지 않는다.
 
 이 단계는 설치 대상을 공개 배포본에서 로컬 소스로 변경한다. 전체 extras, 외부 의존성 다운로드, 시작 시 프로젝트 requirements 설치는 아직 기존 동작을 유지한다. 폐쇄망 완성본이나 경량화 완료 이미지가 아니다.
 
@@ -13,14 +15,14 @@
 저장소 루트에서 실행한다. Podman 환경은 아래 명령의 `docker`를 `podman`으로 바꾸되, build에는 `--format docker`를 추가하여 Dockerfile의 `SHELL` 설정을 보존한다.
 
 ```bash
-docker build -t mage-fork:local -f Dockerfile .
+docker build -t mage-fork:local -f Dockerfile_refactor .
 ```
 
 현재 검증 머신은 AVX가 노출되지 않는 QEMU x86_64 CPU다. 이 환경에서는 기본 Polars가 `SIGILL`로 종료되므로 아래 호환 빌드를 사용한다. 버전은 1.30.0으로 유지하고 staged requirements와 wheel 의존성도 `polars-lts-cpu`로 함께 변경한다. 저장소 requirements 파일 자체는 이 옵션으로 변경되지 않는다.
 
 ```bash
 podman build --format docker --build-arg POLARS_PACKAGE=polars-lts-cpu \
-  -t localhost/mage-fork:step1 -f Dockerfile .
+  -t localhost/mage-fork:step1 -f Dockerfile_refactor .
 ```
 
 위 태그로 빌드했다면 아래 실행/검증 명령에서도 이미지 이름을 `localhost/mage-fork:step1`로 지정한다. `POLARS_PACKAGE`는 `polars` 또는 `polars-lts-cpu`만 허용한다. 일반 CPU용 기본 이미지와 CPU 호환 이미지를 구분해서 관리한다.
@@ -28,12 +30,12 @@ podman build --format docker --build-arg POLARS_PACKAGE=polars-lts-cpu \
 패키지 생성까지만 확인하려면:
 
 ```bash
-docker build --target source-wheels -t mage-fork-wheels:local -f Dockerfile .
+docker build --target source-wheels -t mage-fork-wheels:local -f Dockerfile_refactor .
 ```
 
 `source-wheels` stage에 생성된 wheel은 `/wheels/`에 있다. 실행 stage는 이 wheel을 설치하고 설치용 파일을 제거한다. 저장소나 `.git`을 실행 컨테이너에 마운트할 필요가 없다.
 
-기존 `docker-compose.yml`은 `dev.Dockerfile`을 사용하는 개발용 설정이므로 이번 루트 Dockerfile 검증에는 사용하지 않는다.
+기존 `docker-compose.yml`은 `dev.Dockerfile`을 사용하는 개발용 설정이므로 이번 루트 Dockerfile_refactor 검증에는 사용하지 않는다.
 
 ## 독립 기동
 
@@ -104,10 +106,24 @@ R2 경량화 이미지는 기존 태그를 덮어쓰지 않고 빌드한다. 현
 
 ```bash
 podman build --format docker --build-arg POLARS_PACKAGE=polars-lts-cpu \
-  -t localhost/mage-fork:r2-candidate -f Dockerfile .
+  -t localhost/mage-fork:r2-candidate -f Dockerfile_refactor .
 podman build --format docker --target backend \
   --build-arg MAGE_RUNTIME_IMAGE=localhost/mage-fork:r2-candidate \
   -t localhost/mage-fork-dev:r2-candidate -f dev.Dockerfile .
 ```
 
 `dev.Dockerfile`은 runtime의 의존성을 상속하므로 두 단계를 모두 빌드한다. 설치 목록·wheel metadata·`pip check`·실행 검증 결과는 [R2 적용 결과](DEPENDENCIES_R2_RESULT.ko.md)에 기록한다. 빌드 성공만으로 기존 의존성 충돌이나 Spark 실서비스 연결이 해결됐다고 판단하지 않는다.
+
+## R3 Couchbase 호환 이미지
+
+Python 3.10 기반은 유지하며 Couchbase는 4.3.5로 통일했다. runtime wheel 설치에는 `--only-binary couchbase`를 적용하여 OpenSSL 1.1에 의존하는 구형 바이너리나 의도하지 않은 소스 빌드를 사용하지 않도록 한다. 대상 플랫폼에 wheel이 없으면 빌드가 실패한다.
+
+```bash
+podman build --format docker --build-arg POLARS_PACKAGE=polars-lts-cpu \
+  -t localhost/mage-fork:r3-candidate -f Dockerfile_refactor .
+podman build --format docker --target backend \
+  --build-arg MAGE_RUNTIME_IMAGE=localhost/mage-fork:r3-candidate \
+  -t localhost/mage-fork-dev:r3-candidate -f dev.Dockerfile .
+```
+
+이번 호스트의 Python 3.10/Linux x86_64 wheel을 실제 검사했다. Python 3.11로 기반 이미지를 전환하거나 다른 CPU 플랫폼을 검증한 작업은 아니다. 상세 결과는 [Couchbase 검증 문서](COUCHBASE_R3_RESULT.ko.md)에 기록한다. 기존 의존성 충돌 5건은 별도로 남아 있다.

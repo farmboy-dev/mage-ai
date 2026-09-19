@@ -32,6 +32,13 @@
 | [C2e SaaS integration 제거 결과](SAAS_INTEGRATIONS_C2E_REMOVAL.ko.md) | 593개 파일 제거·96개 테스트·기존 Couchbase/Delta Lake 호환성 문제 |
 | [Tableau·Teradata 추가 제거](TABLEAU_TERADATA_REMOVAL.ko.md) | 사용자 요청에 따른 전용 파일 16개·UI/API 제거 및 검증 |
 | [최종 잔여 코드 정리안](FINAL_CLEANUP_PLAN.ko.md) | R1 지원 목록/API 정리, R2 이미지·SDK, R3 보존 기능 호환성 |
+| [R3b Couchbase 적용 결과](COUCHBASE_R3_RESULT.ko.md) | SDK 4.3.5 wheel·실제 서버 13개 테스트·상세 API 복원 및 후보 이미지 |
+| [R3b Couchbase 수정안](COUCHBASE_R3_PLAN.ko.md) | OpenSSL 1.1 누락 원인·4.3.5 wheel 격리 실험·수정 승인 범위 |
+| [R3a Delta Lake S3 결과](DELTA_LAKE_R3_RESULT.ko.md) | 공식 SDK writer·내부 endpoint·실제 MinIO 입출력 및 136개 테스트 |
+| [R3a Delta Lake S3 수정안](DELTA_LAKE_R3_PLAN.ko.md) | SDK 내부 API 불일치·URI·내부 endpoint 조사 및 수정 승인 범위 |
+| [Upstream 기본 브랜치 재검토](UPSTREAM_MAIN_DEPENDENCIES_REVIEW.ko.md) | 현재 비교 기준, uv·dbt 1.10 상속 확인, uv 검사 및 후속 방향 |
+| [Mage 원본 기준 의존성 재검토](ORIGINAL_DEPENDENCIES_AUDIT.ko.md) | 0.9.79 태그·원본 이미지·upstream·fork 비교 및 typing 제안 정정 |
+| [R2b 의존성 충돌 해결안](DEPENDENCIES_R2B_PLAN.ko.md) | typing/Singer 4건과 dbt-mysql 1건의 단계별 변경·검증 계획 |
 | [R2a SDK·이미지 경량화 결과](DEPENDENCIES_R2_RESULT.ko.md) | 후보 이미지 21.3% 감소·118개 테스트·간접 의존성과 기존 오류 |
 | [R2 SDK·이미지 경량화 변경안](DEPENDENCIES_R2_PLAN.ko.md) | 직접 SDK 제거·AWS 설정 잔여 경로·간접 의존성·후보 이미지 검증 계획 |
 | [R1 잔여 코드 정리 결과](FINAL_CLEANUP_R1_RESULT.ko.md) | 지원 목록 검증·전용 API 삭제·Spark 보존 및 실행 검증 |

@@ -1,0 +1,3345 @@
+{
+  "references": [
+    "0.9.79",
+    "1912c297f",
+    "ff15b3bf1"
+  ],
+  "requirement_differences": {
+    "0.9.79 -> 1912c297f": {
+      "mage_integrations/requirements.txt": {
+        "added": {},
+        "changed": {
+          "google-ads": {
+            "after": [
+              "google-ads==30.0.0"
+            ],
+            "before": [
+              "google-ads==25.1.0"
+            ]
+          },
+          "google-analytics-data": {
+            "after": [
+              "google-analytics-data>=0.20.0"
+            ],
+            "before": [
+              "google-analytics-data==0.14.2; python_version < '3.11'",
+              "google-analytics-data==0.15.0; python_version >= '3.11'"
+            ]
+          },
+          "google-cloud-bigquery": {
+            "after": [
+              "google-cloud-bigquery~=3.30.0"
+            ],
+            "before": [
+              "google-cloud-bigquery~=3.0"
+            ]
+          },
+          "google-cloud-bigquery-storage": {
+            "after": [
+              "google-cloud-bigquery-storage==2.36.2"
+            ],
+            "before": [
+              "google-cloud-bigquery-storage==2.16.2; python_version < '3.11'",
+              "google-cloud-bigquery-storage==2.26.0; python_version >= '3.11'"
+            ]
+          },
+          "protobuf": {
+            "after": [
+              "protobuf>=6.0,<7"
+            ],
+            "before": [
+              "protobuf>=4.25.0"
+            ]
+          },
+          "redshift-connector": {
+            "after": [
+              "redshift-connector>=2.1.8"
+            ],
+            "before": [
+              "redshift-connector~=2.0.915"
+            ]
+          },
+          "snowflake-connector-python": {
+            "after": [
+              "snowflake-connector-python>=4.0.0"
+            ],
+            "before": [
+              "snowflake-connector-python==3.7.1"
+            ]
+          }
+        },
+        "removed": {}
+      },
+      "requirements.txt": {
+        "added": {},
+        "changed": {
+          "clickhouse-connect": {
+            "after": [
+              "clickhouse-connect>=0.10.0"
+            ],
+            "before": [
+              "clickhouse-connect~=0.6.23"
+            ]
+          },
+          "dask": {
+            "after": [
+              "dask[dataframe]>=2022.2.0"
+            ],
+            "before": [
+              "dask>=2022.2.0"
+            ]
+          },
+          "db-dtypes": {
+            "after": [
+              "db-dtypes==1.2.0"
+            ],
+            "before": [
+              "db-dtypes==1.0.5"
+            ]
+          },
+          "dbt-adapters": {
+            "after": [
+              "dbt-adapters==1.22.5"
+            ],
+            "before": [
+              "dbt-adapters==1.8.0"
+            ]
+          },
+          "dbt-bigquery": {
+            "after": [
+              "dbt-bigquery==1.10.3"
+            ],
+            "before": [
+              "dbt-bigquery==1.8.3"
+            ]
+          },
+          "dbt-clickhouse": {
+            "after": [
+              "dbt-clickhouse==1.10.0"
+            ],
+            "before": [
+              "dbt-clickhouse==1.8.5"
+            ]
+          },
+          "dbt-core": {
+            "after": [
+              "dbt-core==1.10.20"
+            ],
+            "before": [
+              "dbt-core==1.8.7"
+            ]
+          },
+          "dbt-duckdb": {
+            "after": [
+              "dbt-duckdb==1.10.1"
+            ],
+            "before": [
+              "dbt-duckdb==1.8.4"
+            ]
+          },
+          "dbt-postgres": {
+            "after": [
+              "dbt-postgres==1.10.0"
+            ],
+            "before": [
+              "dbt-postgres==1.8.2"
+            ]
+          },
+          "dbt-redshift": {
+            "after": [
+              "dbt-redshift==1.10.1"
+            ],
+            "before": [
+              "dbt-redshift==1.8.1"
+            ]
+          },
+          "dbt-snowflake": {
+            "after": [
+              "dbt-snowflake==1.10.7"
+            ],
+            "before": [
+              "dbt-snowflake==1.8.4"
+            ]
+          },
+          "dbt-spark": {
+            "after": [
+              "dbt-spark==1.10.1"
+            ],
+            "before": [
+              "dbt-spark==1.8.0"
+            ]
+          },
+          "dbt-sqlserver": {
+            "after": [
+              "dbt-sqlserver==1.9.0"
+            ],
+            "before": [
+              "dbt-sqlserver==1.8.4"
+            ]
+          },
+          "dbt-synapse": {
+            "after": [
+              "dbt-synapse==1.8.4"
+            ],
+            "before": [
+              "dbt-synapse==1.8.2"
+            ]
+          },
+          "dbt-trino": {
+            "after": [
+              "dbt-trino==1.10.1"
+            ],
+            "before": [
+              "dbt-trino==1.8.4"
+            ]
+          },
+          "gitpython": {
+            "after": [
+              "GitPython==3.1.62"
+            ],
+            "before": [
+              "GitPython==3.1.41"
+            ]
+          },
+          "google-analytics-data": {
+            "after": [
+              "google-analytics-data>=0.20.0"
+            ],
+            "before": [
+              "google-analytics-data==0.14.2; python_version < '3.11'",
+              "google-analytics-data==0.15.0; python_version >= '3.11'"
+            ]
+          },
+          "google-api-core": {
+            "after": [
+              "google-api-core>=2.30.0"
+            ],
+            "before": [
+              "google-api-core~=2.15.0"
+            ]
+          },
+          "google-cloud-bigquery": {
+            "after": [
+              "google-cloud-bigquery~=3.30.0"
+            ],
+            "before": [
+              "google-cloud-bigquery~=3.14.1"
+            ]
+          },
+          "google-cloud-bigquery-storage": {
+            "after": [
+              "google-cloud-bigquery-storage==2.36.2"
+            ],
+            "before": [
+              "google-cloud-bigquery-storage==2.16.2; python_version < '3.11'",
+              "google-cloud-bigquery-storage==2.26.0; python_version >= '3.11'"
+            ]
+          },
+          "google-cloud-iam": {
+            "after": [
+              "google-cloud-iam>=2.20.0"
+            ],
+            "before": [
+              "google-cloud-iam~=2.13.0"
+            ]
+          },
+          "google-cloud-pubsub": {
+            "after": [
+              "google-cloud-pubsub>=2.30.0"
+            ],
+            "before": [
+              "google-cloud-pubsub~=2.19.0"
+            ]
+          },
+          "jinja2": {
+            "after": [
+              "Jinja2>=3.1.6"
+            ],
+            "before": [
+              "Jinja2==3.1.3"
+            ]
+          },
+          "opentelemetry-api": {
+            "after": [
+              "opentelemetry-api>=1.40.0"
+            ],
+            "before": [
+              "opentelemetry-api==1.22.0"
+            ]
+          },
+          "opentelemetry-exporter-otlp": {
+            "after": [
+              "opentelemetry-exporter-otlp>=1.40.0"
+            ],
+            "before": [
+              "opentelemetry-exporter-otlp==1.22.0"
+            ]
+          },
+          "opentelemetry-exporter-prometheus": {
+            "after": [
+              "opentelemetry-exporter-prometheus>=0.61b0"
+            ],
+            "before": [
+              "opentelemetry-exporter-prometheus==0.43b0"
+            ]
+          },
+          "opentelemetry-instrumentation-sqlalchemy": {
+            "after": [
+              "opentelemetry-instrumentation-sqlalchemy>=0.61b0"
+            ],
+            "before": [
+              "opentelemetry-instrumentation-sqlalchemy==0.43b0"
+            ]
+          },
+          "opentelemetry-instrumentation-tornado": {
+            "after": [
+              "opentelemetry-instrumentation-tornado>=0.61b0"
+            ],
+            "before": [
+              "opentelemetry-instrumentation-tornado==0.43b0"
+            ]
+          },
+          "pandas": {
+            "after": [
+              "pandas>=2.1,<3"
+            ],
+            "before": [
+              "pandas>=1.3.0"
+            ]
+          },
+          "protobuf": {
+            "after": [
+              "protobuf>=6.0,<7"
+            ],
+            "before": [
+              "protobuf>=4.25.0"
+            ]
+          },
+          "redshift-connector": {
+            "after": [
+              "redshift-connector>=2.1.8",
+              "redshift-connector>=2.1.8"
+            ],
+            "before": [
+              "redshift-connector==2.0.915",
+              "redshift-connector~=2.0.915"
+            ]
+          },
+          "snowflake-connector-python": {
+            "after": [
+              "snowflake-connector-python>=4.0.0"
+            ],
+            "before": [
+              "snowflake-connector-python==3.7.1"
+            ]
+          },
+          "sqlalchemy": {
+            "after": [
+              "sqlalchemy>2.0.0"
+            ],
+            "before": [
+              "sqlalchemy>=1.4.20, <2.0.0"
+            ]
+          }
+        },
+        "removed": {}
+      }
+    },
+    "1912c297f -> ff15b3bf1": {
+      "mage_integrations/requirements.txt": {
+        "added": {},
+        "changed": {
+          "clickhouse-sqlalchemy": {
+            "after": [
+              "clickhouse_sqlalchemy~=0.3.2"
+            ],
+            "before": [
+              "clickhouse_sqlalchemy~=0.2.4"
+            ]
+          }
+        },
+        "removed": {
+          "azure-storage-blob": [
+            "azure-storage-blob==12.14.1"
+          ],
+          "facebook-business": [
+            "facebook_business==22.0.2"
+          ],
+          "google-ads": [
+            "google-ads==30.0.0"
+          ],
+          "google-analytics-data": [
+            "google-analytics-data>=0.20.0"
+          ],
+          "google-api-python-client": [
+            "google-api-python-client==2.70.0"
+          ],
+          "google-cloud-bigquery": [
+            "google-cloud-bigquery~=3.30.0"
+          ],
+          "google-cloud-bigquery-storage": [
+            "google-cloud-bigquery-storage==2.36.2"
+          ],
+          "google-cloud-storage": [
+            "google-cloud-storage==2.5.0"
+          ],
+          "redshift-connector": [
+            "redshift-connector>=2.1.8"
+          ],
+          "simple-salesforce": [
+            "simple_salesforce~=1.12.5"
+          ],
+          "snowflake-connector-python": [
+            "snowflake-connector-python>=4.0.0"
+          ],
+          "stripe": [
+            "stripe==5.5.0"
+          ],
+          "teradatasql": [
+            "teradatasql"
+          ],
+          "twitter-ads": [
+            "twitter-ads==11.0.0"
+          ],
+          "zenpy": [
+            "zenpy==2.0.25"
+          ]
+        }
+      },
+      "requirements.txt": {
+        "added": {},
+        "changed": {
+          "clickhouse-sqlalchemy": {
+            "after": [
+              "clickhouse_sqlalchemy~=0.3.2"
+            ],
+            "before": [
+              "clickhouse_sqlalchemy"
+            ]
+          }
+        },
+        "removed": {
+          "aws-secretsmanager-caching": [
+            "aws-secretsmanager-caching==1.1.1.5"
+          ],
+          "azure-eventhub": [
+            "azure-eventhub==5.11.2"
+          ],
+          "azure-identity": [
+            "azure-identity==1.12.0"
+          ],
+          "azure-keyvault-certificates": [
+            "azure-keyvault-certificates==4.6.0"
+          ],
+          "azure-keyvault-secrets": [
+            "azure-keyvault-secrets==4.6.0"
+          ],
+          "azure-mgmt-containerinstance": [
+            "azure-mgmt-containerinstance==10.1.0"
+          ],
+          "azure-storage-blob": [
+            "azure-storage-blob==12.14.1"
+          ],
+          "db-dtypes": [
+            "db-dtypes==1.2.0"
+          ],
+          "dbt-bigquery": [
+            "dbt-bigquery==1.10.3"
+          ],
+          "dbt-redshift": [
+            "dbt-redshift==1.10.1"
+          ],
+          "dbt-snowflake": [
+            "dbt-snowflake==1.10.7"
+          ],
+          "dbt-synapse": [
+            "dbt-synapse==1.8.4"
+          ],
+          "facebook-business": [
+            "facebook_business==22.0.2"
+          ],
+          "google-analytics-data": [
+            "google-analytics-data>=0.20.0"
+          ],
+          "google-api-core": [
+            "google-api-core>=2.30.0"
+          ],
+          "google-api-python-client": [
+            "google-api-python-client~=2.70.0"
+          ],
+          "google-cloud-bigquery": [
+            "google-cloud-bigquery~=3.30.0"
+          ],
+          "google-cloud-bigquery-storage": [
+            "google-cloud-bigquery-storage==2.36.2"
+          ],
+          "google-cloud-iam": [
+            "google-cloud-iam>=2.20.0"
+          ],
+          "google-cloud-pubsub": [
+            "google-cloud-pubsub>=2.30.0"
+          ],
+          "google-cloud-run": [
+            "google-cloud-run~=0.10.1"
+          ],
+          "google-cloud-storage": [
+            "google-cloud-storage~=2.5.0"
+          ],
+          "gspread": [
+            "gspread==5.7.2"
+          ],
+          "pyairtable": [
+            "pyairtable>=2.3.3",
+            "pyairtable==2.3.3"
+          ],
+          "redshift-connector": [
+            "redshift-connector>=2.1.8",
+            "redshift-connector>=2.1.8"
+          ],
+          "simple-salesforce": [
+            "simple_salesforce~=1.12.5"
+          ],
+          "snowflake-connector-python": [
+            "snowflake-connector-python>=4.0.0"
+          ],
+          "stripe": [
+            "stripe==5.5.0"
+          ],
+          "twitter-ads": [
+            "twitter-ads==11.0.0"
+          ],
+          "zenpy": [
+            "zenpy==2.0.25"
+          ]
+        }
+      }
+    }
+  },
+  "snapshots": {
+    "0.9.79": {
+      "Dockerfile": "FROM python:3.10-bookworm\nLABEL description=\"Deploy Mage on ECS\"\nARG FEATURE_BRANCH\nUSER root\n\nSHELL [\"/bin/bash\", \"-o\", \"pipefail\", \"-c\"]\n\n## System Packages\nRUN \\\n  curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \\\n  curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list && \\\n  apt-get -y update && \\\n  ACCEPT_EULA=Y apt-get -y install --no-install-recommends \\\n  # NFS dependencies\n  nfs-common \\\n  # odbc dependencies\n  msodbcsql18\\\n  unixodbc-dev \\\n  graphviz \\\n  # postgres dependencies \\\n  postgresql-client \\\n  # R\n  r-base && \\\n  apt-get clean && \\\n  rm -rf /var/lib/apt/lists/*\n\n## R Packages\nRUN \\\n  R -e \"install.packages('pacman', repos='http://cran.us.r-project.org')\" && \\\n  R -e \"install.packages('renv', repos='http://cran.us.r-project.org')\"\n\n\n## Python Packages\nRUN \\\n  pip3 install --no-cache-dir sparkmagic && \\\n  mkdir ~/.sparkmagic && \\\n  curl https://raw.githubusercontent.com/jupyter-incubator/sparkmagic/master/sparkmagic/example_config.json > ~/.sparkmagic/config.json && \\\n  sed -i 's/localhost:8998/host.docker.internal:9999/g' ~/.sparkmagic/config.json && \\\n  jupyter-kernelspec install --user \"$(pip3 show sparkmagic | grep Location | cut -d' ' -f2)/sparkmagic/kernels/pysparkkernel\"\n# Mage integrations and other related packages\nRUN \\\n  pip3 install --no-cache-dir \"git+https://github.com/wbond/oscrypto.git@d5f3437ed24257895ae1edd9e503cfb352e635a8\" && \\\n  pip3 install --no-cache-dir \"git+https://github.com/dremio-hub/arrow-flight-client-examples.git#egg=dremio-flight&subdirectory=python/dremio-flight\" && \\\n  pip3 install --no-cache-dir \"git+https://github.com/mage-ai/singer-python.git#egg=singer-python\" && \\\n  pip3 install --no-cache-dir \"git+https://github.com/mage-ai/dbt-mysql.git#egg=dbt-mysql\" && \\\n  pip3 install --no-cache-dir \"git+https://github.com/mage-ai/sqlglot#egg=sqlglot\" && \\\n  # faster-fifo is not supported on Windows: https://github.com/alex-petrenko/faster-fifo/issues/17\n  pip3 install --no-cache-dir faster-fifo && \\\n  if [ -z \"$FEATURE_BRANCH\" ] || [ \"$FEATURE_BRANCH\" = \"null\" ]; then \\\n  pip3 install --no-cache-dir \"git+https://github.com/mage-ai/mage-ai.git#egg=mage-integrations&subdirectory=mage_integrations\"; \\\n  else \\\n  pip3 install --no-cache-dir \"git+https://github.com/mage-ai/mage-ai.git@$FEATURE_BRANCH#egg=mage-integrations&subdirectory=mage_integrations\"; \\\n  fi\n\n# Mage\nCOPY ./mage_ai/server/constants.py /tmp/constants.py\nRUN if [ -z \"$FEATURE_BRANCH\" ] || [ \"$FEATURE_BRANCH\" = \"null\" ] ; then \\\n  tag=$(tail -n 1 /tmp/constants.py) && \\\n  VERSION=$(echo \"$tag\" | tr -d \"'\") && \\\n  pip3 install --no-cache-dir \"mage-ai[all]==$VERSION\"; \\\n  else \\\n  pip3 install --no-cache-dir \"git+https://github.com/mage-ai/mage-ai.git@$FEATURE_BRANCH#egg=mage-ai[all]\"; \\\n  fi\n\n\n## Startup Script\nCOPY --chmod=0755 ./scripts/install_other_dependencies.py ./scripts/run_app.sh /app/\n\nENV MAGE_DATA_DIR=\"/home/src/mage_data\"\nENV PYTHONPATH=\"${PYTHONPATH}:/home/src\"\nWORKDIR /home/src\nEXPOSE 6789\nEXPOSE 7789\n\nCMD [\"/bin/sh\", \"-c\", \"/app/run_app.sh\"]\n",
+      "mage_integrations/requirements.txt": {
+        "attrs": [
+          "attrs==22.2.0; python_version < '3.12'",
+          "attrs==24.2.0; python_version >= '3.12'"
+        ],
+        "azure-storage-blob": [
+          "azure-storage-blob==12.14.1"
+        ],
+        "backoff": [
+          "backoff"
+        ],
+        "charset-normalizer": [
+          "charset-normalizer"
+        ],
+        "clickhouse-sqlalchemy": [
+          "clickhouse_sqlalchemy~=0.2.4"
+        ],
+        "couchbase": [
+          "couchbase==4.1.1; python_version < '3.11'",
+          "couchbase==4.3.5; python_version >= '3.11'"
+        ],
+        "deltalake": [
+          "deltalake==0.20.2"
+        ],
+        "elasticsearch": [
+          "elasticsearch==8.15.1"
+        ],
+        "facebook-business": [
+          "facebook_business==22.0.2"
+        ],
+        "gnupg": [
+          "gnupg==2.3.1"
+        ],
+        "google-ads": [
+          "google-ads==25.1.0"
+        ],
+        "google-analytics-data": [
+          "google-analytics-data==0.14.2; python_version < '3.11'",
+          "google-analytics-data==0.15.0; python_version >= '3.11'"
+        ],
+        "google-api-python-client": [
+          "google-api-python-client==2.70.0"
+        ],
+        "google-cloud-bigquery": [
+          "google-cloud-bigquery~=3.0"
+        ],
+        "google-cloud-bigquery-storage": [
+          "google-cloud-bigquery-storage==2.16.2; python_version < '3.11'",
+          "google-cloud-bigquery-storage==2.26.0; python_version >= '3.11'"
+        ],
+        "google-cloud-storage": [
+          "google-cloud-storage==2.5.0"
+        ],
+        "httpx": [
+          "httpx>=0.27.0",
+          "httpx[http2]>=0.27.0"
+        ],
+        "kafka-python": [
+          "kafka-python~=2.3.0"
+        ],
+        "mysql-connector-python": [
+          "mysql-connector-python~=8.4.0; python_version < '3.11'",
+          "mysql-connector-python~=9.0.0; python_version >= '3.11'"
+        ],
+        "opensearch-py": [
+          "opensearch-py~=2.0.0"
+        ],
+        "oracledb": [
+          "oracledb==1.3.1; python_version < '3.12'",
+          "oracledb==2.4.1; python_version >= '3.12'"
+        ],
+        "paramiko": [
+          "paramiko==3.5.1"
+        ],
+        "pendulum": [
+          "pendulum==2.1.0; python_version < '3.12'",
+          "pendulum==3.0.0; python_version >= '3.12'"
+        ],
+        "protobuf": [
+          "protobuf>=4.25.0"
+        ],
+        "psycopg2": [
+          "psycopg2==2.9.3"
+        ],
+        "psycopg2-binary": [
+          "psycopg2-binary==2.9.3"
+        ],
+        "pyarrow": [
+          "pyarrow>=14.0.1"
+        ],
+        "pymongo": [
+          "pymongo==4.3.3"
+        ],
+        "pymongo-schema": [
+          "pymongo_schema==0.4.1"
+        ],
+        "python-dateutil": [
+          "python-dateutil==2.8.2"
+        ],
+        "python-magic": [
+          "python-magic==0.4.27"
+        ],
+        "redshift-connector": [
+          "redshift-connector~=2.0.915"
+        ],
+        "requests": [
+          "requests~=2.31.0"
+        ],
+        "requests-mock": [
+          "requests_mock==1.10.0"
+        ],
+        "simple-salesforce": [
+          "simple_salesforce~=1.12.5"
+        ],
+        "simplejson": [
+          "simplejson"
+        ],
+        "singer-sdk": [
+          "singer_sdk~=0.34.1"
+        ],
+        "snowflake-connector-python": [
+          "snowflake-connector-python==3.7.1"
+        ],
+        "sshtunnel": [
+          "sshtunnel==0.4.0"
+        ],
+        "stripe": [
+          "stripe==5.5.0"
+        ],
+        "teradatasql": [
+          "teradatasql"
+        ],
+        "terminaltables": [
+          "terminaltables==3.1.10"
+        ],
+        "trino": [
+          "trino~=0.326"
+        ],
+        "twitter-ads": [
+          "twitter-ads==11.0.0"
+        ],
+        "tzlocal": [
+          "tzlocal==4.2"
+        ],
+        "xlsx2csv": [
+          "xlsx2csv==0.8.1"
+        ],
+        "xmltodict": [
+          "xmltodict==0.13.0"
+        ],
+        "zenpy": [
+          "zenpy==2.0.25"
+        ]
+      },
+      "requirements.txt": {
+        "aiofiles": [
+          "aiofiles==22.1.0"
+        ],
+        "aiohttp": [
+          "aiohttp==3.10.0"
+        ],
+        "alembic": [
+          "alembic>=1.7.5"
+        ],
+        "astor": [
+          "astor>=0.8.1"
+        ],
+        "async-timeout": [
+          "async-timeout==4.0.3"
+        ],
+        "attrs": [
+          "attrs==22.2.0; python_version < '3.12'",
+          "attrs==24.2.0; python_version >= '3.12'"
+        ],
+        "aws-secretsmanager-caching": [
+          "aws-secretsmanager-caching==1.1.1.5"
+        ],
+        "azure-eventhub": [
+          "azure-eventhub==5.11.2"
+        ],
+        "azure-identity": [
+          "azure-identity==1.12.0"
+        ],
+        "azure-keyvault-certificates": [
+          "azure-keyvault-certificates==4.6.0"
+        ],
+        "azure-keyvault-secrets": [
+          "azure-keyvault-secrets==4.6.0"
+        ],
+        "azure-mgmt-containerinstance": [
+          "azure-mgmt-containerinstance==10.1.0"
+        ],
+        "azure-storage-blob": [
+          "azure-storage-blob==12.14.1"
+        ],
+        "backoff": [
+          "backoff"
+        ],
+        "bcrypt": [
+          "bcrypt==4.0.1"
+        ],
+        "boto3": [
+          "boto3==1.26.60"
+        ],
+        "botocore": [
+          "botocore==1.29.60"
+        ],
+        "cachetools": [
+          "cachetools"
+        ],
+        "click": [
+          "click<8.2.0"
+        ],
+        "clickhouse-connect": [
+          "clickhouse-connect~=0.6.23"
+        ],
+        "clickhouse-sqlalchemy": [
+          "clickhouse_sqlalchemy"
+        ],
+        "confluent-avro": [
+          "confluent-avro~=1.8.0"
+        ],
+        "cron-converter": [
+          "cron-converter==1.2.1"
+        ],
+        "cryptography": [
+          "cryptography==42.0.4"
+        ],
+        "dask": [
+          "dask>=2022.2.0"
+        ],
+        "datadog": [
+          "datadog==0.44.0"
+        ],
+        "db-dtypes": [
+          "db-dtypes==1.0.5"
+        ],
+        "dbt-adapters": [
+          "dbt-adapters==1.8.0"
+        ],
+        "dbt-bigquery": [
+          "dbt-bigquery==1.8.3"
+        ],
+        "dbt-clickhouse": [
+          "dbt-clickhouse==1.8.5"
+        ],
+        "dbt-core": [
+          "dbt-core==1.8.7"
+        ],
+        "dbt-duckdb": [
+          "dbt-duckdb==1.8.4"
+        ],
+        "dbt-postgres": [
+          "dbt-postgres==1.8.2"
+        ],
+        "dbt-redshift": [
+          "dbt-redshift==1.8.1"
+        ],
+        "dbt-snowflake": [
+          "dbt-snowflake==1.8.4"
+        ],
+        "dbt-spark": [
+          "dbt-spark==1.8.0"
+        ],
+        "dbt-sqlserver": [
+          "dbt-sqlserver==1.8.4"
+        ],
+        "dbt-synapse": [
+          "dbt-synapse==1.8.2"
+        ],
+        "dbt-trino": [
+          "dbt-trino==1.8.4"
+        ],
+        "deltalake": [
+          "deltalake==0.20.2"
+        ],
+        "duckdb": [
+          "duckdb==1.4.3"
+        ],
+        "elasticsearch": [
+          "elasticsearch==8.15.1"
+        ],
+        "facebook-business": [
+          "facebook_business==22.0.2"
+        ],
+        "faker": [
+          "Faker==4.14.0"
+        ],
+        "freezegun": [
+          "freezegun==1.2.2"
+        ],
+        "gitpython": [
+          "GitPython==3.1.41"
+        ],
+        "gnupg": [
+          "gnupg==2.3.1"
+        ],
+        "google-analytics-data": [
+          "google-analytics-data==0.14.2; python_version < '3.11'",
+          "google-analytics-data==0.15.0; python_version >= '3.11'"
+        ],
+        "google-api-core": [
+          "google-api-core~=2.15.0"
+        ],
+        "google-api-python-client": [
+          "google-api-python-client~=2.70.0"
+        ],
+        "google-cloud-bigquery": [
+          "google-cloud-bigquery~=3.14.1"
+        ],
+        "google-cloud-bigquery-storage": [
+          "google-cloud-bigquery-storage==2.16.2; python_version < '3.11'",
+          "google-cloud-bigquery-storage==2.26.0; python_version >= '3.11'"
+        ],
+        "google-cloud-iam": [
+          "google-cloud-iam~=2.13.0"
+        ],
+        "google-cloud-pubsub": [
+          "google-cloud-pubsub~=2.19.0"
+        ],
+        "google-cloud-run": [
+          "google-cloud-run~=0.10.1"
+        ],
+        "google-cloud-storage": [
+          "google-cloud-storage~=2.5.0"
+        ],
+        "great-expectations": [
+          "great-expectations==0.18.12"
+        ],
+        "gspread": [
+          "gspread==5.7.2"
+        ],
+        "httpx": [
+          "httpx>=0.27.0",
+          "httpx[http2]>=0.27.0"
+        ],
+        "inflection": [
+          "inflection==0.5.1"
+        ],
+        "influxdb-client": [
+          "influxdb_client==1.36.1"
+        ],
+        "ipykernel": [
+          "ipykernel==6.15.0"
+        ],
+        "ipython": [
+          "ipython==8.10.0"
+        ],
+        "itsdangerous": [
+          "itsdangerous~=1.1.0"
+        ],
+        "jinja2": [
+          "Jinja2==3.1.3"
+        ],
+        "joblib": [
+          "joblib>=1.1.0"
+        ],
+        "jupyter-client": [
+          "jupyter_client==7.4.4"
+        ],
+        "jupyter-server": [
+          "jupyter-server==2.14.1"
+        ],
+        "kafka-python": [
+          "kafka-python==2.3.0"
+        ],
+        "kubernetes": [
+          "kubernetes==33.1.0"
+        ],
+        "langchain": [
+          "langchain==0.2.5; python_version >= '3.8'"
+        ],
+        "langchain-community": [
+          "langchain_community==0.2.5"
+        ],
+        "ldap3": [
+          "ldap3==2.9.1"
+        ],
+        "lxml": [
+          "lxml==4.9.4"
+        ],
+        "memory-profiler": [
+          "memory_profiler"
+        ],
+        "mysql-connector-python": [
+          "mysql-connector-python~=8.4.0; python_version < '3.11'",
+          "mysql-connector-python~=9.0.0; python_version >= '3.11'"
+        ],
+        "nats-py": [
+          "nats-py==2.6.0"
+        ],
+        "newrelic": [
+          "newrelic==8.8.0"
+        ],
+        "nkeys": [
+          "nkeys~=0.2.0"
+        ],
+        "numpy": [
+          "numpy>=1.22.0"
+        ],
+        "openai": [
+          "openai==1.82.0"
+        ],
+        "opensearch-py": [
+          "opensearch-py==2.0.0"
+        ],
+        "opentelemetry-api": [
+          "opentelemetry-api==1.22.0"
+        ],
+        "opentelemetry-exporter-otlp": [
+          "opentelemetry-exporter-otlp==1.22.0"
+        ],
+        "opentelemetry-exporter-prometheus": [
+          "opentelemetry-exporter-prometheus==0.43b0"
+        ],
+        "opentelemetry-instrumentation-sqlalchemy": [
+          "opentelemetry-instrumentation-sqlalchemy==0.43b0"
+        ],
+        "opentelemetry-instrumentation-tornado": [
+          "opentelemetry-instrumentation-tornado==0.43b0"
+        ],
+        "oracledb": [
+          "oracledb==1.3.1; python_version < '3.12'",
+          "oracledb==2.4.1; python_version >= '3.12'"
+        ],
+        "pandas": [
+          "pandas>=1.3.0"
+        ],
+        "paramiko": [
+          "paramiko==3.5.1"
+        ],
+        "pendulum": [
+          "pendulum==2.1.0; python_version < '3.12'",
+          "pendulum==3.0.0; python_version >= '3.12'"
+        ],
+        "pika": [
+          "pika==1.3.1"
+        ],
+        "pillow": [
+          "Pillow==10.3.0"
+        ],
+        "pinotdb": [
+          "pinotdb==5.6.0"
+        ],
+        "polars": [
+          "polars==1.30.0"
+        ],
+        "prometheus-client": [
+          "prometheus_client>=0.18.0"
+        ],
+        "protobuf": [
+          "protobuf>=4.25.0"
+        ],
+        "psutil": [
+          "psutil==5.9.8"
+        ],
+        "psycopg2": [
+          "psycopg2==2.9.3"
+        ],
+        "psycopg2-binary": [
+          "psycopg2-binary==2.9.3"
+        ],
+        "pyairtable": [
+          "pyairtable>=2.3.3",
+          "pyairtable==2.3.3"
+        ],
+        "pyarrow": [
+          "pyarrow>=14.0.1"
+        ],
+        "pydruid": [
+          "pydruid==0.6.5"
+        ],
+        "pygithub": [
+          "PyGithub==1.59.0"
+        ],
+        "pyjwt": [
+          "PyJWT==2.6.0"
+        ],
+        "pymongo": [
+          "pymongo==4.3.3"
+        ],
+        "pymongo-schema": [
+          "pymongo_schema==0.4.1"
+        ],
+        "pyodbc": [
+          "pyodbc==4.0.35; python_version < '3.12'",
+          "pyodbc==5.0.1; python_version >= '3.12'"
+        ],
+        "python-dateutil": [
+          "python-dateutil==2.8.2"
+        ],
+        "python-magic": [
+          "python-magic==0.4.27"
+        ],
+        "pytz": [
+          "pytz>=2022.2.1"
+        ],
+        "pyyaml": [
+          "pyyaml~=6.0"
+        ],
+        "redis": [
+          "redis~=5.0.1"
+        ],
+        "redshift-connector": [
+          "redshift-connector==2.0.915",
+          "redshift-connector~=2.0.915"
+        ],
+        "requests": [
+          "requests~=2.31.0"
+        ],
+        "requests-aws4auth": [
+          "requests_aws4auth==1.1.2"
+        ],
+        "requests-mock": [
+          "requests_mock==1.10.0"
+        ],
+        "ruamel.yaml": [
+          "ruamel.yaml==0.17.17"
+        ],
+        "scikit-learn": [
+          "scikit-learn<1.8"
+        ],
+        "sentry-sdk": [
+          "sentry-sdk>=2.0.0,<3.0.0"
+        ],
+        "setuptools": [
+          "setuptools==70.0.0"
+        ],
+        "simple-salesforce": [
+          "simple_salesforce~=1.12.5"
+        ],
+        "simplejson": [
+          "simplejson"
+        ],
+        "singer-sdk": [
+          "singer_sdk~=0.34.1"
+        ],
+        "six": [
+          "six>=1.15.0"
+        ],
+        "snowflake-connector-python": [
+          "snowflake-connector-python==3.7.1"
+        ],
+        "sqlalchemy": [
+          "sqlalchemy>=1.4.20, <2.0.0"
+        ],
+        "sqlglot": [
+          "sqlglot[rs]"
+        ],
+        "sshtunnel": [
+          "sshtunnel==0.4.0"
+        ],
+        "stomp.py": [
+          "stomp.py==8.1.0"
+        ],
+        "stripe": [
+          "stripe==5.5.0"
+        ],
+        "tables": [
+          "tables==3.7.0; python_version < '3.11'",
+          "tables==3.10.1; python_version >= '3.11'"
+        ],
+        "terminado": [
+          "terminado==0.17.1"
+        ],
+        "terminaltables": [
+          "terminaltables==3.1.10"
+        ],
+        "thefuzz": [
+          "thefuzz[speedup]==0.19.0"
+        ],
+        "tornado": [
+          "tornado==6.4.2"
+        ],
+        "trino": [
+          "trino~=0.326"
+        ],
+        "twitter-ads": [
+          "twitter-ads==11.0.0"
+        ],
+        "typer": [
+          "typer[all]==0.9.0"
+        ],
+        "typing-extensions": [
+          "typing_extensions==4.11.0"
+        ],
+        "tzlocal": [
+          "tzlocal==4.2"
+        ],
+        "watchdog": [
+          "watchdog==4.0.0"
+        ],
+        "werkzeug": [
+          "Werkzeug==3.0.3"
+        ],
+        "xlsx2csv": [
+          "xlsx2csv==0.8.1"
+        ],
+        "xmltodict": [
+          "xmltodict==0.13.0"
+        ],
+        "zenpy": [
+          "zenpy==2.0.25"
+        ]
+      },
+      "setup.py": {
+        "ai": {
+          "astor": [
+            "astor>=0.8.1"
+          ],
+          "langchain": [
+            "langchain==0.2.5"
+          ],
+          "langchain-community": [
+            "langchain_community==0.2.5"
+          ],
+          "openai": [
+            "openai==1.82.0"
+          ]
+        },
+        "airtable": {
+          "pyairtable": [
+            "pyairtable>=2.3.3"
+          ]
+        },
+        "all": {
+          "astor": [
+            "astor>=0.8.1"
+          ],
+          "aws-secretsmanager-caching": [
+            "aws-secretsmanager-caching==1.1.1.5"
+          ],
+          "azure-eventhub": [
+            "azure-eventhub==5.11.2"
+          ],
+          "azure-identity": [
+            "azure-identity==1.12.0"
+          ],
+          "azure-keyvault-certificates": [
+            "azure-keyvault-certificates==4.6.0"
+          ],
+          "azure-keyvault-secrets": [
+            "azure-keyvault-secrets==4.6.0"
+          ],
+          "azure-mgmt-containerinstance": [
+            "azure-mgmt-containerinstance==10.1.0"
+          ],
+          "azure-storage-blob": [
+            "azure-storage-blob==12.14.1"
+          ],
+          "boto3": [
+            "boto3==1.26.60"
+          ],
+          "botocore": [
+            "botocore==1.29.60"
+          ],
+          "clickhouse-connect": [
+            "clickhouse-connect~=0.6.23"
+          ],
+          "confluent-avro": [
+            "confluent-avro~=1.8.0"
+          ],
+          "db-dtypes": [
+            "db-dtypes==1.0.5"
+          ],
+          "dbt-adapters": [
+            "dbt-adapters==1.8.0"
+          ],
+          "dbt-bigquery": [
+            "dbt-bigquery==1.8.3"
+          ],
+          "dbt-clickhouse": [
+            "dbt-clickhouse==1.8.5"
+          ],
+          "dbt-core": [
+            "dbt-core==1.8.7"
+          ],
+          "dbt-duckdb": [
+            "dbt-duckdb==1.8.4"
+          ],
+          "dbt-postgres": [
+            "dbt-postgres==1.8.2"
+          ],
+          "dbt-redshift": [
+            "dbt-redshift==1.8.1"
+          ],
+          "dbt-snowflake": [
+            "dbt-snowflake==1.8.4"
+          ],
+          "dbt-spark": [
+            "dbt-spark==1.8.0"
+          ],
+          "dbt-sqlserver": [
+            "dbt-sqlserver==1.8.4"
+          ],
+          "dbt-synapse": [
+            "dbt-synapse==1.8.2"
+          ],
+          "dbt-trino": [
+            "dbt-trino==1.8.4"
+          ],
+          "duckdb": [
+            "duckdb==1.0.0"
+          ],
+          "elasticsearch": [
+            "elasticsearch==8.15.1"
+          ],
+          "google-api-core": [
+            "google-api-core~=2.15.0"
+          ],
+          "google-api-python-client": [
+            "google-api-python-client~=2.70.0"
+          ],
+          "google-cloud-bigquery": [
+            "google-cloud-bigquery~=3.14.1"
+          ],
+          "google-cloud-iam": [
+            "google-cloud-iam~=2.13.0"
+          ],
+          "google-cloud-pubsub": [
+            "google-cloud-pubsub~=2.19.0"
+          ],
+          "google-cloud-run": [
+            "google-cloud-run~=0.10.1"
+          ],
+          "google-cloud-storage": [
+            "google-cloud-storage~=2.5.0"
+          ],
+          "great-expectations": [
+            "great-expectations==0.18.12"
+          ],
+          "gspread": [
+            "gspread==5.7.2"
+          ],
+          "influxdb-client": [
+            "influxdb_client==1.36.1"
+          ],
+          "kafka-python": [
+            "kafka-python==2.0.2"
+          ],
+          "kubernetes": [
+            "kubernetes==33.1.0"
+          ],
+          "langchain": [
+            "langchain==0.2.5"
+          ],
+          "langchain-community": [
+            "langchain_community==0.2.5"
+          ],
+          "ldap3": [
+            "ldap3==2.9.1"
+          ],
+          "lxml": [
+            "lxml==4.9.4"
+          ],
+          "nats-py": [
+            "nats-py==2.6.0"
+          ],
+          "nkeys": [
+            "nkeys~=0.2.0"
+          ],
+          "openai": [
+            "openai==1.82.0"
+          ],
+          "opensearch-py": [
+            "opensearch-py==2.0.0"
+          ],
+          "opentelemetry-api": [
+            "opentelemetry-api==1.22.0"
+          ],
+          "opentelemetry-exporter-otlp": [
+            "opentelemetry-exporter-otlp==1.22.0"
+          ],
+          "opentelemetry-exporter-prometheus": [
+            "opentelemetry-exporter-prometheus==0.43b0"
+          ],
+          "opentelemetry-instrumentation-sqlalchemy": [
+            "opentelemetry-instrumentation-sqlalchemy==0.43b0"
+          ],
+          "opentelemetry-instrumentation-tornado": [
+            "opentelemetry-instrumentation-tornado==0.43b0"
+          ],
+          "oracledb": [
+            "oracledb==1.3.1"
+          ],
+          "pika": [
+            "pika==1.3.1"
+          ],
+          "pinotdb": [
+            "pinotdb==5.6.0"
+          ],
+          "prometheus-client": [
+            "prometheus_client>=0.18.0"
+          ],
+          "protobuf": [
+            "protobuf>=4.25.0"
+          ],
+          "psycopg2": [
+            "psycopg2==2.9.3"
+          ],
+          "psycopg2-binary": [
+            "psycopg2-binary==2.9.3"
+          ],
+          "pyairtable": [
+            "pyairtable==2.3.3"
+          ],
+          "pydruid": [
+            "pydruid==0.6.5"
+          ],
+          "pygithub": [
+            "PyGithub==1.59.0"
+          ],
+          "pymongo": [
+            "pymongo==4.3.3"
+          ],
+          "pyodbc": [
+            "pyodbc==4.0.35; python_version < '3.12'",
+            "pyodbc==5.0.1; python_version >= '3.12'"
+          ],
+          "redshift-connector": [
+            "redshift-connector==2.0.915"
+          ],
+          "requests-aws4auth": [
+            "requests_aws4auth==1.1.2"
+          ],
+          "snowflake-connector-python": [
+            "snowflake-connector-python==3.7.1"
+          ],
+          "sshtunnel": [
+            "sshtunnel==0.4.0"
+          ],
+          "stomp.py": [
+            "stomp.py==8.1.0"
+          ],
+          "thefuzz": [
+            "thefuzz[speedup]==0.19.0"
+          ],
+          "trino": [
+            "trino~=0.326"
+          ]
+        },
+        "azure": {
+          "azure-eventhub": [
+            "azure-eventhub==5.11.2"
+          ],
+          "azure-identity": [
+            "azure-identity==1.12.0"
+          ],
+          "azure-keyvault-certificates": [
+            "azure-keyvault-certificates==4.6.0"
+          ],
+          "azure-keyvault-secrets": [
+            "azure-keyvault-secrets==4.6.0"
+          ],
+          "azure-mgmt-containerinstance": [
+            "azure-mgmt-containerinstance==10.1.0"
+          ],
+          "azure-storage-blob": [
+            "azure-storage-blob==12.14.1"
+          ]
+        },
+        "bigquery": {
+          "db-dtypes": [
+            "db-dtypes==1.0.5"
+          ],
+          "google-cloud-bigquery": [
+            "google-cloud-bigquery~=3.0"
+          ]
+        },
+        "chroma": {
+          "chromadb": [
+            "chromadb>=0.4.17"
+          ]
+        },
+        "clickhouse": {
+          "clickhouse-connect": [
+            "clickhouse-connect~=0.6.23"
+          ]
+        },
+        "dbt": {
+          "dbt-adapters": [
+            "dbt-adapters==1.8.0"
+          ],
+          "dbt-bigquery": [
+            "dbt-bigquery==1.8.3"
+          ],
+          "dbt-clickhouse": [
+            "dbt-clickhouse==1.8.5"
+          ],
+          "dbt-core": [
+            "dbt-core==1.8.7"
+          ],
+          "dbt-duckdb": [
+            "dbt-duckdb==1.8.4"
+          ],
+          "dbt-postgres": [
+            "dbt-postgres==1.8.2"
+          ],
+          "dbt-redshift": [
+            "dbt-redshift==1.8.1"
+          ],
+          "dbt-snowflake": [
+            "dbt-snowflake==1.8.4"
+          ],
+          "dbt-spark": [
+            "dbt-spark==1.8.0"
+          ],
+          "dbt-sqlserver": [
+            "dbt-sqlserver==1.8.4"
+          ],
+          "dbt-synapse": [
+            "dbt-synapse==1.8.2"
+          ],
+          "dbt-trino": [
+            "dbt-trino==1.8.4"
+          ],
+          "trino": [
+            "trino~=0.326"
+          ]
+        },
+        "google-cloud-storage": {
+          "google-cloud-storage": [
+            "google-cloud-storage==2.5.0"
+          ],
+          "gspread": [
+            "gspread==5.7.2"
+          ]
+        },
+        "hdf5": {
+          "tables": [
+            "tables==3.7.0; python_version < '3.11'",
+            "tables==3.10.1; python_version >= '3.11'"
+          ]
+        },
+        "mysql": {
+          "mysql-connector-python": [
+            "mysql-connector-python~=8.4.0; python_version < '3.11'",
+            "mysql-connector-python~=9.0.0; python_version >= '3.11'"
+          ]
+        },
+        "oracle": {
+          "oracledb": [
+            "oracledb==1.3.1; python_version < '3.12'",
+            "oracledb==2.4.1; python_version >= '3.12'"
+          ]
+        },
+        "postgres": {
+          "psycopg2": [
+            "psycopg2==2.9.3"
+          ],
+          "psycopg2-binary": [
+            "psycopg2-binary==2.9.3"
+          ],
+          "sshtunnel": [
+            "sshtunnel==0.4.0"
+          ]
+        },
+        "qdrant": {
+          "qdrant-client": [
+            "qdrant-client==1.6.9"
+          ],
+          "sentence-transformers": [
+            "sentence-transformers==2.2.2"
+          ]
+        },
+        "redshift": {
+          "boto3": [
+            "boto3==1.26.60"
+          ],
+          "lxml": [
+            "lxml==4.9.4"
+          ],
+          "redshift-connector": [
+            "redshift-connector==2.0.915"
+          ]
+        },
+        "s3": {
+          "boto3": [
+            "boto3==1.26.60"
+          ],
+          "botocore": [
+            "botocore==1.29.60"
+          ]
+        },
+        "snowflake": {
+          "snowflake-connector-python": [
+            "snowflake-connector-python==3.7.1"
+          ]
+        },
+        "spark": {
+          "boto3": [
+            "boto3==1.26.60"
+          ],
+          "botocore": [
+            "botocore==1.29.60"
+          ]
+        },
+        "streaming": {
+          "confluent-avro": [
+            "confluent-avro~=1.8.0"
+          ],
+          "elasticsearch": [
+            "elasticsearch==8.15.1"
+          ],
+          "influxdb-client": [
+            "influxdb_client==1.36.1"
+          ],
+          "kafka-python": [
+            "kafka-python==2.3.0"
+          ],
+          "nats-py": [
+            "nats-py==2.6.0"
+          ],
+          "nkeys": [
+            "nkeys~=0.2.0"
+          ],
+          "opensearch-py": [
+            "opensearch-py==2.0.0"
+          ],
+          "pika": [
+            "pika==1.3.1"
+          ],
+          "pymongo": [
+            "pymongo==4.3.3"
+          ],
+          "requests-aws4auth": [
+            "requests_aws4auth==1.1.2"
+          ],
+          "stomp.py": [
+            "stomp.py==8.1.0"
+          ]
+        }
+      }
+    },
+    "1912c297f": {
+      "Dockerfile": "FROM python:3.10-bookworm\nLABEL description=\"Deploy Mage on ECS\"\nARG FEATURE_BRANCH\nUSER root\n\nSHELL [\"/bin/bash\", \"-o\", \"pipefail\", \"-c\"]\n\n## System Packages\nRUN \\\n  curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \\\n  curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list && \\\n  apt-get -y update && \\\n  ACCEPT_EULA=Y apt-get -y install --no-install-recommends \\\n  # NFS dependencies\n  nfs-common \\\n  # odbc dependencies\n  msodbcsql18\\\n  unixodbc-dev \\\n  graphviz \\\n  # postgres dependencies \\\n  postgresql-client \\\n  # R\n  r-base && \\\n  apt-get clean && \\\n  rm -rf /var/lib/apt/lists/*\n\n## R Packages\nRUN \\\n  R -e \"install.packages('pacman', repos='http://cran.us.r-project.org')\" && \\\n  R -e \"install.packages('renv', repos='http://cran.us.r-project.org')\"\n\n# Install uv for faster package installation\nRUN pip3 install --no-cache-dir uv\n\n## Python Packages\nRUN \\\n  uv pip install --system --no-cache-dir sparkmagic && \\\n  mkdir ~/.sparkmagic && \\\n  curl https://raw.githubusercontent.com/jupyter-incubator/sparkmagic/master/sparkmagic/example_config.json > ~/.sparkmagic/config.json && \\\n  sed -i 's/localhost:8998/host.docker.internal:9999/g' ~/.sparkmagic/config.json && \\\n  jupyter-kernelspec install --user \"$(uv pip show sparkmagic | grep Location | cut -d' ' -f2)/sparkmagic/kernels/pysparkkernel\"\n# Mage integrations and other related packages\nRUN \\\n  uv pip install --system --no-cache-dir \"git+https://github.com/wbond/oscrypto.git@d5f3437ed24257895ae1edd9e503cfb352e635a8\" && \\\n  uv pip install --system --no-cache-dir \"git+https://github.com/dremio-hub/arrow-flight-client-examples.git#egg=dremio-flight&subdirectory=python/dremio-flight\" && \\\n  uv pip install --system --no-cache-dir \"git+https://github.com/mage-ai/singer-python.git#egg=singer-python\" && \\\n  uv pip install --system --no-cache-dir \"git+https://github.com/mage-ai/dbt-mysql.git#egg=dbt-mysql\" && \\\n  uv pip install --system --no-cache-dir \"git+https://github.com/mage-ai/sqlglot#egg=sqlglot\" && \\\n  # faster-fifo is not supported on Windows: https://github.com/alex-petrenko/faster-fifo/issues/17\n  uv pip install --system --no-cache-dir faster-fifo && \\\n  if [ -z \"$FEATURE_BRANCH\" ] || [ \"$FEATURE_BRANCH\" = \"null\" ]; then \\\n  uv pip install --system --no-cache-dir \"git+https://github.com/mage-ai/mage-ai.git#egg=mage-integrations&subdirectory=mage_integrations\"; \\\n  else \\\n  uv pip install --system --no-cache-dir \"git+https://github.com/mage-ai/mage-ai.git@$FEATURE_BRANCH#egg=mage-integrations&subdirectory=mage_integrations\"; \\\n  fi\n\n# Mage\nCOPY ./mage_ai/server/constants.py /tmp/constants.py\nRUN if [ -z \"$FEATURE_BRANCH\" ] || [ \"$FEATURE_BRANCH\" = \"null\" ] ; then \\\n  tag=$(tail -n 1 /tmp/constants.py) && \\\n  VERSION=$(echo \"$tag\" | tr -d \"'\") && \\\n  uv pip install --system --no-cache-dir \"mage-ai[all]==$VERSION\"; \\\n  else \\\n  uv pip install --system --no-cache-dir \"git+https://github.com/mage-ai/mage-ai.git@$FEATURE_BRANCH#egg=mage-ai[all]\"; \\\n  fi\n\n\n## Startup Script\nCOPY --chmod=0755 ./scripts/install_other_dependencies.py ./scripts/run_app.sh /app/\n\nENV MAGE_DATA_DIR=\"/home/src/mage_data\"\nENV PYTHONPATH=\"${PYTHONPATH}:/home/src\"\nWORKDIR /home/src\nEXPOSE 6789\nEXPOSE 7789\n\nCMD [\"/bin/sh\", \"-c\", \"/app/run_app.sh\"]\n",
+      "mage_integrations/requirements.txt": {
+        "attrs": [
+          "attrs==22.2.0; python_version < '3.12'",
+          "attrs==24.2.0; python_version >= '3.12'"
+        ],
+        "azure-storage-blob": [
+          "azure-storage-blob==12.14.1"
+        ],
+        "backoff": [
+          "backoff"
+        ],
+        "charset-normalizer": [
+          "charset-normalizer"
+        ],
+        "clickhouse-sqlalchemy": [
+          "clickhouse_sqlalchemy~=0.2.4"
+        ],
+        "couchbase": [
+          "couchbase==4.1.1; python_version < '3.11'",
+          "couchbase==4.3.5; python_version >= '3.11'"
+        ],
+        "deltalake": [
+          "deltalake==0.20.2"
+        ],
+        "elasticsearch": [
+          "elasticsearch==8.15.1"
+        ],
+        "facebook-business": [
+          "facebook_business==22.0.2"
+        ],
+        "gnupg": [
+          "gnupg==2.3.1"
+        ],
+        "google-ads": [
+          "google-ads==30.0.0"
+        ],
+        "google-analytics-data": [
+          "google-analytics-data>=0.20.0"
+        ],
+        "google-api-python-client": [
+          "google-api-python-client==2.70.0"
+        ],
+        "google-cloud-bigquery": [
+          "google-cloud-bigquery~=3.30.0"
+        ],
+        "google-cloud-bigquery-storage": [
+          "google-cloud-bigquery-storage==2.36.2"
+        ],
+        "google-cloud-storage": [
+          "google-cloud-storage==2.5.0"
+        ],
+        "httpx": [
+          "httpx>=0.27.0",
+          "httpx[http2]>=0.27.0"
+        ],
+        "kafka-python": [
+          "kafka-python~=2.3.0"
+        ],
+        "mysql-connector-python": [
+          "mysql-connector-python~=8.4.0; python_version < '3.11'",
+          "mysql-connector-python~=9.0.0; python_version >= '3.11'"
+        ],
+        "opensearch-py": [
+          "opensearch-py~=2.0.0"
+        ],
+        "oracledb": [
+          "oracledb==1.3.1; python_version < '3.12'",
+          "oracledb==2.4.1; python_version >= '3.12'"
+        ],
+        "paramiko": [
+          "paramiko==3.5.1"
+        ],
+        "pendulum": [
+          "pendulum==2.1.0; python_version < '3.12'",
+          "pendulum==3.0.0; python_version >= '3.12'"
+        ],
+        "protobuf": [
+          "protobuf>=6.0,<7"
+        ],
+        "psycopg2": [
+          "psycopg2==2.9.3"
+        ],
+        "psycopg2-binary": [
+          "psycopg2-binary==2.9.3"
+        ],
+        "pyarrow": [
+          "pyarrow>=14.0.1"
+        ],
+        "pymongo": [
+          "pymongo==4.3.3"
+        ],
+        "pymongo-schema": [
+          "pymongo_schema==0.4.1"
+        ],
+        "python-dateutil": [
+          "python-dateutil==2.8.2"
+        ],
+        "python-magic": [
+          "python-magic==0.4.27"
+        ],
+        "redshift-connector": [
+          "redshift-connector>=2.1.8"
+        ],
+        "requests": [
+          "requests~=2.31.0"
+        ],
+        "requests-mock": [
+          "requests_mock==1.10.0"
+        ],
+        "simple-salesforce": [
+          "simple_salesforce~=1.12.5"
+        ],
+        "simplejson": [
+          "simplejson"
+        ],
+        "singer-sdk": [
+          "singer_sdk~=0.34.1"
+        ],
+        "snowflake-connector-python": [
+          "snowflake-connector-python>=4.0.0"
+        ],
+        "sshtunnel": [
+          "sshtunnel==0.4.0"
+        ],
+        "stripe": [
+          "stripe==5.5.0"
+        ],
+        "teradatasql": [
+          "teradatasql"
+        ],
+        "terminaltables": [
+          "terminaltables==3.1.10"
+        ],
+        "trino": [
+          "trino~=0.326"
+        ],
+        "twitter-ads": [
+          "twitter-ads==11.0.0"
+        ],
+        "tzlocal": [
+          "tzlocal==4.2"
+        ],
+        "xlsx2csv": [
+          "xlsx2csv==0.8.1"
+        ],
+        "xmltodict": [
+          "xmltodict==0.13.0"
+        ],
+        "zenpy": [
+          "zenpy==2.0.25"
+        ]
+      },
+      "requirements.txt": {
+        "aiofiles": [
+          "aiofiles==22.1.0"
+        ],
+        "aiohttp": [
+          "aiohttp==3.10.0"
+        ],
+        "alembic": [
+          "alembic>=1.7.5"
+        ],
+        "astor": [
+          "astor>=0.8.1"
+        ],
+        "async-timeout": [
+          "async-timeout==4.0.3"
+        ],
+        "attrs": [
+          "attrs==22.2.0; python_version < '3.12'",
+          "attrs==24.2.0; python_version >= '3.12'"
+        ],
+        "aws-secretsmanager-caching": [
+          "aws-secretsmanager-caching==1.1.1.5"
+        ],
+        "azure-eventhub": [
+          "azure-eventhub==5.11.2"
+        ],
+        "azure-identity": [
+          "azure-identity==1.12.0"
+        ],
+        "azure-keyvault-certificates": [
+          "azure-keyvault-certificates==4.6.0"
+        ],
+        "azure-keyvault-secrets": [
+          "azure-keyvault-secrets==4.6.0"
+        ],
+        "azure-mgmt-containerinstance": [
+          "azure-mgmt-containerinstance==10.1.0"
+        ],
+        "azure-storage-blob": [
+          "azure-storage-blob==12.14.1"
+        ],
+        "backoff": [
+          "backoff"
+        ],
+        "bcrypt": [
+          "bcrypt==4.0.1"
+        ],
+        "boto3": [
+          "boto3==1.26.60"
+        ],
+        "botocore": [
+          "botocore==1.29.60"
+        ],
+        "cachetools": [
+          "cachetools"
+        ],
+        "click": [
+          "click<8.2.0"
+        ],
+        "clickhouse-connect": [
+          "clickhouse-connect>=0.10.0"
+        ],
+        "clickhouse-sqlalchemy": [
+          "clickhouse_sqlalchemy"
+        ],
+        "confluent-avro": [
+          "confluent-avro~=1.8.0"
+        ],
+        "cron-converter": [
+          "cron-converter==1.2.1"
+        ],
+        "cryptography": [
+          "cryptography==42.0.4"
+        ],
+        "dask": [
+          "dask[dataframe]>=2022.2.0"
+        ],
+        "datadog": [
+          "datadog==0.44.0"
+        ],
+        "db-dtypes": [
+          "db-dtypes==1.2.0"
+        ],
+        "dbt-adapters": [
+          "dbt-adapters==1.22.5"
+        ],
+        "dbt-bigquery": [
+          "dbt-bigquery==1.10.3"
+        ],
+        "dbt-clickhouse": [
+          "dbt-clickhouse==1.10.0"
+        ],
+        "dbt-core": [
+          "dbt-core==1.10.20"
+        ],
+        "dbt-duckdb": [
+          "dbt-duckdb==1.10.1"
+        ],
+        "dbt-postgres": [
+          "dbt-postgres==1.10.0"
+        ],
+        "dbt-redshift": [
+          "dbt-redshift==1.10.1"
+        ],
+        "dbt-snowflake": [
+          "dbt-snowflake==1.10.7"
+        ],
+        "dbt-spark": [
+          "dbt-spark==1.10.1"
+        ],
+        "dbt-sqlserver": [
+          "dbt-sqlserver==1.9.0"
+        ],
+        "dbt-synapse": [
+          "dbt-synapse==1.8.4"
+        ],
+        "dbt-trino": [
+          "dbt-trino==1.10.1"
+        ],
+        "deltalake": [
+          "deltalake==0.20.2"
+        ],
+        "duckdb": [
+          "duckdb==1.4.3"
+        ],
+        "elasticsearch": [
+          "elasticsearch==8.15.1"
+        ],
+        "facebook-business": [
+          "facebook_business==22.0.2"
+        ],
+        "faker": [
+          "Faker==4.14.0"
+        ],
+        "freezegun": [
+          "freezegun==1.2.2"
+        ],
+        "gitpython": [
+          "GitPython==3.1.62"
+        ],
+        "gnupg": [
+          "gnupg==2.3.1"
+        ],
+        "google-analytics-data": [
+          "google-analytics-data>=0.20.0"
+        ],
+        "google-api-core": [
+          "google-api-core>=2.30.0"
+        ],
+        "google-api-python-client": [
+          "google-api-python-client~=2.70.0"
+        ],
+        "google-cloud-bigquery": [
+          "google-cloud-bigquery~=3.30.0"
+        ],
+        "google-cloud-bigquery-storage": [
+          "google-cloud-bigquery-storage==2.36.2"
+        ],
+        "google-cloud-iam": [
+          "google-cloud-iam>=2.20.0"
+        ],
+        "google-cloud-pubsub": [
+          "google-cloud-pubsub>=2.30.0"
+        ],
+        "google-cloud-run": [
+          "google-cloud-run~=0.10.1"
+        ],
+        "google-cloud-storage": [
+          "google-cloud-storage~=2.5.0"
+        ],
+        "great-expectations": [
+          "great-expectations==0.18.12"
+        ],
+        "gspread": [
+          "gspread==5.7.2"
+        ],
+        "httpx": [
+          "httpx>=0.27.0",
+          "httpx[http2]>=0.27.0"
+        ],
+        "inflection": [
+          "inflection==0.5.1"
+        ],
+        "influxdb-client": [
+          "influxdb_client==1.36.1"
+        ],
+        "ipykernel": [
+          "ipykernel==6.15.0"
+        ],
+        "ipython": [
+          "ipython==8.10.0"
+        ],
+        "itsdangerous": [
+          "itsdangerous~=1.1.0"
+        ],
+        "jinja2": [
+          "Jinja2>=3.1.6"
+        ],
+        "joblib": [
+          "joblib>=1.1.0"
+        ],
+        "jupyter-client": [
+          "jupyter_client==7.4.4"
+        ],
+        "jupyter-server": [
+          "jupyter-server==2.14.1"
+        ],
+        "kafka-python": [
+          "kafka-python==2.3.0"
+        ],
+        "kubernetes": [
+          "kubernetes==33.1.0"
+        ],
+        "langchain": [
+          "langchain==0.2.5; python_version >= '3.8'"
+        ],
+        "langchain-community": [
+          "langchain_community==0.2.5"
+        ],
+        "ldap3": [
+          "ldap3==2.9.1"
+        ],
+        "lxml": [
+          "lxml==4.9.4"
+        ],
+        "memory-profiler": [
+          "memory_profiler"
+        ],
+        "mysql-connector-python": [
+          "mysql-connector-python~=8.4.0; python_version < '3.11'",
+          "mysql-connector-python~=9.0.0; python_version >= '3.11'"
+        ],
+        "nats-py": [
+          "nats-py==2.6.0"
+        ],
+        "newrelic": [
+          "newrelic==8.8.0"
+        ],
+        "nkeys": [
+          "nkeys~=0.2.0"
+        ],
+        "numpy": [
+          "numpy>=1.22.0"
+        ],
+        "openai": [
+          "openai==1.82.0"
+        ],
+        "opensearch-py": [
+          "opensearch-py==2.0.0"
+        ],
+        "opentelemetry-api": [
+          "opentelemetry-api>=1.40.0"
+        ],
+        "opentelemetry-exporter-otlp": [
+          "opentelemetry-exporter-otlp>=1.40.0"
+        ],
+        "opentelemetry-exporter-prometheus": [
+          "opentelemetry-exporter-prometheus>=0.61b0"
+        ],
+        "opentelemetry-instrumentation-sqlalchemy": [
+          "opentelemetry-instrumentation-sqlalchemy>=0.61b0"
+        ],
+        "opentelemetry-instrumentation-tornado": [
+          "opentelemetry-instrumentation-tornado>=0.61b0"
+        ],
+        "oracledb": [
+          "oracledb==1.3.1; python_version < '3.12'",
+          "oracledb==2.4.1; python_version >= '3.12'"
+        ],
+        "pandas": [
+          "pandas>=2.1,<3"
+        ],
+        "paramiko": [
+          "paramiko==3.5.1"
+        ],
+        "pendulum": [
+          "pendulum==2.1.0; python_version < '3.12'",
+          "pendulum==3.0.0; python_version >= '3.12'"
+        ],
+        "pika": [
+          "pika==1.3.1"
+        ],
+        "pillow": [
+          "Pillow==10.3.0"
+        ],
+        "pinotdb": [
+          "pinotdb==5.6.0"
+        ],
+        "polars": [
+          "polars==1.30.0"
+        ],
+        "prometheus-client": [
+          "prometheus_client>=0.18.0"
+        ],
+        "protobuf": [
+          "protobuf>=6.0,<7"
+        ],
+        "psutil": [
+          "psutil==5.9.8"
+        ],
+        "psycopg2": [
+          "psycopg2==2.9.3"
+        ],
+        "psycopg2-binary": [
+          "psycopg2-binary==2.9.3"
+        ],
+        "pyairtable": [
+          "pyairtable>=2.3.3",
+          "pyairtable==2.3.3"
+        ],
+        "pyarrow": [
+          "pyarrow>=14.0.1"
+        ],
+        "pydruid": [
+          "pydruid==0.6.5"
+        ],
+        "pygithub": [
+          "PyGithub==1.59.0"
+        ],
+        "pyjwt": [
+          "PyJWT==2.6.0"
+        ],
+        "pymongo": [
+          "pymongo==4.3.3"
+        ],
+        "pymongo-schema": [
+          "pymongo_schema==0.4.1"
+        ],
+        "pyodbc": [
+          "pyodbc==4.0.35; python_version < '3.12'",
+          "pyodbc==5.0.1; python_version >= '3.12'"
+        ],
+        "python-dateutil": [
+          "python-dateutil==2.8.2"
+        ],
+        "python-magic": [
+          "python-magic==0.4.27"
+        ],
+        "pytz": [
+          "pytz>=2022.2.1"
+        ],
+        "pyyaml": [
+          "pyyaml~=6.0"
+        ],
+        "redis": [
+          "redis~=5.0.1"
+        ],
+        "redshift-connector": [
+          "redshift-connector>=2.1.8",
+          "redshift-connector>=2.1.8"
+        ],
+        "requests": [
+          "requests~=2.31.0"
+        ],
+        "requests-aws4auth": [
+          "requests_aws4auth==1.1.2"
+        ],
+        "requests-mock": [
+          "requests_mock==1.10.0"
+        ],
+        "ruamel.yaml": [
+          "ruamel.yaml==0.17.17"
+        ],
+        "scikit-learn": [
+          "scikit-learn<1.8"
+        ],
+        "sentry-sdk": [
+          "sentry-sdk>=2.0.0,<3.0.0"
+        ],
+        "setuptools": [
+          "setuptools==70.0.0"
+        ],
+        "simple-salesforce": [
+          "simple_salesforce~=1.12.5"
+        ],
+        "simplejson": [
+          "simplejson"
+        ],
+        "singer-sdk": [
+          "singer_sdk~=0.34.1"
+        ],
+        "six": [
+          "six>=1.15.0"
+        ],
+        "snowflake-connector-python": [
+          "snowflake-connector-python>=4.0.0"
+        ],
+        "sqlalchemy": [
+          "sqlalchemy>2.0.0"
+        ],
+        "sqlglot": [
+          "sqlglot[rs]"
+        ],
+        "sshtunnel": [
+          "sshtunnel==0.4.0"
+        ],
+        "stomp.py": [
+          "stomp.py==8.1.0"
+        ],
+        "stripe": [
+          "stripe==5.5.0"
+        ],
+        "tables": [
+          "tables==3.7.0; python_version < '3.11'",
+          "tables==3.10.1; python_version >= '3.11'"
+        ],
+        "terminado": [
+          "terminado==0.17.1"
+        ],
+        "terminaltables": [
+          "terminaltables==3.1.10"
+        ],
+        "thefuzz": [
+          "thefuzz[speedup]==0.19.0"
+        ],
+        "tornado": [
+          "tornado==6.4.2"
+        ],
+        "trino": [
+          "trino~=0.326"
+        ],
+        "twitter-ads": [
+          "twitter-ads==11.0.0"
+        ],
+        "typer": [
+          "typer[all]==0.9.0"
+        ],
+        "typing-extensions": [
+          "typing_extensions==4.11.0"
+        ],
+        "tzlocal": [
+          "tzlocal==4.2"
+        ],
+        "watchdog": [
+          "watchdog==4.0.0"
+        ],
+        "werkzeug": [
+          "Werkzeug==3.0.3"
+        ],
+        "xlsx2csv": [
+          "xlsx2csv==0.8.1"
+        ],
+        "xmltodict": [
+          "xmltodict==0.13.0"
+        ],
+        "zenpy": [
+          "zenpy==2.0.25"
+        ]
+      },
+      "setup.py": {
+        "ai": {
+          "astor": [
+            "astor>=0.8.1"
+          ],
+          "langchain": [
+            "langchain==0.2.5"
+          ],
+          "langchain-community": [
+            "langchain_community==0.2.5"
+          ],
+          "openai": [
+            "openai==1.82.0"
+          ]
+        },
+        "airtable": {
+          "pyairtable": [
+            "pyairtable>=2.3.3"
+          ]
+        },
+        "all": {
+          "astor": [
+            "astor>=0.8.1"
+          ],
+          "aws-secretsmanager-caching": [
+            "aws-secretsmanager-caching==1.1.1.5"
+          ],
+          "azure-eventhub": [
+            "azure-eventhub==5.11.2"
+          ],
+          "azure-identity": [
+            "azure-identity==1.12.0"
+          ],
+          "azure-keyvault-certificates": [
+            "azure-keyvault-certificates==4.6.0"
+          ],
+          "azure-keyvault-secrets": [
+            "azure-keyvault-secrets==4.6.0"
+          ],
+          "azure-mgmt-containerinstance": [
+            "azure-mgmt-containerinstance==10.1.0"
+          ],
+          "azure-storage-blob": [
+            "azure-storage-blob==12.14.1"
+          ],
+          "boto3": [
+            "boto3==1.26.60"
+          ],
+          "botocore": [
+            "botocore==1.29.60"
+          ],
+          "clickhouse-connect": [
+            "clickhouse-connect>=0.10.0"
+          ],
+          "confluent-avro": [
+            "confluent-avro~=1.8.0"
+          ],
+          "db-dtypes": [
+            "db-dtypes==1.2.0"
+          ],
+          "dbt-adapters": [
+            "dbt-adapters==1.22.5"
+          ],
+          "dbt-bigquery": [
+            "dbt-bigquery==1.10.3"
+          ],
+          "dbt-clickhouse": [
+            "dbt-clickhouse==1.10.0"
+          ],
+          "dbt-core": [
+            "dbt-core==1.10.20"
+          ],
+          "dbt-duckdb": [
+            "dbt-duckdb==1.10.1"
+          ],
+          "dbt-postgres": [
+            "dbt-postgres==1.10.0"
+          ],
+          "dbt-redshift": [
+            "dbt-redshift==1.10.1"
+          ],
+          "dbt-snowflake": [
+            "dbt-snowflake==1.10.7"
+          ],
+          "dbt-spark": [
+            "dbt-spark==1.10.1"
+          ],
+          "dbt-sqlserver": [
+            "dbt-sqlserver==1.9.0"
+          ],
+          "dbt-synapse": [
+            "dbt-synapse==1.8.4"
+          ],
+          "dbt-trino": [
+            "dbt-trino==1.10.1"
+          ],
+          "duckdb": [
+            "duckdb==1.4.3"
+          ],
+          "elasticsearch": [
+            "elasticsearch==8.15.1"
+          ],
+          "google-api-core": [
+            "google-api-core>=2.30.0"
+          ],
+          "google-api-python-client": [
+            "google-api-python-client~=2.70.0"
+          ],
+          "google-cloud-bigquery": [
+            "google-cloud-bigquery~=3.30.0"
+          ],
+          "google-cloud-iam": [
+            "google-cloud-iam>=2.20.0"
+          ],
+          "google-cloud-pubsub": [
+            "google-cloud-pubsub>=2.30.0"
+          ],
+          "google-cloud-run": [
+            "google-cloud-run~=0.10.1"
+          ],
+          "google-cloud-storage": [
+            "google-cloud-storage~=2.5.0"
+          ],
+          "great-expectations": [
+            "great-expectations==0.18.12"
+          ],
+          "gspread": [
+            "gspread==5.7.2"
+          ],
+          "influxdb-client": [
+            "influxdb_client==1.36.1"
+          ],
+          "kafka-python": [
+            "kafka-python==2.0.2"
+          ],
+          "kubernetes": [
+            "kubernetes==33.1.0"
+          ],
+          "langchain": [
+            "langchain==0.2.5"
+          ],
+          "langchain-community": [
+            "langchain_community==0.2.5"
+          ],
+          "ldap3": [
+            "ldap3==2.9.1"
+          ],
+          "lxml": [
+            "lxml==4.9.4"
+          ],
+          "nats-py": [
+            "nats-py==2.6.0"
+          ],
+          "nkeys": [
+            "nkeys~=0.2.0"
+          ],
+          "openai": [
+            "openai==1.82.0"
+          ],
+          "opensearch-py": [
+            "opensearch-py==2.0.0"
+          ],
+          "opentelemetry-api": [
+            "opentelemetry-api>=1.40.0"
+          ],
+          "opentelemetry-exporter-otlp": [
+            "opentelemetry-exporter-otlp>=1.40.0"
+          ],
+          "opentelemetry-exporter-prometheus": [
+            "opentelemetry-exporter-prometheus>=0.61b0"
+          ],
+          "opentelemetry-instrumentation-sqlalchemy": [
+            "opentelemetry-instrumentation-sqlalchemy>=0.61b0"
+          ],
+          "opentelemetry-instrumentation-tornado": [
+            "opentelemetry-instrumentation-tornado>=0.61b0"
+          ],
+          "oracledb": [
+            "oracledb==1.3.1"
+          ],
+          "pika": [
+            "pika==1.3.1"
+          ],
+          "pinotdb": [
+            "pinotdb==5.6.0"
+          ],
+          "prometheus-client": [
+            "prometheus_client>=0.18.0"
+          ],
+          "protobuf": [
+            "protobuf>=6.0,<7"
+          ],
+          "psycopg2": [
+            "psycopg2==2.9.3"
+          ],
+          "psycopg2-binary": [
+            "psycopg2-binary==2.9.3"
+          ],
+          "pyairtable": [
+            "pyairtable==2.3.3"
+          ],
+          "pydruid": [
+            "pydruid==0.6.5"
+          ],
+          "pygithub": [
+            "PyGithub==1.59.0"
+          ],
+          "pymongo": [
+            "pymongo==4.3.3"
+          ],
+          "pyodbc": [
+            "pyodbc==4.0.35; python_version < '3.12'",
+            "pyodbc==5.0.1; python_version >= '3.12'"
+          ],
+          "redshift-connector": [
+            "redshift-connector>=2.1.8"
+          ],
+          "requests-aws4auth": [
+            "requests_aws4auth==1.1.2"
+          ],
+          "snowflake-connector-python": [
+            "snowflake-connector-python>=4.0.0"
+          ],
+          "sshtunnel": [
+            "sshtunnel==0.4.0"
+          ],
+          "stomp.py": [
+            "stomp.py==8.1.0"
+          ],
+          "thefuzz": [
+            "thefuzz[speedup]==0.19.0"
+          ],
+          "trino": [
+            "trino~=0.326"
+          ]
+        },
+        "azure": {
+          "azure-eventhub": [
+            "azure-eventhub==5.11.2"
+          ],
+          "azure-identity": [
+            "azure-identity==1.12.0"
+          ],
+          "azure-keyvault-certificates": [
+            "azure-keyvault-certificates==4.6.0"
+          ],
+          "azure-keyvault-secrets": [
+            "azure-keyvault-secrets==4.6.0"
+          ],
+          "azure-mgmt-containerinstance": [
+            "azure-mgmt-containerinstance==10.1.0"
+          ],
+          "azure-storage-blob": [
+            "azure-storage-blob==12.14.1"
+          ]
+        },
+        "bigquery": {
+          "db-dtypes": [
+            "db-dtypes==1.2.0"
+          ],
+          "google-cloud-bigquery": [
+            "google-cloud-bigquery~=3.30.0"
+          ]
+        },
+        "chroma": {
+          "chromadb": [
+            "chromadb>=0.4.17"
+          ]
+        },
+        "clickhouse": {
+          "clickhouse-connect": [
+            "clickhouse-connect>=0.10.0"
+          ]
+        },
+        "dbt": {
+          "dbt-adapters": [
+            "dbt-adapters==1.22.5"
+          ],
+          "dbt-bigquery": [
+            "dbt-bigquery==1.10.3"
+          ],
+          "dbt-clickhouse": [
+            "dbt-clickhouse==1.10.0"
+          ],
+          "dbt-core": [
+            "dbt-core==1.10.20"
+          ],
+          "dbt-duckdb": [
+            "dbt-duckdb==1.10.1"
+          ],
+          "dbt-postgres": [
+            "dbt-postgres==1.10.0"
+          ],
+          "dbt-redshift": [
+            "dbt-redshift==1.10.1"
+          ],
+          "dbt-snowflake": [
+            "dbt-snowflake==1.10.7"
+          ],
+          "dbt-spark": [
+            "dbt-spark==1.10.1"
+          ],
+          "dbt-sqlserver": [
+            "dbt-sqlserver==1.9.0"
+          ],
+          "dbt-synapse": [
+            "dbt-synapse==1.8.4"
+          ],
+          "dbt-trino": [
+            "dbt-trino==1.10.1"
+          ],
+          "trino": [
+            "trino~=0.326"
+          ]
+        },
+        "google-cloud-storage": {
+          "google-cloud-storage": [
+            "google-cloud-storage==2.5.0"
+          ],
+          "gspread": [
+            "gspread==5.7.2"
+          ]
+        },
+        "hdf5": {
+          "tables": [
+            "tables==3.7.0; python_version < '3.11'",
+            "tables==3.10.1; python_version >= '3.11'"
+          ]
+        },
+        "mysql": {
+          "mysql-connector-python": [
+            "mysql-connector-python~=8.4.0; python_version < '3.11'",
+            "mysql-connector-python~=9.0.0; python_version >= '3.11'"
+          ]
+        },
+        "oracle": {
+          "oracledb": [
+            "oracledb==1.3.1; python_version < '3.12'",
+            "oracledb==2.4.1; python_version >= '3.12'"
+          ]
+        },
+        "postgres": {
+          "psycopg2": [
+            "psycopg2==2.9.3"
+          ],
+          "psycopg2-binary": [
+            "psycopg2-binary==2.9.3"
+          ],
+          "sshtunnel": [
+            "sshtunnel==0.4.0"
+          ]
+        },
+        "qdrant": {
+          "qdrant-client": [
+            "qdrant-client==1.6.9"
+          ],
+          "sentence-transformers": [
+            "sentence-transformers==2.2.2"
+          ]
+        },
+        "redshift": {
+          "boto3": [
+            "boto3==1.26.60"
+          ],
+          "lxml": [
+            "lxml==4.9.4"
+          ],
+          "redshift-connector": [
+            "redshift-connector>=2.1.8"
+          ]
+        },
+        "s3": {
+          "boto3": [
+            "boto3==1.26.60"
+          ],
+          "botocore": [
+            "botocore==1.29.60"
+          ]
+        },
+        "snowflake": {
+          "snowflake-connector-python": [
+            "snowflake-connector-python>=4.0.0"
+          ]
+        },
+        "spark": {
+          "boto3": [
+            "boto3==1.26.60"
+          ],
+          "botocore": [
+            "botocore==1.29.60"
+          ]
+        },
+        "streaming": {
+          "confluent-avro": [
+            "confluent-avro~=1.8.0"
+          ],
+          "elasticsearch": [
+            "elasticsearch==8.15.1"
+          ],
+          "influxdb-client": [
+            "influxdb_client==1.36.1"
+          ],
+          "kafka-python": [
+            "kafka-python==2.3.0"
+          ],
+          "nats-py": [
+            "nats-py==2.6.0"
+          ],
+          "nkeys": [
+            "nkeys~=0.2.0"
+          ],
+          "opensearch-py": [
+            "opensearch-py==2.0.0"
+          ],
+          "pika": [
+            "pika==1.3.1"
+          ],
+          "pymongo": [
+            "pymongo==4.3.3"
+          ],
+          "requests-aws4auth": [
+            "requests_aws4auth==1.1.2"
+          ],
+          "stomp.py": [
+            "stomp.py==8.1.0"
+          ]
+        }
+      }
+    },
+    "ff15b3bf1": {
+      "Dockerfile": "FROM python:3.10-bookworm AS source-wheels\n\n# Build both distributions from this checkout, including the bundled frontend.\n# Keep separate source roots so setuptools does not discover unrelated packages.\nCOPY setup.py pyproject.toml requirements.txt MANIFEST.in README.md LICENSE /src/mage/\nCOPY mage_ai /src/mage/mage_ai\nCOPY LICENSE mage_integrations/setup.py mage_integrations/pyproject.toml mage_integrations/requirements.txt mage_integrations/MANIFEST.in mage_integrations/README.md /src/mage-integrations/\nCOPY mage_integrations/mage_integrations /src/mage-integrations/mage_integrations\n# The LTS CPU wheel exposes the same Polars API on hosts without AVX support.\n# Change the staged requirement so wheel metadata matches the installed package.\nARG POLARS_PACKAGE=polars\nRUN case \"$POLARS_PACKAGE\" in \\\n      polars|polars-lts-cpu) ;; \\\n      *) echo \"POLARS_PACKAGE must be polars or polars-lts-cpu\" >&2; exit 1 ;; \\\n    esac && \\\n    sed -i \"s/^polars==/${POLARS_PACKAGE}==/\" /src/mage/requirements.txt && \\\n    python -m pip wheel --no-cache-dir --no-deps --wheel-dir /wheels \\\n      /src/mage /src/mage-integrations\n\nFROM python:3.10-bookworm AS runtime\nLABEL description=\"Mage built from the local checkout\"\nUSER root\n\nSHELL [\"/bin/bash\", \"-o\", \"pipefail\", \"-c\"]\n\n## System Packages\nRUN \\\n  curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \\\n  curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list && \\\n  apt-get -y update && \\\n  ACCEPT_EULA=Y apt-get -y install --no-install-recommends \\\n  # NFS dependencies\n  nfs-common \\\n  # odbc dependencies\n  msodbcsql18\\\n  unixodbc-dev \\\n  graphviz \\\n  # postgres dependencies \\\n  postgresql-client \\\n  # R\n  r-base && \\\n  apt-get clean && \\\n  rm -rf /var/lib/apt/lists/*\n\n## R Packages\nRUN \\\n  R -e \"install.packages('pacman', repos='http://cran.us.r-project.org')\" && \\\n  R -e \"install.packages('renv', repos='http://cran.us.r-project.org')\"\n\n# Install uv for faster package installation\nRUN pip3 install --no-cache-dir uv\n\n# Mage integrations and other related packages\nRUN \\\n  uv pip install --system --no-cache-dir \"git+https://github.com/dremio-hub/arrow-flight-client-examples.git#egg=dremio-flight&subdirectory=python/dremio-flight\" && \\\n  uv pip install --system --no-cache-dir \"git+https://github.com/mage-ai/singer-python.git#egg=singer-python\" && \\\n  uv pip install --system --no-cache-dir \"git+https://github.com/mage-ai/dbt-mysql.git#egg=dbt-mysql\" && \\\n  uv pip install --system --no-cache-dir \"git+https://github.com/mage-ai/sqlglot#egg=sqlglot\" && \\\n  # faster-fifo is not supported on Windows: https://github.com/alex-petrenko/faster-fifo/issues/17\n  uv pip install --system --no-cache-dir faster-fifo\n\n# Preserve the existing feature set while installing our own distributions.\n# FEATURE_BRANCH is no longer used: select the source by checking it out locally.\nCOPY --from=source-wheels /wheels /tmp/mage-wheels\nRUN --mount=type=cache,target=/root/.cache/uv \\\n    set -- /tmp/mage-wheels/mage_ai-*.whl && \\\n    uv pip install --system \"$1[all]\" \\\n      /tmp/mage-wheels/mage_integrations-*.whl && \\\n    rm -rf /tmp/mage-wheels\n\n\n## Startup Script\nCOPY --chmod=0755 ./scripts/install_other_dependencies.py ./scripts/run_app.sh /app/\n\nENV MAGE_DATA_DIR=\"/home/src/mage_data\"\nENV PYTHONPATH=\"${PYTHONPATH}:/home/src\"\nWORKDIR /home/src\nEXPOSE 6789\nEXPOSE 7789\n\nCMD [\"/bin/sh\", \"-c\", \"/app/run_app.sh\"]\n",
+      "mage_integrations/requirements.txt": {
+        "attrs": [
+          "attrs==22.2.0; python_version < '3.12'",
+          "attrs==24.2.0; python_version >= '3.12'"
+        ],
+        "backoff": [
+          "backoff"
+        ],
+        "charset-normalizer": [
+          "charset-normalizer"
+        ],
+        "clickhouse-sqlalchemy": [
+          "clickhouse_sqlalchemy~=0.3.2"
+        ],
+        "couchbase": [
+          "couchbase==4.1.1; python_version < '3.11'",
+          "couchbase==4.3.5; python_version >= '3.11'"
+        ],
+        "deltalake": [
+          "deltalake==0.20.2"
+        ],
+        "elasticsearch": [
+          "elasticsearch==8.15.1"
+        ],
+        "gnupg": [
+          "gnupg==2.3.1"
+        ],
+        "httpx": [
+          "httpx>=0.27.0",
+          "httpx[http2]>=0.27.0"
+        ],
+        "kafka-python": [
+          "kafka-python~=2.3.0"
+        ],
+        "mysql-connector-python": [
+          "mysql-connector-python~=8.4.0; python_version < '3.11'",
+          "mysql-connector-python~=9.0.0; python_version >= '3.11'"
+        ],
+        "opensearch-py": [
+          "opensearch-py~=2.0.0"
+        ],
+        "oracledb": [
+          "oracledb==1.3.1; python_version < '3.12'",
+          "oracledb==2.4.1; python_version >= '3.12'"
+        ],
+        "paramiko": [
+          "paramiko==3.5.1"
+        ],
+        "pendulum": [
+          "pendulum==2.1.0; python_version < '3.12'",
+          "pendulum==3.0.0; python_version >= '3.12'"
+        ],
+        "protobuf": [
+          "protobuf>=6.0,<7"
+        ],
+        "psycopg2": [
+          "psycopg2==2.9.3"
+        ],
+        "psycopg2-binary": [
+          "psycopg2-binary==2.9.3"
+        ],
+        "pyarrow": [
+          "pyarrow>=14.0.1"
+        ],
+        "pymongo": [
+          "pymongo==4.3.3"
+        ],
+        "pymongo-schema": [
+          "pymongo_schema==0.4.1"
+        ],
+        "python-dateutil": [
+          "python-dateutil==2.8.2"
+        ],
+        "python-magic": [
+          "python-magic==0.4.27"
+        ],
+        "requests": [
+          "requests~=2.31.0"
+        ],
+        "requests-mock": [
+          "requests_mock==1.10.0"
+        ],
+        "simplejson": [
+          "simplejson"
+        ],
+        "singer-sdk": [
+          "singer_sdk~=0.34.1"
+        ],
+        "sshtunnel": [
+          "sshtunnel==0.4.0"
+        ],
+        "terminaltables": [
+          "terminaltables==3.1.10"
+        ],
+        "trino": [
+          "trino~=0.326"
+        ],
+        "tzlocal": [
+          "tzlocal==4.2"
+        ],
+        "xlsx2csv": [
+          "xlsx2csv==0.8.1"
+        ],
+        "xmltodict": [
+          "xmltodict==0.13.0"
+        ]
+      },
+      "requirements.txt": {
+        "aiofiles": [
+          "aiofiles==22.1.0"
+        ],
+        "aiohttp": [
+          "aiohttp==3.10.0"
+        ],
+        "alembic": [
+          "alembic>=1.7.5"
+        ],
+        "astor": [
+          "astor>=0.8.1"
+        ],
+        "async-timeout": [
+          "async-timeout==4.0.3"
+        ],
+        "attrs": [
+          "attrs==22.2.0; python_version < '3.12'",
+          "attrs==24.2.0; python_version >= '3.12'"
+        ],
+        "backoff": [
+          "backoff"
+        ],
+        "bcrypt": [
+          "bcrypt==4.0.1"
+        ],
+        "boto3": [
+          "boto3==1.26.60"
+        ],
+        "botocore": [
+          "botocore==1.29.60"
+        ],
+        "cachetools": [
+          "cachetools"
+        ],
+        "click": [
+          "click<8.2.0"
+        ],
+        "clickhouse-connect": [
+          "clickhouse-connect>=0.10.0"
+        ],
+        "clickhouse-sqlalchemy": [
+          "clickhouse_sqlalchemy~=0.3.2"
+        ],
+        "confluent-avro": [
+          "confluent-avro~=1.8.0"
+        ],
+        "cron-converter": [
+          "cron-converter==1.2.1"
+        ],
+        "cryptography": [
+          "cryptography==42.0.4"
+        ],
+        "dask": [
+          "dask[dataframe]>=2022.2.0"
+        ],
+        "datadog": [
+          "datadog==0.44.0"
+        ],
+        "dbt-adapters": [
+          "dbt-adapters==1.22.5"
+        ],
+        "dbt-clickhouse": [
+          "dbt-clickhouse==1.10.0"
+        ],
+        "dbt-core": [
+          "dbt-core==1.10.20"
+        ],
+        "dbt-duckdb": [
+          "dbt-duckdb==1.10.1"
+        ],
+        "dbt-postgres": [
+          "dbt-postgres==1.10.0"
+        ],
+        "dbt-spark": [
+          "dbt-spark==1.10.1"
+        ],
+        "dbt-sqlserver": [
+          "dbt-sqlserver==1.9.0"
+        ],
+        "dbt-trino": [
+          "dbt-trino==1.10.1"
+        ],
+        "deltalake": [
+          "deltalake==0.20.2"
+        ],
+        "duckdb": [
+          "duckdb==1.4.3"
+        ],
+        "elasticsearch": [
+          "elasticsearch==8.15.1"
+        ],
+        "faker": [
+          "Faker==4.14.0"
+        ],
+        "freezegun": [
+          "freezegun==1.2.2"
+        ],
+        "gitpython": [
+          "GitPython==3.1.62"
+        ],
+        "gnupg": [
+          "gnupg==2.3.1"
+        ],
+        "great-expectations": [
+          "great-expectations==0.18.12"
+        ],
+        "httpx": [
+          "httpx>=0.27.0",
+          "httpx[http2]>=0.27.0"
+        ],
+        "inflection": [
+          "inflection==0.5.1"
+        ],
+        "influxdb-client": [
+          "influxdb_client==1.36.1"
+        ],
+        "ipykernel": [
+          "ipykernel==6.15.0"
+        ],
+        "ipython": [
+          "ipython==8.10.0"
+        ],
+        "itsdangerous": [
+          "itsdangerous~=1.1.0"
+        ],
+        "jinja2": [
+          "Jinja2>=3.1.6"
+        ],
+        "joblib": [
+          "joblib>=1.1.0"
+        ],
+        "jupyter-client": [
+          "jupyter_client==7.4.4"
+        ],
+        "jupyter-server": [
+          "jupyter-server==2.14.1"
+        ],
+        "kafka-python": [
+          "kafka-python==2.3.0"
+        ],
+        "kubernetes": [
+          "kubernetes==33.1.0"
+        ],
+        "langchain": [
+          "langchain==0.2.5; python_version >= '3.8'"
+        ],
+        "langchain-community": [
+          "langchain_community==0.2.5"
+        ],
+        "ldap3": [
+          "ldap3==2.9.1"
+        ],
+        "lxml": [
+          "lxml==4.9.4"
+        ],
+        "memory-profiler": [
+          "memory_profiler"
+        ],
+        "mysql-connector-python": [
+          "mysql-connector-python~=8.4.0; python_version < '3.11'",
+          "mysql-connector-python~=9.0.0; python_version >= '3.11'"
+        ],
+        "nats-py": [
+          "nats-py==2.6.0"
+        ],
+        "newrelic": [
+          "newrelic==8.8.0"
+        ],
+        "nkeys": [
+          "nkeys~=0.2.0"
+        ],
+        "numpy": [
+          "numpy>=1.22.0"
+        ],
+        "openai": [
+          "openai==1.82.0"
+        ],
+        "opensearch-py": [
+          "opensearch-py==2.0.0"
+        ],
+        "opentelemetry-api": [
+          "opentelemetry-api>=1.40.0"
+        ],
+        "opentelemetry-exporter-otlp": [
+          "opentelemetry-exporter-otlp>=1.40.0"
+        ],
+        "opentelemetry-exporter-prometheus": [
+          "opentelemetry-exporter-prometheus>=0.61b0"
+        ],
+        "opentelemetry-instrumentation-sqlalchemy": [
+          "opentelemetry-instrumentation-sqlalchemy>=0.61b0"
+        ],
+        "opentelemetry-instrumentation-tornado": [
+          "opentelemetry-instrumentation-tornado>=0.61b0"
+        ],
+        "oracledb": [
+          "oracledb==1.3.1; python_version < '3.12'",
+          "oracledb==2.4.1; python_version >= '3.12'"
+        ],
+        "pandas": [
+          "pandas>=2.1,<3"
+        ],
+        "paramiko": [
+          "paramiko==3.5.1"
+        ],
+        "pendulum": [
+          "pendulum==2.1.0; python_version < '3.12'",
+          "pendulum==3.0.0; python_version >= '3.12'"
+        ],
+        "pika": [
+          "pika==1.3.1"
+        ],
+        "pillow": [
+          "Pillow==10.3.0"
+        ],
+        "pinotdb": [
+          "pinotdb==5.6.0"
+        ],
+        "polars": [
+          "polars==1.30.0"
+        ],
+        "prometheus-client": [
+          "prometheus_client>=0.18.0"
+        ],
+        "protobuf": [
+          "protobuf>=6.0,<7"
+        ],
+        "psutil": [
+          "psutil==5.9.8"
+        ],
+        "psycopg2": [
+          "psycopg2==2.9.3"
+        ],
+        "psycopg2-binary": [
+          "psycopg2-binary==2.9.3"
+        ],
+        "pyarrow": [
+          "pyarrow>=14.0.1"
+        ],
+        "pydruid": [
+          "pydruid==0.6.5"
+        ],
+        "pygithub": [
+          "PyGithub==1.59.0"
+        ],
+        "pyjwt": [
+          "PyJWT==2.6.0"
+        ],
+        "pymongo": [
+          "pymongo==4.3.3"
+        ],
+        "pymongo-schema": [
+          "pymongo_schema==0.4.1"
+        ],
+        "pyodbc": [
+          "pyodbc==4.0.35; python_version < '3.12'",
+          "pyodbc==5.0.1; python_version >= '3.12'"
+        ],
+        "python-dateutil": [
+          "python-dateutil==2.8.2"
+        ],
+        "python-magic": [
+          "python-magic==0.4.27"
+        ],
+        "pytz": [
+          "pytz>=2022.2.1"
+        ],
+        "pyyaml": [
+          "pyyaml~=6.0"
+        ],
+        "redis": [
+          "redis~=5.0.1"
+        ],
+        "requests": [
+          "requests~=2.31.0"
+        ],
+        "requests-aws4auth": [
+          "requests_aws4auth==1.1.2"
+        ],
+        "requests-mock": [
+          "requests_mock==1.10.0"
+        ],
+        "ruamel.yaml": [
+          "ruamel.yaml==0.17.17"
+        ],
+        "scikit-learn": [
+          "scikit-learn<1.8"
+        ],
+        "sentry-sdk": [
+          "sentry-sdk>=2.0.0,<3.0.0"
+        ],
+        "setuptools": [
+          "setuptools==70.0.0"
+        ],
+        "simplejson": [
+          "simplejson"
+        ],
+        "singer-sdk": [
+          "singer_sdk~=0.34.1"
+        ],
+        "six": [
+          "six>=1.15.0"
+        ],
+        "sqlalchemy": [
+          "sqlalchemy>2.0.0"
+        ],
+        "sqlglot": [
+          "sqlglot[rs]"
+        ],
+        "sshtunnel": [
+          "sshtunnel==0.4.0"
+        ],
+        "stomp.py": [
+          "stomp.py==8.1.0"
+        ],
+        "tables": [
+          "tables==3.7.0; python_version < '3.11'",
+          "tables==3.10.1; python_version >= '3.11'"
+        ],
+        "terminado": [
+          "terminado==0.17.1"
+        ],
+        "terminaltables": [
+          "terminaltables==3.1.10"
+        ],
+        "thefuzz": [
+          "thefuzz[speedup]==0.19.0"
+        ],
+        "tornado": [
+          "tornado==6.4.2"
+        ],
+        "trino": [
+          "trino~=0.326"
+        ],
+        "typer": [
+          "typer[all]==0.9.0"
+        ],
+        "typing-extensions": [
+          "typing_extensions==4.11.0"
+        ],
+        "tzlocal": [
+          "tzlocal==4.2"
+        ],
+        "watchdog": [
+          "watchdog==4.0.0"
+        ],
+        "werkzeug": [
+          "Werkzeug==3.0.3"
+        ],
+        "xlsx2csv": [
+          "xlsx2csv==0.8.1"
+        ],
+        "xmltodict": [
+          "xmltodict==0.13.0"
+        ]
+      },
+      "setup.py": {
+        "ai": {
+          "astor": [
+            "astor>=0.8.1"
+          ],
+          "langchain": [
+            "langchain==0.2.5"
+          ],
+          "langchain-community": [
+            "langchain_community==0.2.5"
+          ],
+          "openai": [
+            "openai==1.82.0"
+          ]
+        },
+        "all": {
+          "astor": [
+            "astor>=0.8.1"
+          ],
+          "boto3": [
+            "boto3==1.26.60"
+          ],
+          "botocore": [
+            "botocore==1.29.60"
+          ],
+          "clickhouse-connect": [
+            "clickhouse-connect>=0.10.0"
+          ],
+          "confluent-avro": [
+            "confluent-avro~=1.8.0"
+          ],
+          "dbt-adapters": [
+            "dbt-adapters==1.22.5"
+          ],
+          "dbt-clickhouse": [
+            "dbt-clickhouse==1.10.0"
+          ],
+          "dbt-core": [
+            "dbt-core==1.10.20"
+          ],
+          "dbt-duckdb": [
+            "dbt-duckdb==1.10.1"
+          ],
+          "dbt-postgres": [
+            "dbt-postgres==1.10.0"
+          ],
+          "dbt-spark": [
+            "dbt-spark==1.10.1"
+          ],
+          "dbt-sqlserver": [
+            "dbt-sqlserver==1.9.0"
+          ],
+          "dbt-trino": [
+            "dbt-trino==1.10.1"
+          ],
+          "duckdb": [
+            "duckdb==1.4.3"
+          ],
+          "elasticsearch": [
+            "elasticsearch==8.15.1"
+          ],
+          "great-expectations": [
+            "great-expectations==0.18.12"
+          ],
+          "influxdb-client": [
+            "influxdb_client==1.36.1"
+          ],
+          "kafka-python": [
+            "kafka-python==2.3.0"
+          ],
+          "kubernetes": [
+            "kubernetes==33.1.0"
+          ],
+          "langchain": [
+            "langchain==0.2.5"
+          ],
+          "langchain-community": [
+            "langchain_community==0.2.5"
+          ],
+          "ldap3": [
+            "ldap3==2.9.1"
+          ],
+          "lxml": [
+            "lxml==4.9.4"
+          ],
+          "nats-py": [
+            "nats-py==2.6.0"
+          ],
+          "nkeys": [
+            "nkeys~=0.2.0"
+          ],
+          "openai": [
+            "openai==1.82.0"
+          ],
+          "opensearch-py": [
+            "opensearch-py==2.0.0"
+          ],
+          "opentelemetry-api": [
+            "opentelemetry-api>=1.40.0"
+          ],
+          "opentelemetry-exporter-otlp": [
+            "opentelemetry-exporter-otlp>=1.40.0"
+          ],
+          "opentelemetry-exporter-prometheus": [
+            "opentelemetry-exporter-prometheus>=0.61b0"
+          ],
+          "opentelemetry-instrumentation-sqlalchemy": [
+            "opentelemetry-instrumentation-sqlalchemy>=0.61b0"
+          ],
+          "opentelemetry-instrumentation-tornado": [
+            "opentelemetry-instrumentation-tornado>=0.61b0"
+          ],
+          "oracledb": [
+            "oracledb==1.3.1"
+          ],
+          "pika": [
+            "pika==1.3.1"
+          ],
+          "pinotdb": [
+            "pinotdb==5.6.0"
+          ],
+          "prometheus-client": [
+            "prometheus_client>=0.18.0"
+          ],
+          "protobuf": [
+            "protobuf>=6.0,<7"
+          ],
+          "psycopg2": [
+            "psycopg2==2.9.3"
+          ],
+          "psycopg2-binary": [
+            "psycopg2-binary==2.9.3"
+          ],
+          "pydruid": [
+            "pydruid==0.6.5"
+          ],
+          "pygithub": [
+            "PyGithub==1.59.0"
+          ],
+          "pymongo": [
+            "pymongo==4.3.3"
+          ],
+          "pyodbc": [
+            "pyodbc==4.0.35; python_version < '3.12'",
+            "pyodbc==5.0.1; python_version >= '3.12'"
+          ],
+          "requests-aws4auth": [
+            "requests_aws4auth==1.1.2"
+          ],
+          "sshtunnel": [
+            "sshtunnel==0.4.0"
+          ],
+          "stomp.py": [
+            "stomp.py==8.1.0"
+          ],
+          "thefuzz": [
+            "thefuzz[speedup]==0.19.0"
+          ],
+          "trino": [
+            "trino~=0.326"
+          ]
+        },
+        "chroma": {
+          "chromadb": [
+            "chromadb>=0.4.17"
+          ]
+        },
+        "clickhouse": {
+          "clickhouse-connect": [
+            "clickhouse-connect>=0.10.0"
+          ]
+        },
+        "dbt": {
+          "dbt-adapters": [
+            "dbt-adapters==1.22.5"
+          ],
+          "dbt-clickhouse": [
+            "dbt-clickhouse==1.10.0"
+          ],
+          "dbt-core": [
+            "dbt-core==1.10.20"
+          ],
+          "dbt-duckdb": [
+            "dbt-duckdb==1.10.1"
+          ],
+          "dbt-postgres": [
+            "dbt-postgres==1.10.0"
+          ],
+          "dbt-spark": [
+            "dbt-spark==1.10.1"
+          ],
+          "dbt-sqlserver": [
+            "dbt-sqlserver==1.9.0"
+          ],
+          "dbt-trino": [
+            "dbt-trino==1.10.1"
+          ],
+          "trino": [
+            "trino~=0.326"
+          ]
+        },
+        "hdf5": {
+          "tables": [
+            "tables==3.7.0; python_version < '3.11'",
+            "tables==3.10.1; python_version >= '3.11'"
+          ]
+        },
+        "mysql": {
+          "mysql-connector-python": [
+            "mysql-connector-python~=8.4.0; python_version < '3.11'",
+            "mysql-connector-python~=9.0.0; python_version >= '3.11'"
+          ]
+        },
+        "oracle": {
+          "oracledb": [
+            "oracledb==1.3.1; python_version < '3.12'",
+            "oracledb==2.4.1; python_version >= '3.12'"
+          ]
+        },
+        "postgres": {
+          "psycopg2": [
+            "psycopg2==2.9.3"
+          ],
+          "psycopg2-binary": [
+            "psycopg2-binary==2.9.3"
+          ],
+          "sshtunnel": [
+            "sshtunnel==0.4.0"
+          ]
+        },
+        "qdrant": {
+          "qdrant-client": [
+            "qdrant-client==1.6.9"
+          ],
+          "sentence-transformers": [
+            "sentence-transformers==2.2.2"
+          ]
+        },
+        "s3": {
+          "boto3": [
+            "boto3==1.26.60"
+          ],
+          "botocore": [
+            "botocore==1.29.60"
+          ]
+        },
+        "spark": {
+          "boto3": [
+            "boto3==1.26.60"
+          ],
+          "botocore": [
+            "botocore==1.29.60"
+          ]
+        },
+        "streaming": {
+          "confluent-avro": [
+            "confluent-avro~=1.8.0"
+          ],
+          "elasticsearch": [
+            "elasticsearch==8.15.1"
+          ],
+          "influxdb-client": [
+            "influxdb_client==1.36.1"
+          ],
+          "kafka-python": [
+            "kafka-python==2.3.0"
+          ],
+          "nats-py": [
+            "nats-py==2.6.0"
+          ],
+          "nkeys": [
+            "nkeys~=0.2.0"
+          ],
+          "opensearch-py": [
+            "opensearch-py==2.0.0"
+          ],
+          "pika": [
+            "pika==1.3.1"
+          ],
+          "pymongo": [
+            "pymongo==4.3.3"
+          ],
+          "requests-aws4auth": [
+            "requests_aws4auth==1.1.2"
+          ],
+          "stomp.py": [
+            "stomp.py==8.1.0"
+          ]
+        }
+      }
+    }
+  }
+}
