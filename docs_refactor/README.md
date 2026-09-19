@@ -5,6 +5,7 @@
 | 문서 | 내용 |
 |---|---|
 | [경량화 분석](OFFLINE_SLIMMING_ANALYSIS.ko.md) | 최초 분석과 제거·보존 대상, 단계별 계획 |
+| [Upstream Dockerfile 빌드 비교](UPSTREAM_DOCKERFILE_BUILD.ko.md) | 원본 복원·Dockerfile_refactor 분리·빌드 대상 및 검증 결과 |
 | [로컬 이미지 빌드](LOCAL_BUILD.ko.md) | 로컬 소스 기반 이미지 빌드와 기본 검증 |
 | [개발 환경](DEV_SETUP.ko.md) | 개발 컨테이너 실행, 사내망 접속, 소스 변경 반영 |
 | [내부 S3·AI 연결](INTERNAL_SERVICES.ko.md) | MinIO/Ceph 및 OpenAI 호환 API 설정과 검증 |
